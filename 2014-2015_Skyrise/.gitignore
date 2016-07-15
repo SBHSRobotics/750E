@@ -1,0 +1,8 @@
+/.metadata/
+/*/bin/
+/*/firmware/
+/*/.project
+/*/.cproject
+/*/*.mk
+/*/Makefile
+/*/src/Makefile
