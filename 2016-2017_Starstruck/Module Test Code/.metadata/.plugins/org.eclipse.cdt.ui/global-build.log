@@ -1,0 +1,405 @@
+12:41:01 **** Clean-only build of configuration Default for project C_OOP_Test ****
+make clean 
+make.exe": *** No rule to make target `clean'.  Stop.
+12:42:20 **** Build of configuration Default for project C_OOP_Test ****
+make all 
+make.exe": *** No rule to make target `all'.  Stop.
+12:42:23 **** Incremental Build of configuration Default for project C_OOP_Test ****
+make all 
+make.exe": *** No rule to make target `all'.  Stop.
+20:04:30 **** Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src auto.c
+CC -I../include -I../src init.c
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:35:3: error: implicit declaration of function 'speakerPlayRTTTL' [-Werror=implicit-function-declaration]
+cc1.exe: some warnings being treated as errors
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+20:04:50 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  12356	      0	   3840	  16196	   3f44	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+20:05:41 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  12536	      0	   3840	  16376	   3ff8	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+20:05:52 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+20:07:16 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  12384	      0	   3840	  16224	   3f60	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+20:11:09 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+20:11:38 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:35:20: error: expected expression before '[' token
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+20:14:35 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:35:20: error: expected expression before '[' token
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+20:14:43 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:35:20: error: expected expression before '{' token
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+20:16:23 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  13184	      0	   3840	  17024	   4280	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+20:16:26 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+20:18:12 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  13552	      0	   3840	  17392	   43f0	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+20:20:42 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  13548	      0	   3840	  17388	   43ec	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+20:22:52 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+20:23:42 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+20:24:18 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:38:18 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:43:19: error: 'rtttl' undeclared (first use in this function)
+opcontrol.c:43:19: note: each undeclared identifier is reported only once for each function it appears in
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+08:38:32 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  13484	      0	   3840	  17324	   43ac	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+08:38:48 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:42:03 **** Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:46:45 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  15788	      0	   3840	  19628	   4cac	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+08:49:36 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:49:36 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:39:13: error: 'INT_MAX' undeclared (first use in this function)
+opcontrol.c:39:13: note: each undeclared identifier is reported only once for each function it appears in
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+08:49:40 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:49:40 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:39:13: error: 'INT_MAX' undeclared (first use in this function)
+opcontrol.c:39:13: note: each undeclared identifier is reported only once for each function it appears in
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+08:50:13 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:50:14 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  13412	      0	   3840	  17252	   4364	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+08:51:53 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  15708	      0	   3840	  19548	   4c5c	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+08:53:15 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  15704	      0	   3840	  19544	   4c58	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+08:57:43 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:57:43 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:47:19: error: expected expression before '{' token
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+08:57:54 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:57:54 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:47:19: error: expected expression before '{' token
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+08:58:21 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:49:2: warning: passing argument 1 of 'speakerPlayArray' from incompatible pointer type [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from opcontrol.c:18:
+../include/API.h:446:6: note: expected 'const char **' but argument is of type 'char **'
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  14100	      0	   3840	  17940	   4614	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+08:58:51 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:58:51 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:47:7: error: array type has incomplete element type
+opcontrol.c:47:7: warning: unused variable 'rtttl' [-Wunused-variable]
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+08:59:06 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:59:06 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:47:7: error: array type has incomplete element type
+opcontrol.c:47:7: warning: unused variable 'rtttl' [-Wunused-variable]
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+08:59:16 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:59:16 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:47:7: error: array type has incomplete element type
+opcontrol.c:47:7: warning: unused variable 'rtttl' [-Wunused-variable]
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+08:59:26 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:59:26 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:47:7: error: array type has incomplete element type
+opcontrol.c:47:7: warning: unused variable 'rtttl' [-Wunused-variable]
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+08:59:32 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:59:33 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:47:7: error: array type has incomplete element type
+opcontrol.c:47:7: warning: unused variable 'rtttl' [-Wunused-variable]
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+08:59:52 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+08:59:53 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:47:7: error: array type has incomplete element type
+opcontrol.c:47:7: warning: unused variable 'rtttl' [-Wunused-variable]
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+09:00:02 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:00:03 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:47:7: error: array type has incomplete element type
+opcontrol.c:47:7: warning: unused variable 'rtttl' [-Wunused-variable]
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+09:00:18 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:00:18 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:47:7: error: array type has incomplete element type
+opcontrol.c:47:7: warning: unused variable 'rtttl' [-Wunused-variable]
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+09:00:28 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:00:28 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:47:7: error: array type has incomplete element type
+opcontrol.c:47:7: warning: unused variable 'rtttl' [-Wunused-variable]
+make[1]: *** [../bin/opcontrol.o] Error 1
+make.exe": *** [src] Error 2
+09:00:42 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:00:42 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  14120	      0	   3840	  17960	   4628	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+09:00:55 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:00:56 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  14100	      0	   3840	  17940	   4614	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+09:01:11 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:02:13 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  14096	      0	   3840	  17936	   4610	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+09:03:33 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+opcontrol.c: In function 'operatorControl':
+opcontrol.c:50:2: warning: passing argument 1 of 'printf' from incompatible pointer type [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from opcontrol.c:18:
+../include/API.h:1060:5: note: expected 'const char *' but argument is of type 'const char **'
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  16436	      0	   3840	  20276	   4f34	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+09:04:08 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  14104	      0	   3840	  17944	   4618	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+09:04:15 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:05:14 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  14112	      0	   3840	  17952	   4620	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+09:06:01 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  14104	      0	   3840	  17944	   4618	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+09:07:02 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  14104	      0	   3840	  17944	   4618	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+09:07:39 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:07:53 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:09:18 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:09:34 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:09:51 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:10:15 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:12:41 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:13:43 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+09:14:54 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
