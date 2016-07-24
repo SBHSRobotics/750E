@@ -52,52 +52,34 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 
-void debugMap();
 void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char frontRight, unsigned char backRight);
+
 
 void operatorControl() {
 
-	//driveKill();
-	driveInit();
-
-	taskCreate(debugMap,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+//	crabKill();
 
 	while (1) {
-		if(currentConfig.id == ID_HOLO) {
-			if(joystickGetDigital(1,6,JOY_UP)) {
-				activateDriveConfig(lock);
-			}
+		switch(currentConfig.id) {
+			case TANK_DRIVE:
+				if(joystickGetDigital(1,6,JOY_DOWN)) {
+					setDriveConfig(holonomicDrive);
+				}
 
-			driveMap(LF,LB,RF,RB);
+				driveMap(LF,LB,RF,RB);
+				break;
+			case HOLONOMIC_DRIVE:
+			default:
+				if(joystickGetDigital(1,6,JOY_UP)) {
+					setDriveConfig(tankDrive);
+				}
 
-		} else if(currentConfig.id == ID_TANK) {
-			if(joystickGetDigital(1,6,JOY_DOWN)) {
-				activateDriveConfig(kiwiConfig);
-			}
-
-			driveMap(LF,LB,RF,RB);
+				driveMap(LF,LB,RF,RB);
+				break;
 		}
-
-//		motorSet(S,shooterSpeed);
-//		C:\Program Files\Java\jdk1.8.0_91\binmotorSet(SY,shooterSpeed);
 
 		delay(20);
 	}
-}
-
-void debugMap(){
-	char c = 'p';
-	while(1){
-		c = getchar();
-		printf("L: %d\tR: %d",analogRead(8),analogRead(1));
-		if(c=='l'){
-			activateDriveConfig(lock);
-		}else if(c=='h'){
-			activateDriveConfig(kiwiConfig);
-		}
-		c = 'p';
-	}
-
 }
 
 

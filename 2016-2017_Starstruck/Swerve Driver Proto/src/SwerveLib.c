@@ -1,34 +1,85 @@
 /*
- * KiwiSwerveLib.c
+ * SwerveLib.c
  *
- *  Created on: Aug 2, 2015
- *      Author: Mikel
+ *  Created on: Jul 24, 2016
+ *      Author: Mikel Matticoli
  */
+
 #include <main.h>
 #include <time.h>
 
+// Define drive configurations (Must be tuned based on potentiometer values at a given position)
+DriveConfiguration holonomicDrive = {HOLONOMIC_DRIVE, 2000, 2000};
+DriveConfiguration tankDrive = {TANK_DRIVE, 1250, 2750};
+DriveConfiguration shuffleDrive = {SHUFFLE_DRIVE, 12750, 1250};
 
-DriverConfiguration kiwiConfig = {ID_HOLO, 2000, 2000, 2000};
-DriverConfiguration lock = {ID_TANK, 1200, 2000, 2700};
+DriveConfiguration currentConfig;
 
-typedef struct Wheel{
+// Private Global Constants
+static const double Kp=1.0,
+			 	 	Ki=1.0;
+
+// Private types
+typedef struct CrabGroup {
 	TaskHandle thread;
-	//time_t prevIter;
 	int errSum;
 	double timeSum;;
-}Wheel;
+}CrabGroup;	// Defines a wheel or group of wheels controlled by a motor/potentiometer pair
 
-Wheel leftWheel;
-Wheel middleWheel;
-Wheel rightWheel;
+// Private Global variable declarations
+CrabGroup leftWheel;
+CrabGroup rightWheel;
 
-DriverConfiguration currentConfig;
+// Private function declarations
+/**/
+void crabPID(unsigned char motor, int currentValue, int targetValue, CrabGroup group);
 
-double Kp=1,
-	   Ki=1;
 
-void crabPID(unsigned char motor, int currentValue, int targetValue, Wheel wheel) {
-	// TODO Integral ~ motors still oscilate sporadically
+// Public function definitions
+
+void crabInit(){
+	void leftSidePID(){
+		while(1)
+			crabPID(LR, analogRead(LP), currentConfig.leftWheel, leftWheel);
+	}
+
+	void rightSidePID(){
+		while(1)
+			crabPID(RR, analogRead(RP), currentConfig.rightWheel, rightWheel);
+	}
+
+	setDriveConfig(DEFAULT_DRIVE_MODE);
+	leftWheel.thread = taskCreate(leftSidePID,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+	rightWheel.thread = taskCreate(rightSidePID,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+
+#if DEBUG_MODE
+	void debug() {
+		while(1) {
+			printf("%c[2J", (char)27); // Clear Console
+			printf("=SWERVE DEBUG=\n\rLeft Potentiometer:\t%d\n\rRight Potentiometer:\t%d",analogRead(LR), analogRead(RR));
+			delay(100);
+		}
+	}
+	taskCreate(debug,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+#endif
+}
+
+void crabKill() {
+	taskDelete(leftWheel.thread);
+	taskDelete(rightWheel.thread);
+}
+
+void setDriveConfig(DriveConfiguration config) {
+	currentConfig = config;
+	leftWheel.errSum = 0;
+	rightWheel.errSum = 0;
+}
+
+
+// Private function definitions
+
+void crabPID(unsigned char motor, int currentValue, int targetValue, CrabGroup group) {
+	// TODO: Integral ~ motors still oscillate sporadically
 
 	// Do not run motors if they have reached the target position
 	if (abs(targetValue-currentValue)<PID_THRESH) {
@@ -41,7 +92,6 @@ void crabPID(unsigned char motor, int currentValue, int targetValue, Wheel wheel
 
 	//Integral
 //	wheel.errSum += err;
-
 //	wheel.prevIter = time(NULL);
 
 	//Convert Target Value to Motor Speed
@@ -49,49 +99,12 @@ void crabPID(unsigned char motor, int currentValue, int targetValue, Wheel wheel
 
 	// Shift speed scale past deadzone
 	speed +=
-		( (speed>0)
-			?(127 - PID_MOTOR_SCALE)
-			:(-127 + PID_MOTOR_SCALE)
+		( (speed > 0)
+			? (127 - PID_MOTOR_SCALE)
+			: (-127 + PID_MOTOR_SCALE)
 		 );
-
 	motorSet(motor, speed);
 }
 
-void activateDriveConfig(DriverConfiguration config) {
-	currentConfig = config;
-	leftWheel.errSum = 0;
-	middleWheel.errSum = 0;
-	rightWheel.errSum = 0;
-}
 
-void driveInit(){
-	void leftWheelPID(){
-		while(1)
-			crabPID(LR, analogRead(LP), currentConfig.leftWheel, leftWheel);
-	}
-	void middleWheelPID(){
-//		while(1)
-//			crabPID(0, analogRead(0), currentConfig.middleWheel, middleWheel);
-	}
-	void rightWheelPID(){
-		while(1)
-			crabPID(RR, analogRead(RP), currentConfig.rightWheel, rightWheel);
-	}
-	void debug() {
-		while(1){
-			printf("L: %d\tM: %d\t R: %d\n\r",analogRead(LP),analogRead(MP),analogRead(RP));
-		}
-	}
-	activateDriveConfig(lock);
-	leftWheel.thread = taskCreate(leftWheelPID,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
-	middleWheel.thread = taskCreate(middleWheelPID,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
-	rightWheel.thread = taskCreate(rightWheelPID,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
-	taskCreate(debug,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
-}
-
-void driveKill(){
-	taskDelete(leftWheel.thread);
-	taskDelete(middleWheel.thread);
-	taskDelete(rightWheel.thread);
-}
 

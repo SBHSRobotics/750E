@@ -1,57 +1,78 @@
 /*
- * KiwiSwerveLib.h
+ * SwerveLib.h
  *
- *  Created on: Aug 2, 2015
- *      Author: Mikel
+ *  Created on: Jul 24, 2016
+ *      Author: Mikel Matticoli
  */
 
-#ifndef KIWISWERVELIB_H_
-#define KIWISWERVELIB_H_
+#ifndef SWERVELIB_H_
+#define SWERVELIB_H_
 
-//Motors
-  //Drive
-#define LR 10
-#define RR 1
-#define LW 0
-#define RW 0
-#define LF 9
-#define LB 8
-#define RF 3
-#define RB 2
+	/*
+	 * This is the public API for 750E's Swerve Drive Library. This file should be placed in includes and
+	 * included in main.h
+	 *
+	 */
 
-  //Conveyor
-#define CY 0
-#define C 0
-  //Shooter
-#define SY 0
-#define S 0
+#ifndef DEBUG_MODE
+	#define DEBUG_MODE 1 // Enable or disable debug output
+#endif
 
-#define LP 8
-#define MP 0
-#define RP 1
+// Default drive mode (MUST BE A GLOBAL DriveConfiguration LISTED BELOW)
+#define DEFAULT_DRIVE_MODE holonomicDrive
 
-#define ID_HOLO 0
-#define ID_TANK 1
+// Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
+  	// Chassis
+	static const unsigned char LR = 10;	// Left side rotation control
+	static const unsigned char LF = 9;	// Front left drive wheel
+	static const unsigned char LB = 8;	// Back left drive wheel
+	static const unsigned char RR = 1;	// Right side rotation control
+	static const unsigned char RF = 3;	// Front Right drive wheel
+	static const unsigned char RB = 2;	// Back right drive wheel
+	//TODO: CHANGE THESE PORTS (Not intuitive at all)
 
-static const int PID_MOTOR_SCALE = 70;
-static const int PID_THRESH = 80;
+	// Sensors
+	static const unsigned char LP = 8;	// Left side rotation measurement
+	static const unsigned char RP = 1;	// Right side rotation measurement
 
-//typedef struct DriverConfiguration DriverConfiguration;
+// Constants
+	// PID (These may need tuning depending on mechanical implementation)
+	static const int PID_MOTOR_SCALE = 70;	// Lower = faster, Higher = More precise
+	static const int PID_THRESH = 80;		// Minimum power (motor speed as error approaches zero)
 
-typedef struct DriverConfiguration {
-	unsigned char id;
-	int leftWheel;
-	int middleWheel;
-	int rightWheel;
-}DriverConfiguration;
+	// Drive Configs - These must be constant expressions to be used in struct init http://goo.gl/QLQMuc
+	#define HOLONOMIC_DRIVE 0
+	#define TANK_DRIVE 1
+	#define SHUFFLE_DRIVE 2
 
-extern DriverConfiguration kiwiConfig;
-extern DriverConfiguration lock;
-extern DriverConfiguration currentConfig;
+// Public types
+	typedef struct DriverConfiguration {
+		unsigned char id;
+		int leftWheel;
+		int rightWheel;
+	}DriveConfiguration;
 
-void activateDriveConfig(DriverConfiguration config);
+// Public Global Variable declarations (defined in SwerveLib.c)
+	extern DriveConfiguration holonomicDrive;	// Standard holonomic-x
+	extern DriveConfiguration tankDrive;	// Standard tank
+	extern DriveConfiguration shuffleDrive;	// Horizontal tank
 
-void driveInit();
-void driveKill();
+	extern DriveConfiguration currentConfig;
 
-#endif /* KIWISWERVELIB_H_ */
+// Public function declarations
+	/*
+	 * Initializes swerve drive and starts background tasks
+	 */
+	void crabInit();
+
+	/*
+	 * Stops all swerve drive tasks
+	 */
+	void crabKill();
+
+	/*
+	 * Changes the active drive configuration
+	 */
+	void setDriveConfig(DriveConfiguration config);
+
+#endif /* SWERVELIB_H_ */
