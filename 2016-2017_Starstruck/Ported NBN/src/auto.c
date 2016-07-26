@@ -1,0 +1,117 @@
+/**
+* File for autonomous code.
+*
+* This file should contain the user autonomous() function and any functions related to it.
+*
+* Copyright (c) 2011-2014, Purdue University ACM SIG BOTS. All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+*
+* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+* Neither the name of Purdue University ACM SIG BOTS nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL PURDUE UNIVERSITY ACM SIG BOTS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+* Purdue Robotics OS contains FreeRTOS (http://www.freertos.org) whose source code may be obtained from http://sourceforge.net/projects/freertos/files/ or on request.
+********************************************************************************/
+
+#include "main.h"
+
+//#include "Vex_Competition_Includes.c"
+#include "CharlesLib.c"
+
+/**
+* Runs the user autonomous code.
+*
+* This function will be started in its own task with the default priority and stack size whenever the robot is enabled via the Field Management System or the VEX Competition Switch in the autonomous mode. If the robot is disabled or communications is lost, the autonomous task will be stopped by the kernel. Re-enabling the robot will restart the task, not re-start it from where it left off.
+*
+* Code running in the autonomous task cannot access information from the VEX Joystick. However, the autonomous function can be invoked from another task if a VEX Competition Switch is not available, and it can access joystick information if called in this way.
+*
+* The autonomous task may exit, unlike operatorControl() which should never exit. If it does so, the robot will await a switch to another mode or disable/enable cycle.
+*/
+void autonomous() {
+	intakeSet();
+
+	// Potentiometer selector is "VEX" side up
+
+	encoderReset(QuadL);
+	encoderReset(QuadR);
+
+	//9490 Lift Auton
+	if(analogRead(SEL)==4095){
+		driveSet(127,127);
+		while(1);
+	}
+
+	//Stationary Auton
+	else if(analogRead(SEL) <= 2047){ // left of the potentiometer
+		shooterSetDirect(analogRead(SEL)/10,analogRead(SEL)/10); //change back to 100 after skills
+
+		intakeSet();
+		conveyorSet();
+		wait10Msec(300);//3 Sec Delay for ramp-up
+		intakeSet(100);
+		conveyorSet(127);
+	}
+
+	//Mobile Auton
+	else if(analogRead(SEL) > 2047){ // right of the potentiometer
+		beep();
+		intakeSet();
+
+		int sonarDistance = 62; //maybe change to 54
+		int encoderThresh = 800;
+
+		shooterSetDirect(90,90); //TODO: re-benchmark this speed!! with the sonarDistance!!
+
+		//Run forward approximate distance using encoder
+		//do{
+		int i;
+		for(i = 0; i<=100;i+=2) {
+			driveSet(i,i);
+			wait10Msec(2);
+		}
+		wait10Msec(150);
+		//}while(abs(nMotorEncoder[QuadL])<encoderThresh);// && (abs(EncoderGetValue(W_RF))<encoderThresh));
+
+		driveSet();
+		wait10Msec(50);
+
+		//Lock into shooting distance using ultrasonic
+		float err = 0;
+		timeElapsed = 0;
+
+		do{
+			err = sonarDistance-ultrasonicGet(Sonar);
+			if(abs(err)<=AUTON_PID_THRESH){
+				timeElapsed++;
+				continue;
+			}
+
+			driveSetByDistance(sonarDistance);
+
+		}while(timeElapsed<2000);
+
+		driveSet(0,0);
+
+		beep(); //beeps when it stops
+		wait10Msec(1);
+		beep();
+		wait10Msec(1);
+		beep();
+		wait10Msec(1);
+		boop();
+
+		intakeSet(60);
+		conveyorSet(50);
+		wait1Msec(750);
+		conveyorSet(0);
+		wait1Msec(750);
+		conveyorSet(50);
+		wait1Msec(750);
+		conveyorSet(0);
+		wait1Msec(750);
+		conveyorSet(50);
+	}
+}
+
