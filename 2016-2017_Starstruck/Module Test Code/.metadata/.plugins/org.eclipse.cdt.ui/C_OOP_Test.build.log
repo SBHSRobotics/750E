@@ -1,0 +1,6 @@
+12:42:23 **** Incremental Build of configuration Default for project C_OOP_Test ****
+make all 
+make.exe": *** No rule to make target `all'.  Stop.
+
+12:42:23 Build Finished (took 330ms)
+
