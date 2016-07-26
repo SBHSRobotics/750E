@@ -365,7 +365,7 @@ void lcdMenu() {
 
       case MENU_BATT:
         lcdDisplayVoltage();
-        if(lcdReadButtons(LCD) == LCD_L) { //TODO: change rest of displayLCDString's to lcdSetText(LCD,line #,"String")
+        if(lcdReadButtons(LCD) == LCD_L) {
           menu=MENU_MAIN;
           option=1;
           wait10Msec(50);

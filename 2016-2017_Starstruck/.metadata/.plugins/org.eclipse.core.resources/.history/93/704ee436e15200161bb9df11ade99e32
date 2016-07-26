@@ -62,7 +62,7 @@ void autonomous() {
 		int sonarDistance = 62; //maybe change to 54
 		int encoderThresh = 800;
 
-		shooterSetDirect(90,90);
+		shooterSetDirect(90,90); //TODO: re-benchmark this speed!! with the sonarDistance!!
 
 		//Run forward approximate distance using encoder
 		//do{

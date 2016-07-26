@@ -9,7 +9,7 @@
 #include "RobotLibEvo.c"
 #include "Music.c"
 
-shooter = 0;
+
 
 //=== Utility Functions ===//
 
@@ -38,7 +38,7 @@ int speedRfromRPM(int i) {
 
 
 /* Shooter speed increase feedback */
-void soundSpeedUp(){
+task soundSpeedUp(){
   //        140 = Tempo
   //          5 = Default octave
   //    Quarter = Default note length
@@ -50,7 +50,7 @@ void soundSpeedUp(){
 
 
 /* Shooter speed decrease feedback */
-void soundSpeedDown(){
+task soundSpeedDown(){
   //        140 = Tempo
   //          5 = Default octave
   //    Quarter = Default note length
@@ -98,6 +98,7 @@ void driveSet(int leftSpeed = 0, int rightSpeed = 0, int hSpeed = 0) {
 	motorSet(W_RB, rightSpeed);
 	motorSet(W_HF, -hSpeed);
 	motorSet(W_HB, hSpeed);
+	//TODO: Horizontal Axis after holo drive is built
 }
 
 
@@ -120,7 +121,7 @@ void driveSetByDistance(int ultrasonicDistance) {
 
 /* Map chassis to primary joystick */
 void joyMapMain() {
-  driveX = joyMain.rx;
+	driveX = joyMain.rx;
   driveY = joyMain.ly;
   driveH = joyMain.lx;
 
@@ -139,22 +140,22 @@ void joyMapMain() {
 
 /* Map buttons on primary joystick */
 void buttonMapMain() {
-	intakeSet(joystickGetDigital(1,6,JOY_UP)?100:
-						joystickGetDigital(1,6,JOY_DOWN)?(-100):
+	intakeSet(vexRT[Btn6U]?100:
+						vexRT[Btn6D]?(-100):
 						0);
-	if(joystickGetDigital(1,5,JOY_UP)) {
+	if(vexRT[Btn5U]) {
 		driveSetByDistance(170);
-	} else if(joystickGetDigital(1,5,JOY_DOWN)) {
+	} else if(vexRT[Btn5D]) {
 		driveSetByDistance(62);
-	} else if(joystickGetDigital(1,7,JOY_UP)) {
+	} else if(vexRT[Btn7U]) {
     driveSetByDistance(222);
-  } else if(joystickGetDigital(1,8,JOY_RIGHT)) {
+  } else if(vexRT[Btn8R]) {
   	StartTask(PinkPanther);
-	} else if(joystickGetDigital(1,8,JOY_LEFT)) {
+	} else if(vexRT[Btn8L]) {
   	StartTask(HotlineBling);
-	} else if(joystickGetDigital(1,8,JOY_DOWN)) {
+	} else if(vexRT[Btn8D]) {
   	StartTask(Dhoom);
-	}else if(joystickGetDigital(1,8,JOY_UP)) {
+	}else if(vexRT[Btn8U]) {
   	StartTask(JohnCena);
 	}
 
@@ -178,17 +179,17 @@ void joyMapPartner() {
 }
 /* Map buttons on secondary joystick */
 void buttonMapPartner() {
-		shooter = joystickGetDigital(2,8,JOY_RIGHT)?75://Set shooter speed with Joy2 buttons
-						joystickGetDigital(2,8,JOY_UP)?60:
-						joystickGetDigital(2,8,JOY_LEFT)?55:
-						joystickGetDigital(2,8,JOY_DOWN)?0:
-						joystickGetDigital(2,7,JOY_RIGHT)?127:
-						joystickGetDigital(2,7,JOY_UP)?100:
-						joystickGetDigital(2,7,JOY_LEFT)?94:
-						joystickGetDigital(2,7,JOY_DOWN)?80:shooter;
+		shooter = vexRT[Btn8RXmtr2]?75://Set shooter speed with Joy2 buttons
+			  			vexRT[Btn8UXmtr2]?60:
+				  		vexRT[Btn8LXmtr2]?55:
+				  		vexRT[Btn8DXmtr2]?0:
+				  		vexRT[Btn7RXmtr2]?127:
+				  		vexRT[Btn7UXmtr2]?100:
+			  			vexRT[Btn7LXmtr2]?94:
+			  			vexRT[Btn7DXmtr2]?80:shooter;
 
-		conveyorSet(joystickGetDigital(2,6,JOY_UP)?100:
-							joystickGetDigital(2,6,JOY_DOWN)?(-100):
+		conveyorSet(vexRT[Btn6UXmtr2]?100:
+							  vexRT[Btn6DXmtr2]?(-100):
 						    0); //Successful over-use of ternary operator
 
 		shooterSetDirect(shooter, shooter);
@@ -240,12 +241,12 @@ int option = 1;
 /* Display Main and Power Expander Battery Voltages on LCD */
 void lcdDisplayVoltage() {
   lcdClear();
-  char* s = "Main: ";
-  sprintf(s,"%dmV",powerLevelMain()); //Format LCD line 1
+  string s = "Main: ";
+  sprintf(s,"%dmV",nImmediateBatteryLevel); //Format LCD line 1
   displayLCDString(0, 0, s); //Display main battery on LCD
 
   s= "Expander: ";
-  sprintf(s,"%dmV",analogRead(EXPANDER)*21.93); //Format LCD line 1
+  sprintf(s,"%dmV",SensorValue[Expander]*21.93); //Format LCD line 1
   lcdPrint(1, 0, s); //Display power expander battery on LCD
   wait10Msec(50);
 }
@@ -253,23 +254,23 @@ void lcdDisplayVoltage() {
 
 /* Display shooter speeds on LCD */
 void lcdDisplayShooter() {
-  lcdClear(LCD);
+  lcdClear(uart1);
   char *speeds[8]; //i probably didnt do the string concatenation right just fyi
   strcpy(speeds,motorGet(S_L));
   strcpy(speeds,"  ");
   strcpy(speeds,motorGet(S_R));
-  lcdPrint(LCD,0, speeds);
-  lcdPrint(LCD,1,"<Back");
+  lcdPrint(uart1,0, speeds);
+  lcdPrint(uart1,1,"<Back");
 }
 
 void lcdDisplayPot() {
-  lcdClear(LCD);
+  lcdClear(uart1);
   char *speeds[8]; //i probably didnt do the string concatenation right just fyi
   strcpy(speeds,analogRead(SEL)/10);
   strcpy(speeds,"  ");
   strcpy(speeds,analogRead(SEL));
-  lcdPrint(LCD,0, speeds);
-  lcdPrint(LCD,1,"<Back");
+  lcdPrint(uart1,0, speeds);
+  lcdPrint(uart1,1,"<Back");
 }
 
 
@@ -278,12 +279,12 @@ WARNING: WHEN RUNNING POST ASYNCHRONOUSLY, DO NOT ATTEMPT JOYSTICK CONTROL */
 void lcdMenu() {
   while(true) {
     wait1Msec(50);
-    lcdClear(LCD);
+    lcdClear(uart1);
 
-    if(lcdReadButtons(LCD) == LCD_L) {
+    if(lcdReadButtons(uart1) == LCD_L) {
       option++;
       wait1Msec(100);
-    } else if (lcdReadButtons(LCD) == LCD_R) {
+    } else if (lcdReadButtons(uart1) == LCD_R) {
       option--;
       wait1Msec(100);
 
@@ -293,7 +294,7 @@ void lcdMenu() {
     switch(menu) {
       case MENU_MAIN:
 
-        lcdSetText(LCD,2,"Main Menu");
+        lcdPrint(0,3,"Main Menu");
 
         switch(option) {
 
@@ -302,8 +303,8 @@ void lcdMenu() {
             break;
 
           case 1:
-            lcdSetText(LCD,2,"< BATTERY LVL  >");
-            if(lcdReadButtons(LCD)==LCD_M) {
+            displayLCDString(1,0,"< BATTERY LVL  >");
+            if(lcdReadButtons(uart1)==LCD_M) {
               menu=MENU_BATT;
               option=1;
               wait10Msec(50);
@@ -311,15 +312,15 @@ void lcdMenu() {
             break;
 
           case 2:
-            lcdSetText(LCD,1,"<  SELF-TEST   >");
-              if(lcdReadButtons(LCD)==LCD_M) {
+            displayLCDString(1,0,"<  SELF-TEST   >");
+              if(lcdReadButtons(uart1)==LCD_M) {
                 powerOnSelfTest();
               }
               break;
 
           case 3:
-            lcdSetText(LCD,1,"< MANUAL TEST  >");
-              if(lcdReadButtons(LCD)==LCD_M) {
+            displayLCDString(1,0,"< MANUAL TEST  >");
+              if(lcdReadButtons(uart1)==LCD_M) {
                 menu=MENU_MST;
                 option=1;
                 wait10Msec(50);
@@ -327,8 +328,8 @@ void lcdMenu() {
               }
               break;
           case 4:
-            lcdSetText(LCD,1,"< PLAY MUSIC  >");
-              if(lcdReadButtons(LCD)==LCD_M) {
+            displayLCDString(1,0,"< PLAY MUSIC  >");
+              if(lcdReadButtons(uart1)==LCD_M) {
                 menu=MENU_MEMES;
                 option=1;
                 wait10Msec(50);
@@ -336,16 +337,16 @@ void lcdMenu() {
               }
               break;
           case 5:
-            lcdSetText(LCD,1,"< SHOOTER SPD  >");
-            if(lcdReadButtons(LCD)==LCD_M) {
+            displayLCDString(1,0,"< SHOOTER SPD  >");
+            if(lcdReadButtons(uart1)==LCD_M) {
               menu=MENU_SHOOTER;
               option=1;
               wait10Msec(50);
             }
             break;
           case 6:
-            lcdSetText(LCD,1,"<   POT  SPD   >");
-            if(lcdReadButtons(LCD)==LCD_M) {
+            displayLCDString(1,0,"<   POT  SPD   >");
+            if(lcdReadButtons(uart1)==LCD_M) {
               menu=MENU_POT;
               option=1;
               wait10Msec(50);
@@ -357,7 +358,7 @@ void lcdMenu() {
             break;
 
           default:
-            lcdSetText(LCD,1,"<    ERROR     >");
+            displayLCDString(1,0,"<    ERROR     >");
             break;
 
         }
@@ -365,7 +366,7 @@ void lcdMenu() {
 
       case MENU_BATT:
         lcdDisplayVoltage();
-        if(lcdReadButtons(LCD) == LCD_L) { //TODO: change rest of displayLCDString's to lcdSetText(LCD,line #,"String")
+        if(lcdReadButtons(uart1) == LCD_L) {
           menu=MENU_MAIN;
           option=1;
           wait10Msec(50);
@@ -374,7 +375,7 @@ void lcdMenu() {
 
       case MENU_SHOOTER:
         lcdDisplayShooter();
-        if(lcdReadButtons(LCD) == LCD_L) {
+        if(lcdReadButtons(uart1) == LCD_L) {
           menu=MENU_MAIN;
           option=1;
           wait10Msec(50);
@@ -391,77 +392,77 @@ void lcdMenu() {
 
           case 1:
             displayLCDString(1,0,"<    Port 1    >");
-            if(lcdReadButtons(LCD)==LCD_M) {
-              pulseMotor(1);
+            if(lcdReadButtons(uart1)==LCD_M) {
+              pulseMotor(port1);
             }
             break;
 
           case 2:
             displayLCDString(1,0,"<    Port 2    >");
-            if(lcdReadButtons(LCD)==LCD_M) {
-              pulseMotor(2);
+            if(lcdReadButtons(uart1)==LCD_M) {
+              pulseMotor(port2);
             }
             break;
 
           case 3:
             displayLCDString(1,0,"<    Port 3    >");
-            if(lcdReadButtons(LCD)==LCD_M) {
-              pulseMotor(3);
+            if(lcdReadButtons(uart1)==LCD_M) {
+              pulseMotor(port3);
             }
             break;
 
           case 4:
             displayLCDString(1,0,"<    Port 4    >");
-            if(lcdReadButtons(LCD)==LCD_M) {
-              pulseMotor(4);
+            if(lcdReadButtons(uart1)==LCD_M) {
+              pulseMotor(port4);
             }
             break;
 
           case 5:
             displayLCDString(1,0,"<    Port 5    >");
-            if(lcdReadButtons(LCD)==LCD_M) {
-              pulseMotor(5);
+            if(lcdReadButtons(uart1)==LCD_M) {
+              pulseMotor(port5);
             }
             break;
 
           case 6:
             displayLCDString(1,0,"<    Port 6    >");
-            if(lcdReadButtons(LCD)==LCD_M) {
-              pulseMotor(6);
+            if(lcdReadButtons(uart1)==LCD_M) {
+              pulseMotor(port6);
             }
             break;
 
           case 7:
             displayLCDString(1,0,"<    Port 7    >");
-            if(lcdReadButtons(LCD)==LCD_M) {
-              pulseMotor(7);
+            if(lcdReadButtons(uart1)==LCD_M) {
+              pulseMotor(port7);
             }
             break;
 
           case 8:
             displayLCDString(1,0,"<    Port 8    >");
-            if(lcdReadButtons(LCD)==LCD_M) {
-              pulseMotor(8);
+            if(lcdReadButtons(uart1)==LCD_M) {
+              pulseMotor(port8);
             }
             break;
 
           case 9:
             displayLCDString(1,0,"<    Port 9    >");
-            if(lcdReadButtons(LCD)==LCD_M) {
-              pulseMotor(9);
+            if(lcdReadButtons(uart1)==LCD_M) {
+              pulseMotor(port9);
             }
             break;
 
           case 10:
             displayLCDString(1,0,"<    Port 10   >");
-            if(lcdReadButtons(LCD)==LCD_M) {
-              pulseMotor(10);
+            if(lcdReadButtons(uart1)==LCD_M) {
+              pulseMotor(port10);
             }
             break;
 
           case 11:
             displayLCDString(1,0,"<     Back    >");
-            if(lcdReadButtons(LCD)==LCD_M) {
+            if(lcdReadButtons(uart1)==LCD_M) {
               menu=MENU_MAIN;
               option=1;
               wait10Msec(100);
@@ -487,54 +488,54 @@ void lcdMenu() {
 
           case 1:
             displayLCDString(1,0,"<     Beep     >");
-            if(lcdReadButtons(LCD)==LCD_M) {
+            if(lcdReadButtons(uart1)==LCD_M) {
               beep();
             }
             break;
 
           case 2:
             displayLCDString(1,0,"<     Boop     >");
-              if(lcdReadButtons(LCD)==LCD_M) {
+              if(lcdReadButtons(uart1)==LCD_M) {
                 boop();
               }
               break;
 
           case 3:
             displayLCDString(1,0,"<    Dhoom     >");
-              if(lcdReadButtons(LCD)==LCD_M) {
+              if(lcdReadButtons(uart1)==LCD_M) {
                 StartTask(Dhoom);
               }
               break;
 
           case 4:
             displayLCDString(1,0,"<  Take On Me  >");
-              if(lcdReadButtons(LCD)==LCD_M) {
+              if(lcdReadButtons(uart1)==LCD_M) {
                 StartTask(TakeOnMe);
               }
               break;
 
           case 5:
             displayLCDString(1,0,"<  BigBoyRayC  >");
-              if(lcdReadButtons(LCD)==LCD_M) {
+              if(lcdReadButtons(uart1)==LCD_M) {
                 StartTask(PinkPanther);
               }
               break;
 
           case 6:
             displayLCDString(1,0,"< HotlineBling >");
-              if(lcdReadButtons(LCD)==LCD_M) {
+              if(lcdReadButtons(uart1)==LCD_M) {
                 StartTask(HotlineBling);
               }
               break;
           case 7:
             displayLCDString(1,0,"<  John  Cena  >");
-              if(lcdReadButtons(LCD)==LCD_M) {
+              if(lcdReadButtons(uart1)==LCD_M) {
                 StartTask(JohnCena);
               }
               break;
           case 8:
             displayLCDString(1,0,"<      Back       >");
-              if(lcdReadButtons(LCD)==LCD_M) {
+              if(lcdReadButtons(uart1)==LCD_M) {
                 option = 1;
                 menu = MENU_MAIN;
                 wait10Msec(100);
@@ -551,7 +552,7 @@ void lcdMenu() {
           break;
       case MENU_POT:
         lcdDisplayPot();
-        if(lcdReadButtons(LCD) == LCD_L) {
+        if(lcdReadButtons(uart1) == LCD_L) {
           menu=MENU_MAIN;
           option=1;
           wait10Msec(50);

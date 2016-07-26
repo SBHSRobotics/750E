@@ -53,8 +53,6 @@ void initializeIO() {
  */
 void initialize() {
 	taskCreate(lcdMenu,TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
-	taskCreate(soundSpeedUp, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
-	taskCreate(soundSpeedDown, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
 
 	QuadL = encoderInit(QUADL_TOP,QUADL_BOTTOM,QUADL_REVERSED);
 	QuadR = encoderInit(QUADR_TOP,QUADR_BOTTOM,QUADR_REVERSED);

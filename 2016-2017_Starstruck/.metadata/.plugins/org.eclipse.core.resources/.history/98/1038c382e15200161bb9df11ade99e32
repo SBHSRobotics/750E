@@ -9,8 +9,6 @@ typedef int bool;
 #define true 1
 #define false 0
 
-#define LCD uart1
-
 //Functions
 
 int speedLfromRPM(int i);

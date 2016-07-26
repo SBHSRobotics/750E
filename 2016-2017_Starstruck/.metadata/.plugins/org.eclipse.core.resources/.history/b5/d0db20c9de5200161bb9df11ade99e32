@@ -34,7 +34,7 @@
  */
 void operatorControl() {
 	while(true) {
-		//lcdDisplayVoltage();/
+		//lcdDisplayVoltage();//TODO: Check if comp switch is plugged in
 		joystickMap();
 	}
 }

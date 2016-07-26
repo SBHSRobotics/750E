@@ -1,0 +1,68 @@
+23:34:33 **** Build of configuration Default for project Ported NBN ****
+make all 
+CC -I../include -I../src CharlesCompetition.c
+CharlesCompetition.c:1:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:2:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:3:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:4:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:5:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:6:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:7:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:8:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:9:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:10:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:11:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:12:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:13:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:14:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:15:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:16:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:17:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:18:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:19:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:20:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:21:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:22:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:23:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:26:0: warning: ignoring #pragma platform  [-Wunknown-pragmas]
+CharlesCompetition.c:29:0: warning: ignoring #pragma competitionControl  [-Wunknown-pragmas]
+CharlesCompetition.c:30:0: warning: ignoring #pragma autonomousDuration  [-Wunknown-pragmas]
+CharlesCompetition.c:31:0: warning: ignoring #pragma userControlDuration  [-Wunknown-pragmas]
+CharlesCompetition.c:34:38: fatal error: Vex_Competition_Includes.c: No such file or directory
+compilation terminated.
+make[1]: *** [../bin/CharlesCompetition.o] Error 1
+make: *** [src] Error 2
+23:35:48 **** Incremental Build of configuration Default for project Ported NBN ****
+make all 
+CC -I../include -I../src CharlesCompetition.c
+CharlesCompetition.c:1:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:2:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:3:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:4:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:5:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:6:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:7:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:8:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:9:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:10:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:11:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:12:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:13:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:14:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:15:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:16:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:17:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:18:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:19:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:20:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:21:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:22:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:23:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
+CharlesCompetition.c:26:0: warning: ignoring #pragma platform  [-Wunknown-pragmas]
+CharlesCompetition.c:29:0: warning: ignoring #pragma competitionControl  [-Wunknown-pragmas]
+CharlesCompetition.c:30:0: warning: ignoring #pragma autonomousDuration  [-Wunknown-pragmas]
+CharlesCompetition.c:31:0: warning: ignoring #pragma userControlDuration  [-Wunknown-pragmas]
+CharlesCompetition.c:34:38: fatal error: Vex_Competition_Includes.c: No such file or directory
+compilation terminated.
+make[1]: *** [../bin/CharlesCompetition.o] Error 1
+make: *** [src] Error 2

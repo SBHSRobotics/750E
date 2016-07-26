@@ -51,7 +51,7 @@ void pulseMotor(unsigned char motor) {
 
 /* Pulses all motors and verifies that sensors are connected */
 void powerOnSelfTest() {
-  lcdClear(LCD);
+  lcdClear(uart1);
   lcdPrint(0,0,"~Running POST...");
   lcdPrint(0,1,"DO NOT USE CTRL!");
   pulseMotor(1);

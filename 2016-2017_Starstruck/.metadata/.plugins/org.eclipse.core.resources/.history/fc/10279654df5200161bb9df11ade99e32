@@ -9,8 +9,6 @@ typedef int bool;
 #define true 1
 #define false 0
 
-#define LCD uart1
-
 //Functions
 
 int speedLfromRPM(int i);
@@ -48,7 +46,7 @@ const unsigned char SONAR_R = 19;
 //const unsigned char SQUAD_L = 1; //I2C_1
 //const unsigned char SQUAD_R = 2; //I2C_2
 
-extern int shooter;
+int	shooter = 0, shooterOld = 0;//Shooter speed (tps)
 
 float Kp = 300.0;
 float bsFix = 2.0;
@@ -58,6 +56,8 @@ float speedR = 0;//Calculated right flywheel speed (-127 to 127)
 
 float errL = 0,
 			errR = 0;
+
+
 
 //int SPEED_CONV_FACTOR = 300;
 int PID_THRESH = 30;

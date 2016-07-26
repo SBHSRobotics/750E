@@ -293,7 +293,7 @@ void lcdMenu() {
     switch(menu) {
       case MENU_MAIN:
 
-        lcdSetText(LCD,2,"Main Menu");
+        lcdPrint(0,3,"Main Menu");
 
         switch(option) {
 
@@ -302,7 +302,7 @@ void lcdMenu() {
             break;
 
           case 1:
-            lcdSetText(LCD,2,"< BATTERY LVL  >");
+            displayLCDString(1,0,"< BATTERY LVL  >");
             if(lcdReadButtons(LCD)==LCD_M) {
               menu=MENU_BATT;
               option=1;
@@ -311,14 +311,14 @@ void lcdMenu() {
             break;
 
           case 2:
-            lcdSetText(LCD,1,"<  SELF-TEST   >");
+            displayLCDString(1,0,"<  SELF-TEST   >");
               if(lcdReadButtons(LCD)==LCD_M) {
                 powerOnSelfTest();
               }
               break;
 
           case 3:
-            lcdSetText(LCD,1,"< MANUAL TEST  >");
+            displayLCDString(1,0,"< MANUAL TEST  >");
               if(lcdReadButtons(LCD)==LCD_M) {
                 menu=MENU_MST;
                 option=1;
@@ -327,7 +327,7 @@ void lcdMenu() {
               }
               break;
           case 4:
-            lcdSetText(LCD,1,"< PLAY MUSIC  >");
+            displayLCDString(1,0,"< PLAY MUSIC  >");
               if(lcdReadButtons(LCD)==LCD_M) {
                 menu=MENU_MEMES;
                 option=1;
@@ -336,7 +336,7 @@ void lcdMenu() {
               }
               break;
           case 5:
-            lcdSetText(LCD,1,"< SHOOTER SPD  >");
+            displayLCDString(1,0,"< SHOOTER SPD  >");
             if(lcdReadButtons(LCD)==LCD_M) {
               menu=MENU_SHOOTER;
               option=1;
@@ -344,7 +344,7 @@ void lcdMenu() {
             }
             break;
           case 6:
-            lcdSetText(LCD,1,"<   POT  SPD   >");
+            displayLCDString(1,0,"<   POT  SPD   >");
             if(lcdReadButtons(LCD)==LCD_M) {
               menu=MENU_POT;
               option=1;
@@ -357,7 +357,7 @@ void lcdMenu() {
             break;
 
           default:
-            lcdSetText(LCD,1,"<    ERROR     >");
+            displayLCDString(1,0,"<    ERROR     >");
             break;
 
         }
@@ -365,7 +365,7 @@ void lcdMenu() {
 
       case MENU_BATT:
         lcdDisplayVoltage();
-        if(lcdReadButtons(LCD) == LCD_L) { //TODO: change rest of displayLCDString's to lcdSetText(LCD,line #,"String")
+        if(lcdReadButtons(LCD) == LCD_L) {
           menu=MENU_MAIN;
           option=1;
           wait10Msec(50);
