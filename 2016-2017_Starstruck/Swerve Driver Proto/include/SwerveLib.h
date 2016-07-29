@@ -36,9 +36,11 @@
 	static const unsigned char RP = 1;	// Right side rotation measurement
 
 // Constants
-	// PID (These may need tuning depending on mechanical implementation)
-	static const int PID_MOTOR_SCALE = 70;	// Lower = faster, Higher = More precise
-	static const int PID_THRESH = 80;		// Minimum power (motor speed as error approaches zero)
+	// PID (These may need tuning depending on mechanical implementation and weight)
+	static const int PID_MOTOR_SCALE = 80;	// Lower = faster, Higher = More precise
+	static const int PID_THRESH = 60;		// Minimum power (motor speed as error approaches zero)
+	// NOTE: When modifying other parts of the robot, these constants may need to be adjusted
+	// to accommodate weight changes
 
 	// Drive Configs - These must be constant expressions to be used in struct init http://goo.gl/QLQMuc
 	#define HOLONOMIC_DRIVE 0
