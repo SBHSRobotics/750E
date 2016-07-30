@@ -1,0 +1,6 @@
+09:14:54 **** Incremental Build of configuration Default for project SpeakerTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+
+09:14:55 Build Finished (took 247ms)
+
