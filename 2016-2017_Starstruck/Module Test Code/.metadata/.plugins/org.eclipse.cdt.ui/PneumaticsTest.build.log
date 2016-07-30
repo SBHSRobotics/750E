@@ -1,0 +1,6 @@
+12:40:55 **** Incremental Build of configuration Default for project PneumaticsTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+
+12:40:55 Build Finished (took 309ms)
+

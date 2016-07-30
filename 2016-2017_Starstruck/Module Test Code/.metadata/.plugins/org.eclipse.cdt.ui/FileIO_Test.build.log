@@ -1,0 +1,6 @@
+09:00:55 **** Incremental Build of configuration Default for project FileIO_Test ****
+make all 
+make[1]: Nothing to be done for `all'.
+
+09:00:56 Build Finished (took 304ms)
+
