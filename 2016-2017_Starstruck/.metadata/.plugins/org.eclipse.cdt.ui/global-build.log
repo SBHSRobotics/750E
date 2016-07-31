@@ -1,68 +1,127 @@
-23:34:33 **** Build of configuration Default for project Ported NBN ****
+11:05:27 **** Clean-only build of configuration Default for project Charles ****
+make clean 
+Cannot run program "make": Launching failed
+
+Error: Program "make" not found in PATH
+PATH=[C:/Program Files/Java/jre1.8.0_92/bin/server;C:/Program Files/Java/jre1.8.0_92/bin;C:/Program Files/Java/jre1.8.0_92/lib/amd64;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\PROS\cli;%PROS_TOOLCHAIN%\bin;C:\Program Files (x86)\PuTTY\;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files\PROS\pros-toolchain;C:\Users\Kirsten\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\PROS;]
+11:05:31 **** Build of configuration Default for project Charles ****
 make all 
-CC -I../include -I../src CharlesCompetition.c
-CharlesCompetition.c:1:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:2:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:3:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:4:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:5:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:6:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:7:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:8:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:9:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:10:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:11:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:12:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:13:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:14:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:15:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:16:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:17:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:18:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:19:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:20:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:21:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:22:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:23:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:26:0: warning: ignoring #pragma platform  [-Wunknown-pragmas]
-CharlesCompetition.c:29:0: warning: ignoring #pragma competitionControl  [-Wunknown-pragmas]
-CharlesCompetition.c:30:0: warning: ignoring #pragma autonomousDuration  [-Wunknown-pragmas]
-CharlesCompetition.c:31:0: warning: ignoring #pragma userControlDuration  [-Wunknown-pragmas]
-CharlesCompetition.c:34:38: fatal error: Vex_Competition_Includes.c: No such file or directory
-compilation terminated.
-make[1]: *** [../bin/CharlesCompetition.o] Error 1
-make: *** [src] Error 2
-23:35:48 **** Incremental Build of configuration Default for project Ported NBN ****
+Cannot run program "make": Launching failed
+
+Error: Program "make" not found in PATH
+PATH=[C:/Program Files/Java/jre1.8.0_92/bin/server;C:/Program Files/Java/jre1.8.0_92/bin;C:/Program Files/Java/jre1.8.0_92/lib/amd64;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\PROS\cli;%PROS_TOOLCHAIN%\bin;C:\Program Files (x86)\PuTTY\;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files\PROS\pros-toolchain;C:\Users\Kirsten\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\PROS;]
+11:05:37 **** Incremental Build of configuration Default for project Charles ****
 make all 
-CC -I../include -I../src CharlesCompetition.c
-CharlesCompetition.c:1:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:2:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:3:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:4:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:5:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:6:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:7:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:8:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:9:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:10:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:11:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:12:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:13:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:14:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:15:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:16:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:17:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:18:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:19:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:20:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:21:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:22:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:23:0: warning: ignoring #pragma config  [-Wunknown-pragmas]
-CharlesCompetition.c:26:0: warning: ignoring #pragma platform  [-Wunknown-pragmas]
-CharlesCompetition.c:29:0: warning: ignoring #pragma competitionControl  [-Wunknown-pragmas]
-CharlesCompetition.c:30:0: warning: ignoring #pragma autonomousDuration  [-Wunknown-pragmas]
-CharlesCompetition.c:31:0: warning: ignoring #pragma userControlDuration  [-Wunknown-pragmas]
-CharlesCompetition.c:34:38: fatal error: Vex_Competition_Includes.c: No such file or directory
-compilation terminated.
-make[1]: *** [../bin/CharlesCompetition.o] Error 1
+Cannot run program "make": Launching failed
+
+Error: Program "make" not found in PATH
+PATH=[C:/Program Files/Java/jre1.8.0_92/bin/server;C:/Program Files/Java/jre1.8.0_92/bin;C:/Program Files/Java/jre1.8.0_92/lib/amd64;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\PROS\cli;%PROS_TOOLCHAIN%\bin;C:\Program Files (x86)\PuTTY\;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files\PROS\pros-toolchain;C:\Users\Kirsten\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\PROS;]
+11:05:37 **** Build of configuration Default for project Kiwi Swerve Driver ****
+make all 
+Cannot run program "make": Launching failed
+
+Error: Program "make" not found in PATH
+PATH=[C:/Program Files/Java/jre1.8.0_92/bin/server;C:/Program Files/Java/jre1.8.0_92/bin;C:/Program Files/Java/jre1.8.0_92/lib/amd64;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\PROS\cli;%PROS_TOOLCHAIN%\bin;C:\Program Files (x86)\PuTTY\;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files\PROS\pros-toolchain;C:\Users\Kirsten\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\PROS;]
+11:05:37 **** Build of configuration Default for project Kiwi Swerve Prototype ****
+make all 
+Cannot run program "make": Launching failed
+
+Error: Program "make" not found in PATH
+PATH=[C:/Program Files/Java/jre1.8.0_92/bin/server;C:/Program Files/Java/jre1.8.0_92/bin;C:/Program Files/Java/jre1.8.0_92/lib/amd64;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\PROS\cli;%PROS_TOOLCHAIN%\bin;C:\Program Files (x86)\PuTTY\;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files\PROS\pros-toolchain;C:\Users\Kirsten\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\PROS;]
+11:05:38 **** Build of configuration Default for project ShooterTest ****
+make all 
+Cannot run program "make": Launching failed
+
+Error: Program "make" not found in PATH
+PATH=[C:/Program Files/Java/jre1.8.0_92/bin/server;C:/Program Files/Java/jre1.8.0_92/bin;C:/Program Files/Java/jre1.8.0_92/lib/amd64;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files (x86)\Brackets\command;C:\Program Files (x86)\IVI Foundation\VISA\WinNT\Bin;C:\Program Files (x86)\GtkSharp\2.12\bin;C:\Program Files\PROS\cli;%PROS_TOOLCHAIN%\bin;C:\Program Files (x86)\PuTTY\;C:\Program Files (x86)\Java\jdk1.8.0_45\bin;C:\Program Files\PROS\pros-toolchain;C:\Users\Kirsten\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\PROS;]
+11:05:38 **** Build of configuration Default for project Swerve Driver Proto ****
+make all 
+CC -I../include -I../src SwerveLib.c
+LN ./bin/SwerveLib.o ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  17428	     36	   3888	  21352	   5368	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+11:07:42 **** Incremental Build of configuration Default for project Charles ****
+make all 
+CC -I../include -I../src auto.c
+In file included from auto.c:35:0:
+../include/main.h:48:13: error: two or more data types in declaration specifiers
+../include/main.h:48:1: warning: useless type name in empty declaration [enabled by default]
+make[1]: *** [../bin/auto.o] Error 1
 make: *** [src] Error 2
+11:07:42 **** Incremental Build of configuration Default for project Kiwi Swerve Driver ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:07:43 **** Incremental Build of configuration Default for project Kiwi Swerve Prototype ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:07:43 **** Incremental Build of configuration Default for project ShooterTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:07:44 **** Incremental Build of configuration Default for project Swerve Driver Proto ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:08:32 **** Incremental Build of configuration Default for project Charles ****
+make all 
+CC -I../include -I../src auto.c
+In file included from auto.c:35:0:
+../include/main.h:48:13: error: two or more data types in declaration specifiers
+../include/main.h:48:1: warning: useless type name in empty declaration [enabled by default]
+make[1]: *** [../bin/auto.o] Error 1
+make: *** [src] Error 2
+11:08:33 **** Incremental Build of configuration Default for project Kiwi Swerve Driver ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:08:33 **** Incremental Build of configuration Default for project Kiwi Swerve Prototype ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:08:34 **** Incremental Build of configuration Default for project ShooterTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:08:34 **** Incremental Build of configuration Default for project Swerve Driver Proto ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:08:55 **** Incremental Build of configuration Default for project Charles ****
+make all 
+CC -I../include -I../src auto.c
+In file included from auto.c:35:0:
+../include/main.h:48:13: error: two or more data types in declaration specifiers
+../include/main.h:48:1: warning: useless type name in empty declaration [enabled by default]
+make[1]: *** [../bin/auto.o] Error 1
+make: *** [src] Error 2
+11:08:55 **** Incremental Build of configuration Default for project Kiwi Swerve Driver ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:08:56 **** Incremental Build of configuration Default for project Kiwi Swerve Prototype ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:08:56 **** Incremental Build of configuration Default for project ShooterTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:08:57 **** Incremental Build of configuration Default for project Swerve Driver Proto ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:09:06 **** Incremental Build of configuration Default for project Charles ****
+make all 
+CC -I../include -I../src auto.c
+CC -I../include -I../src init.c
+CC -I../include -I../src opcontrol.c
+LN ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  20380	      4	   3964	  24348	   5f1c	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+11:09:08 **** Incremental Build of configuration Default for project Kiwi Swerve Driver ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:09:08 **** Incremental Build of configuration Default for project Kiwi Swerve Prototype ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:09:09 **** Incremental Build of configuration Default for project ShooterTest ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:09:09 **** Incremental Build of configuration Default for project Swerve Driver Proto ****
+make all 
+make[1]: Nothing to be done for `all'.
+11:09:20 **** Incremental Build of configuration Default for project Charles ****
+make all 
+make[1]: Nothing to be done for `all'.
