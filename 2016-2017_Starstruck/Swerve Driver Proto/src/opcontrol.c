@@ -60,23 +60,34 @@ void operatorControl() {
 //	crabKill();
 
 	while (1) {
-		switch(currentConfig.id) {
+		/*switch(currentConfig.id) {
 			case TANK_DRIVE:
-				if(joystickGetDigital(1,6,JOY_DOWN)) {
-					setDriveConfig(holonomicDrive);
-				}
-
 				driveMap(LF,LB,RF,RB);
 				break;
+			case SHUFFLE_DRIVE:
+				driveMap(LF,LB,RF,RB);
 			case HOLONOMIC_DRIVE:
 			default:
-				if(joystickGetDigital(1,6,JOY_UP)) {
-					setDriveConfig(tankDrive);
-				}
-
 				driveMap(LF,LB,RF,RB);
 				break;
+		}*/
+
+		if(joystickGetDigital(1,7,JOY_UP)){
+			motorSet(LF,127);
+			motorSet(LB,127);
+			motorSet(RF,127);
+			motorSet(RB,127);
 		}
+		if(joystickGetDigital(1,6,JOY_DOWN)) {
+			setDriveConfig(holonomicDrive);
+		}
+		if(joystickGetDigital(1,6,JOY_UP)) {
+			setDriveConfig(tankDrive);
+		}
+		if(joystickGetDigital(1,5,JOY_UP)){
+			setDriveConfig(shuffleDrive);
+		}
+		driveMap(LF,LB,RF,RB);
 
 		delay(20);
 	}
