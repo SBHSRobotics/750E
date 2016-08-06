@@ -957,7 +957,7 @@ int fputs(const char *string, FILE *stream);
  * @param stream the stream to read (stdout, uart1, uart2, or an open file in Read mode)
  * @return the number of bytes successfully read
  */
-size_t fread(void *ptr, size_t size, size_t count, FILE *stream);
+int fread(void *ptr, int size, int count, FILE *stream);
 /**
  * Seeks within a file open in Read mode. This function will fail when used on a file in Write
  * mode or on any communications port.
@@ -987,7 +987,7 @@ long int ftell(FILE *stream);
  * @param stream the stream to write (stdout, uart1, uart2, or an open file in Write mode)
  * @return the number of bytes successfully written
  */
-size_t fwrite(const void *ptr, size_t size, size_t count, FILE *stream);
+int fwrite(const void *ptr, int size, int count, FILE *stream);
 /**
  * Reads and returns one character from "stdin", which is the PC debug terminal.
  *
@@ -1070,7 +1070,7 @@ int printf(const char *formatString, ...);
  * @param formatString the format string as specified in fprintf()
  * @return the number of characters stored
  */
-int snprintf(char *buffer, size_t limit, const char *formatString, ...);
+int snprintf(char *buffer, int limit, const char *formatString, ...);
 /**
  * Prints the formatted string to the string buffer.
  *

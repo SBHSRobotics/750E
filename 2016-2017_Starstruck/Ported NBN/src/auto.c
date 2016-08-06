@@ -17,9 +17,6 @@
 
 #include "main.h"
 
-//#include "Vex_Competition_Includes.c"
-#include "CharlesLib.c"
-
 /**
 * Runs the user autonomous code.
 *
@@ -30,88 +27,6 @@
 * The autonomous task may exit, unlike operatorControl() which should never exit. If it does so, the robot will await a switch to another mode or disable/enable cycle.
 */
 void autonomous() {
-	intakeSet();
 
-	// Potentiometer selector is "VEX" side up
-
-	encoderReset(QuadL);
-	encoderReset(QuadR);
-
-	//9490 Lift Auton
-	if(analogRead(SEL)==4095){
-		driveSet(127,127);
-		while(1);
-	}
-
-	//Stationary Auton
-	else if(analogRead(SEL) <= 2047){ // left of the potentiometer
-		shooterSetDirect(analogRead(SEL)/10,analogRead(SEL)/10); //change back to 100 after skills
-
-		intakeSet();
-		conveyorSet();
-		wait10Msec(300);//3 Sec Delay for ramp-up
-		intakeSet(100);
-		conveyorSet(127);
-	}
-
-	//Mobile Auton
-	else if(analogRead(SEL) > 2047){ // right of the potentiometer
-		beep();
-		intakeSet();
-
-		int sonarDistance = 62; //maybe change to 54
-		int encoderThresh = 800;
-
-		shooterSetDirect(90,90);
-
-		//Run forward approximate distance using encoder
-		//do{
-		int i;
-		for(i = 0; i<=100;i+=2) {
-			driveSet(i,i);
-			wait10Msec(2);
-		}
-		wait10Msec(150);
-		//}while(abs(nMotorEncoder[QuadL])<encoderThresh);// && (abs(EncoderGetValue(W_RF))<encoderThresh));
-
-		driveSet();
-		wait10Msec(50);
-
-		//Lock into shooting distance using ultrasonic
-		float err = 0;
-		timeElapsed = 0;
-
-		do{
-			err = sonarDistance-ultrasonicGet(Sonar);
-			if(abs(err)<=AUTON_PID_THRESH){
-				timeElapsed++;
-				continue;
-			}
-
-			driveSetByDistance(sonarDistance);
-
-		}while(timeElapsed<2000);
-
-		driveSet(0,0);
-
-		beep(); //beeps when it stops
-		wait10Msec(1);
-		beep();
-		wait10Msec(1);
-		beep();
-		wait10Msec(1);
-		boop();
-
-		intakeSet(60);
-		conveyorSet(50);
-		wait1Msec(750);
-		conveyorSet(0);
-		wait1Msec(750);
-		conveyorSet(50);
-		wait1Msec(750);
-		conveyorSet(0);
-		wait1Msec(750);
-		conveyorSet(50);
-	}
 }
 

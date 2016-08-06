@@ -16,19 +16,18 @@
  */
 
 #include "main.h"
-#include "CharlesLib.h"
 
-#include "CharlesLib.c"
+//Sensor Ports
+const static unsigned char QUADL_TOP = 1;
+const static unsigned char QUADL_BOTTOM = 2;
+const static bool QUADL_REVERSED = false;
+const static unsigned char QUADR_TOP = 1;
+const static unsigned char QUADR_BOTTOM = 2;
+const static bool QUADR_REVERSED = false;
+const static unsigned char SONAR_O = 1;
+const static unsigned char SONAR_Y = 2;
 
-const unsigned char QUADL_TOP = 1;
-const unsigned char QUADL_BOTTOM = 2;
-const bool QUADL_REVERSED = false;
-const unsigned char QUADR_TOP = 1;
-const unsigned char QUADR_BOTTOM = 2;
-const bool QUADR_REVERSED = false;
-const unsigned char SONAR_O = 1;
-const unsigned char SONAR_Y = 2;
-
+//Sensors, also extern defined in main.h
 Encoder QuadL;
 Encoder QuadR;
 Ultrasonic Sonar;
@@ -52,13 +51,11 @@ void initializeIO() {
  * This function must exit relatively promptly, or the operatorControl() and autonomous() tasks will not start. An autonomous mode selection menu like the pre_auton() in other environments can be implemented in this task if desired.
  */
 void initialize() {
-	taskCreate(lcdMenu,TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
-	taskCreate(soundSpeedUp, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
-	taskCreate(soundSpeedDown, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
-
 	QuadL = encoderInit(QUADL_TOP,QUADL_BOTTOM,QUADL_REVERSED);
 	QuadR = encoderInit(QUADR_TOP,QUADR_BOTTOM,QUADR_REVERSED);
 
 	Sonar = ultrasonicInit(SONAR_O,SONAR_Y);
+
+	lcdInit(uart1);
 
 }

@@ -16,10 +16,6 @@
  ********************************************************************************/
 
 #include "main.h"
-#include "CharlesLib.h"
-
-#include "CharlesLib.c"
-
 
 /**
  * Runs the user operator control code.
@@ -37,16 +33,4 @@ void operatorControl() {
 		//lcdDisplayVoltage();/
 		joystickMap();
 	}
-}
-
-void joystickMap() {
-  joyRefreshAnalog();
-
-  if(!joystickGetDigital(1,5,JOY_DOWN) && !joystickGetDigital(1,5,JOY_UP)) {
-  	joyMapMain();
-  }
-  buttonMapMain();
-
-  joyMapPartner();
-  buttonMapPartner();
 }

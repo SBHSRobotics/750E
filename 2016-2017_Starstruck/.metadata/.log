@@ -870,3 +870,37 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.cdt.core 1 0 2016-08-06 12:20:12.248
 !MESSAGE Indexed 'Demo Bot NNO' (3 sources, 2 headers) in 0.074 sec: 250 declarations; 68 references; 3 unresolved inclusions; 0 syntax errors; 24 unresolved names (7%)
+!SESSION 2016-08-06 13:16:31.306 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_92
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product edu.purdue.sigbots.ros.eclipse.branding.prosproduct
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product edu.purdue.sigbots.ros.eclipse.branding.prosproduct
+
+!ENTRY org.eclipse.ui 4 4 2016-08-06 13:16:36.591
+!MESSAGE Conflicting handlers for edu.purdue.sigbots.ros.eclipse.wizard.commands.updateCommand: {edu.purdue.sigbots.ros.eclipse.wizard.commands.UpgradeProjectCommand} vs {edu.purdue.sigbots.ros.eclipse.wizard.commands.UpgradeProjectCommand}
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-08-06 13:16:42.121
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Kirsten'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+!SESSION 2016-08-06 16:00:35.730 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_92
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product edu.purdue.sigbots.ros.eclipse.branding.prosproduct
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product edu.purdue.sigbots.ros.eclipse.branding.prosproduct
+
+!ENTRY org.eclipse.ui 4 4 2016-08-06 16:00:49.366
+!MESSAGE Conflicting handlers for edu.purdue.sigbots.ros.eclipse.wizard.commands.updateCommand: {edu.purdue.sigbots.ros.eclipse.wizard.commands.UpgradeProjectCommand} vs {edu.purdue.sigbots.ros.eclipse.wizard.commands.UpgradeProjectCommand}
+
+!ENTRY org.eclipse.egit.ui 2 0 2016-08-06 16:00:57.198
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Kirsten'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.

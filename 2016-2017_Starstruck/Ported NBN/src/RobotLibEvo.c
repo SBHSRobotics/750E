@@ -3,55 +3,35 @@
 //        Add general utility functions here.                     //
 //================================================================//
 
-
-//=== Joystick Control Abstraction ===//
-
-
-/* Structure to store analog values from a joystick */
-typedef struct{
-  int lx; //Left stick x-axis
-  int ly; //Left stick y-axis
-  int rx; //Right stick x-axis
-  int ry; //Right stick y-axis
-}AnalogChannel;
-
-
-/* Create an AnalogChannel struct for each joystick */
-AnalogChannel joyMain,joyPartner;
-
+#include "main.h"
 
 /* Refresh joystick control structures */
 void joyRefreshAnalog() {
-  joyMain.lx = analogRead(1,4);
-  joyMain.ly = analogRead(1,3);
-  joyMain.rx = analogRead(1,1);
-  joyMain.ry = analogRead(1,2);
-  joyPartner.lx = analogRead(2,4);
-  joyPartner.ly = analogRead(2,3);
-  joyPartner.rx = analogRead(2,1);
-  joyPartner.ry = analogRead(2,2);
+  joyMain.lx = joystickGetAnalog(1,4);
+  joyMain.ly = joystickGetAnalog(1,3);
+  joyMain.rx = joystickGetAnalog(1,1);
+  joyMain.ry = joystickGetAnalog(1,2);
+  joyPartner.lx = joystickGetAnalog(2,4);
+  joyPartner.ly = joystickGetAnalog(2,3);
+  joyPartner.rx = joystickGetAnalog(2,1);
+  joyPartner.ry = joystickGetAnalog(2,2);
 }
 
-
-//=== LCD Debugging ===//
-
-
 //=== Motor Control and Testing ===//
-
 
 /* Runs a motor 0.5sec in each direction to make sure it's working */
 void pulseMotor(unsigned char motor) {
   motorSet(motor,127);
-  wait1Msec(250);
+  delay(250);
   motorSet(motor,-127);
-  wait1Msec(250);
-  motorSet(motor);
+  delay(250);
+  motorSet(motor,0);
 }
 
 
 /* Pulses all motors and verifies that sensors are connected */
 void powerOnSelfTest() {
-  lcdClear(LCD);
+  lcdClear(uart1);
   lcdPrint(0,0,"~Running POST...");
   lcdPrint(0,1,"DO NOT USE CTRL!");
   pulseMotor(1);
@@ -64,6 +44,5 @@ void powerOnSelfTest() {
   pulseMotor(8);
   pulseMotor(9);
   pulseMotor(10);
-  boop(); beep(); boop();
   //TODO: Check sensors before and after 1s delay and make sure values are the same (this will tell if a sensor is connected or not)
 }

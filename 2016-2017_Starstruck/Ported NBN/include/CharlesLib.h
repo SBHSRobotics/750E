@@ -1,71 +1,51 @@
 //========================================================//
 //         Charles Competition Library v2015.1.19
 //========================================================//
+#ifndef CHARLES_LIB_H_
+#define CHARLES_LIB_H_
+//===== LCD Menu =====//
 
-//Tasks (Each task runs simultaneously in its own thread)
+//Menu Macros
+#define MENU_MAIN 0
+#define MENU_BATT 1
+#define MENU_MST 2
+#define MENU_MEMES 3
+#define MENU_SHOOTER 4
+#define MENU_POT 5
 
-//Define bool
-typedef int bool;
-#define true 1
-#define false 0
+//Motor Macros
+#define W_LF 1;
+#define W_RF 2;
+#define W_HF 3;
+#define INTAKE 4;
+#define S_L 5;
+#define S_R 6;
+#define CON 7;
+#define W_HB 8;
+#define W_LB 9;
+#define W_RB 10;
 
-#define LCD uart1
+//Sensor Ports
+#define GYRO 2;
+#define SEL 8;
+#define QUADL 11;
+#define QUADR 13;
+#define SONAR 15;
+#define SONAR_L 17;
+#define SONAR_R 19;
+//#define SQUAD_L 1; //I2C_1
+//#define SQUAD_R 2; //I2C_2
+
+//Power Expander
+extern const unsigned char EXPANDER;
+
+//Sensors
+extern Encoder QuadL;
+extern Encoder QuadR;
+extern Ultrasonic Sonar;
 
 //Functions
-
-int speedLfromRPM(int i);
-int speedRfromRPM(int i);
+//Declared here because it's used outside of CharlesLib.c, used in multiple files
 void joystickMap();
-void beep();
-void boop();
-void soundSpeedUp();
-void soundSpeedDown();
 
-
-//Global Vars
-
-//motors
-const unsigned char W_LF = 1;
-const unsigned char W_RF = 2;
-const unsigned char W_HF = 3;
-const unsigned char INTAKE = 4;
-const unsigned char S_L = 5;
-const unsigned char S_R = 6;
-const unsigned char CON = 7;
-const unsigned char W_HB = 8;
-const unsigned char W_LB = 9;
-const unsigned char W_RB = 10;
-
-//sensors
-const unsigned char GYRO = 2;
-const unsigned char EXPANDER = 3;
-const unsigned char SEL = 8;
-const unsigned char QUADL = 11;
-const unsigned char QUADR = 13;
-const unsigned char SONAR = 15;
-const unsigned char SONAR_L = 17;
-const unsigned char SONAR_R = 19;
-//const unsigned char SQUAD_L = 1; //I2C_1
-//const unsigned char SQUAD_R = 2; //I2C_2
-
-extern int shooter;
-
-float Kp = 300.0;
-float bsFix = 2.0;
-
-float speedL = 0;
-float speedR = 0;//Calculated right flywheel speed (-127 to 127)
-
-float errL = 0,
-			errR = 0;
-
-//int SPEED_CONV_FACTOR = 300;
-int PID_THRESH = 30;
-
-int timeElapsed = 0;
-
-int driveX = 0,
-		driveY = 0,
-		driveH = 0; //Intake speed (-127 to 127)
-
-int AUTON_PID_THRESH = 5;
+#endif
