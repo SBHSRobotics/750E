@@ -59,7 +59,9 @@ void function() {
 void operatorControl() {
 	while (true)
 	{
+		// If button pressed
 		if(digitalRead(2)) {
+			//run solenoid
 			digitalWrite(1,HIGH);
 		} else {
 			digitalWrite(1,LOW);
