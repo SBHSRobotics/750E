@@ -53,7 +53,7 @@ void lcdDisplayVoltage() {
   lcdPrint(0, 0, s); //Display main battery on LCD
 
   s= "Expander: ";
-  sprintf(s,"%dmV",analogRead(EXPANDER)*21.93); //Format LCD line 1
+  sprintf(s,"%dmV",(int)(analogRead(EXPANDER)*21.93)); //Format LCD line 1
   lcdPrint(1, 0, s); //Display power expander battery on LCD
   wait(500);
 }
