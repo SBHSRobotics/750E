@@ -138,11 +138,27 @@ void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char fro
 		motorSet(frontLeft, 127);
 		motorSet(backRight, -127);
 		motorSet(frontRight, -(-127));
-	}
-	else {
+	} else {
 		motorStop(backLeft);
 		motorStop(frontLeft);
 		motorStop(backRight);
 		motorStop(frontRight);
+	}
+	#define s 70
+	if (joystickGetDigital(1, 7, JOY_UP)) {
+		motorSet(TL, s);
+		motorSet(BL, s);
+		motorSet(TR, -s);
+		motorSet(BR, -s);
+	} else if (joystickGetDigital(1, 7, JOY_DOWN)) {
+		motorSet(TL, -s);
+		motorSet(BL, -s);
+		motorSet(TR, s);
+		motorSet(BR, s);
+	} else {
+		motorSet(TL, 0);
+		motorSet(BL, 0);
+		motorSet(TR, -0);
+		motorSet(BR, -0);
 	}
 }
