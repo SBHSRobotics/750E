@@ -23,22 +23,25 @@
 
 // Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
   	// Chassis
-	static const unsigned char LR = 10;	// Left side rotation control
-	static const unsigned char LF = 9;	// Front left drive wheel
-	static const unsigned char LB = 8;	// Back left drive wheel
-	static const unsigned char RR = 1;	// Right side rotation control
-	static const unsigned char RF = 3;	// Front Right drive wheel
-	static const unsigned char RB = 2;	// Back right drive wheel
+	static const unsigned char LR = 1;	// Left side rotation control
+	static const unsigned char LF = 2;	// Front left drive wheel
+	static const unsigned char LB = 3;	// Back left drive wheel
+	static const unsigned char RR = 10;	// Right side rotation control
+	static const unsigned char RF = 9;	// Front Right drive wheel
+	static const unsigned char RB = 8;	// Back right drive wheel
 	//TODO: CHANGE THESE PORTS (Not intuitive at all)
 
-	static const unsigned char TL = 4;
-	static const unsigned char BL = 5;
-	static const unsigned char TR = 6;
-	static const unsigned char BR = 7;
+	static const unsigned char TL = 4; // Top left lift
+	static const unsigned char BL = 5; // Bottom left lift
+	static const unsigned char TR = 6; // Top right lift
+	static const unsigned char BR = 7; // Bottom right lift
 
 	// Sensors
-	static const unsigned char LP = 8;	// Left side rotation measurement
-	static const unsigned char RP = 1;	// Right side rotation measurement
+	static const unsigned char LP = 1;	// Left side rotation measurement
+	static const unsigned char RP = 8;	// Right side rotation measurement
+
+	// Actuators
+	static const unsigned char SOL = 1; // Solenoid
 
 // Constants
 	// PID (These may need tuning depending on mechanical implementation and weight)
