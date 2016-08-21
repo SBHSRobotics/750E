@@ -65,6 +65,6 @@ void initialize() {
 	lcdClear(uart1);
 	speakerInit();
 
-	eLeft = encoderInit(ENC_L_A, ENC_L_B,false);
-	eRight = encoderInit(ENC_R_A, ENC_R_B,true);
+	eLeft = encoderInit(ENC_L_A, ENC_L_B,0);
+	eRight = encoderInit(ENC_R_A, ENC_R_B,1);
 }

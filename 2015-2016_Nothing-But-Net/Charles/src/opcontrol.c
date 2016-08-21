@@ -115,7 +115,7 @@ void operatorControl() {
 	gyro = gyroInit(GYRO, 0);
 	gyroReset(gyro);
 
-	taskCreate(debugCtrl,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+	taskCreate(debugCtrl,TASK_DEFAULT_STACK_SIZE,0 /*NULL*/,TASK_PRIORITY_DEFAULT);
 
 	while (1) {
 
