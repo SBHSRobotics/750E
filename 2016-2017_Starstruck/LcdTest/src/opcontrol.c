@@ -17,33 +17,6 @@
 
 #include "main.h"
 
-//Lib Header:
-typedef struct Object {
-	struct Object *self;
-	void (*method)(struct Object*, int);
-} Object;
-
-Object newObject();
-void method(Object *self, int i);
-
-
-//Lib Source:
-Object newObject() {
-	Object o = {.self=&o, .method=&method};
-	return o;
-}
-
-void method(Object *self, int i) {
-	//Do Stuff
-}
-
-
-//User Code:
-void function() {
-	Object o = newObject();
-	o.method(o.self, 3);
-}
-
 
 /**
  * Runs the user operator control code.
@@ -59,13 +32,6 @@ void function() {
 void operatorControl() {
 	while (true)
 	{
-		// If button pressed
-		if(digitalRead(2)) {
-			//run solenoid
-			digitalWrite(1,HIGH);
-		} else {
-			digitalWrite(1,LOW);
-		}
 		delay(25);
 	}
 }
