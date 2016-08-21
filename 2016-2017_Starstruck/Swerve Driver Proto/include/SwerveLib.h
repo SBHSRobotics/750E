@@ -31,6 +31,11 @@
 	static const unsigned char RB = 2;	// Back right drive wheel
 	//TODO: CHANGE THESE PORTS (Not intuitive at all)
 
+	static const unsigned char TL = 4;
+	static const unsigned char BL = 5;
+	static const unsigned char TR = 6;
+	static const unsigned char BR = 7;
+
 	// Sensors
 	static const unsigned char LP = 8;	// Left side rotation measurement
 	static const unsigned char RP = 1;	// Right side rotation measurement
