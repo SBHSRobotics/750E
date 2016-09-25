@@ -1,0 +1,105 @@
+16:35:54 **** Incremental Build of configuration Default for project Ported NBN ****
+make all 
+CC -I../include -I../src CharlesLib.c
+CharlesLib.c: In function 'lcdDisplayVoltage':
+CharlesLib.c:56:3: warning: format '%d' expects argument of type 'int', but argument 3 has type 'double' [-Wformat]
+CharlesLib.c:57:3: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c: In function 'lcdMenu':
+CharlesLib.c:178:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:185:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:192:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:199:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:206:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:213:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:220:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:227:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:234:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:241:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:248:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:261:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:274:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:281:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:288:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:295:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:302:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:309:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:315:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:321:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CharlesLib.c:333:13: warning: passing argument 1 of 'lcdPrint' makes pointer from integer without a cast [enabled by default]
+In file included from ../include/main.h:46:0,
+                 from CharlesLib.c:7:
+../include/API.h:1131:46: note: expected 'FILE *' but argument is of type 'int'
+CC -I../include -I../src RobotLibEvo.c
+CC -I../include -I../src auto.c
+CC -I../include -I../src init.c
+CC -I../include -I../src opcontrol.c
+LN ./bin/CharlesLib.o ./bin/RobotLibEvo.o ./bin/auto.o ./bin/init.o ./bin/opcontrol.o ./firmware/libccos.a -lgcc -lm to bin/output.elf
+   text	   data	    bss	    dec	    hex	filename
+  13128	      0	   3888	  17016	   4278	./bin/output.elf
+arm-none-eabi-objcopy ./bin/output.elf -O binary ./bin/output.bin
+
+16:35:55 Build Finished (took 1s.344ms)
+

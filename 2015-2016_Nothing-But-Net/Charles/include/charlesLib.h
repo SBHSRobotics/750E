@@ -5,8 +5,6 @@
  *      Author: Mikel
  */
 
-
-
 #ifndef CHARLESLIB_H_
 #define CHARLESLIB_H_
 

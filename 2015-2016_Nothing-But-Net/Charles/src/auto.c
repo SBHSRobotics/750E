@@ -106,7 +106,7 @@ void moveForward(int encoderDist) {
 
 void autonLeft() {
 	initAll();
-	taskCreate(shooterCounter, TASK_DEFAULT_STACK_SIZE, NULL,
+	taskCreate(shooterCounter, TASK_DEFAULT_STACK_SIZE, 0 /*NULL*/,
 			TASK_PRIORITY_DEFAULT);
 
 }
@@ -123,7 +123,7 @@ void autonSkills() {
 	}
 	initAll();
 	shoot(107);
-	taskCreate(shooterCounter, TASK_DEFAULT_STACK_SIZE, NULL,
+	taskCreate(shooterCounter, TASK_DEFAULT_STACK_SIZE, 0 /*NULL*/,
 			TASK_PRIORITY_DEFAULT);
 }
 

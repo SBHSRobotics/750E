@@ -23,7 +23,7 @@ static const double Kp=1.0,
 typedef struct CrabGroup {
 	TaskHandle thread;
 	int errSum;
-	double timeSum;;
+	double timeSum;
 }CrabGroup;	// Defines a wheel or group of wheels controlled by a motor/potentiometer pair
 
 // Private Global variable declarations
@@ -90,8 +90,8 @@ void crabPID(unsigned char motor, int currentValue, int targetValue, CrabGroup g
 	double err = (double)Kp*((double)targetValue - (double)currentValue);
 
 	//Integral
-//	wheel.errSum += err;
-//	wheel.prevIter = time(NULL);
+//	group.errSum += err;
+//	group.prevIter = time(NULL);
 
 	//Convert Target Value to Motor Speed
 	int speed = (int)(((double)err / ((double)4095) * (double)PID_MOTOR_SCALE) );
