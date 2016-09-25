@@ -151,16 +151,17 @@ void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char fro
 		motorStop(frontRight);
 	}
 	#define s 70
+	//Lift code
 	if (joystickGetDigital(1, 7, JOY_UP)) {
+		motorSet(TL, -s);
+		motorSet(BL, s);
+		motorSet(TR, s);
+		motorSet(BR, -s);
+	} else if (joystickGetDigital(1, 7, JOY_DOWN)) {
 		motorSet(TL, s);
 		motorSet(BL, -s);
 		motorSet(TR, -s);
 		motorSet(BR, s);
-	} else if (joystickGetDigital(1, 7, JOY_DOWN)) {
-		motorSet(TL, -s);
-		motorSet(BL, s);
-		motorSet(TR, -s);
-		motorSet(BR, -s);
 	} else {
 		motorSet(TL, 0);
 		motorSet(BL, 0);
@@ -168,4 +169,3 @@ void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char fro
 		motorSet(BR, 0);
 	}
 }
-
