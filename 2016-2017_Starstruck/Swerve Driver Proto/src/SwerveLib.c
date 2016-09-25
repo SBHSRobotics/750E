@@ -36,7 +36,6 @@ void crabPID(unsigned char motor, int currentValue, int targetValue, CrabGroup g
 
 
 // Public function definitions
-
 void crabInit(){
 	void leftSidePID(){
 		while(1)

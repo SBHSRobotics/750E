@@ -89,10 +89,16 @@ void operatorControl() {
 		}
 		driveMap(LF,LB,RF,RB);
 
+		if(joystickGetDigital(1,8,JOY_UP)){
+			digitalWrite(SOL, HIGH);
+		}
+		if(joystickGetDigital(1,8,JOY_DOWN)){
+			digitalWrite(SOL, LOW);
+		}
+
 		delay(20);
 	}
 }
-
 
 void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char frontRight, unsigned char backRight) {
 	int thresh = 20;
@@ -147,18 +153,19 @@ void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char fro
 	#define s 70
 	if (joystickGetDigital(1, 7, JOY_UP)) {
 		motorSet(TL, s);
+		motorSet(BL, -s);
+		motorSet(TR, -s);
+		motorSet(BR, s);
+	} else if (joystickGetDigital(1, 7, JOY_DOWN)) {
+		motorSet(TL, -s);
 		motorSet(BL, s);
 		motorSet(TR, -s);
 		motorSet(BR, -s);
-	} else if (joystickGetDigital(1, 7, JOY_DOWN)) {
-		motorSet(TL, -s);
-		motorSet(BL, -s);
-		motorSet(TR, s);
-		motorSet(BR, s);
 	} else {
 		motorSet(TL, 0);
 		motorSet(BL, 0);
-		motorSet(TR, -0);
-		motorSet(BR, -0);
+		motorSet(TR, 0);
+		motorSet(BR, 0);
 	}
 }
+
