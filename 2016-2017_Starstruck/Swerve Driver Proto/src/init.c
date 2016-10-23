@@ -62,5 +62,4 @@ void initializeIO() {
  */
 void initialize() {
 	crabInit();
-
 }

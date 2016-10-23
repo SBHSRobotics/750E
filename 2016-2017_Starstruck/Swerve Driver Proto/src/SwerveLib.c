@@ -46,21 +46,22 @@ void crabInit(){
 		while(1)
 			crabPID(RR, analogRead(RP), currentConfig.rightWheel, rightWheel);
 	}
+	#if (DEBUG_MODE == 0)
+		setDriveConfig(DEFAULT_DRIVE_MODE);
+		leftWheel.thread = taskCreate(leftSidePID,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+		rightWheel.thread = taskCreate(rightSidePID,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+	#endif
 
-	setDriveConfig(DEFAULT_DRIVE_MODE);
-	leftWheel.thread = taskCreate(leftSidePID,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
-	rightWheel.thread = taskCreate(rightSidePID,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
-
-#if DEBUG_MODE
-	void debug() {
-		while(1) {
-			printf("%c[2J", (char)27); // Clear Console
-			printf("=SWERVE DEBUG=\n\rLeft Potentiometer:\t%d\n\rRight Potentiometer:\t%d",analogRead(LR), analogRead(RR));
-			delay(100);
+	#if (DEBUG_MODE == 1)
+		void debug() {
+			while(1) {
+				printf("%c[2J", (char)27); // Clear Console
+				printf("=SWERVE DEBUG=\n\rLeft Potentiometer:\t%d\n\rRight Potentiometer:\t%d",analogRead(LR), analogRead(RR));
+				delay(100);
+			}
 		}
-	}
-	taskCreate(debug,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
-#endif
+		taskCreate(debug,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+	#endif
 }
 
 void crabKill() {
@@ -104,6 +105,3 @@ void crabPID(unsigned char motor, int currentValue, int targetValue, CrabGroup g
 		 );
 	motorSet(motor, speed);
 }
-
-
-
