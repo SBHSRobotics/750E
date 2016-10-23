@@ -19,7 +19,7 @@
 #endif
 
 // Default drive mode (MUST BE A GLOBAL DriveConfiguration LISTED BELOW)
-#define DEFAULT_DRIVE_MODE holonomicDrive
+#define DEFAULT_DRIVE_MODE tankDrive
 
 // Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
   	// Chassis

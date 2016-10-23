@@ -60,6 +60,249 @@ void initializeIO() {
  * will not start. An autonomous mode selection menu like the pre_auton() in other environments
  * can be implemented in this task if desired.
  */
+void pulseMotor(unsigned char x){
+  motorSet(x,127);
+  delay(250);
+  motorSet(x,-127);
+  delay(250);
+  motorSet(x,0);
+}
+
+
+void LCD(){
+  lcdClear(uart1);
+  lcdSetBacklight(uart1, true);
+  int count = 0;
+  int manualCount;
+  while(1){
+    delay(200);
+     //uart1, line #, string, any variable for %d
+    switch (count) {
+      case 0:
+        lcdSetText(uart1,1, " Potentiometers ");
+        lcdSetText(uart1,2, "<    Select    >");
+        if (lcdReadButtons(uart1)==LCD_BTN_LEFT){
+          count=3;
+        } else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+          count++;
+        }
+        else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+          count = 4;
+        }
+        break;
+      case 1:
+        lcdSetText(uart1,1,"   Drive Mode   ");
+        lcdSetText(uart1,2,"<    Select    >");
+        if (lcdReadButtons(uart1)==LCD_BTN_LEFT){
+          count--;
+        }
+        else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+          count++;
+        }
+        else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+          count=5;
+        }
+        break;
+      case 2:
+        lcdSetText(uart1,1,"   Self Test   ");
+        lcdSetText(uart1,2,"<    Select    >");
+        if (lcdReadButtons(uart1)==LCD_BTN_LEFT){
+          count--;
+        }
+        else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+          count++;
+        }
+        else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+          count=6;
+        }
+        break;
+      case 3:
+        lcdSetText(uart1,1,"   Manual Test  ");
+        lcdSetText(uart1,2,"<    Select    >");
+        if (lcdReadButtons(uart1)==LCD_BTN_LEFT){
+          count--;
+        }
+        else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+          count=0;
+        }
+        else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+          count=7;
+        }
+        break;
+      case 4: //potentiometer readings
+        lcdPrint(uart1,1,"Left: %d", analogRead(LP));
+        lcdPrint(uart1,2,"Right: %d", analogRead(RP));
+        if(lcdReadButtons(uart1)==LCD_BTN_CENTER)
+          count = 0; //go back to select menu
+        break;
+      case 5: //get current drive mode
+        lcdPrint(uart1,1,"Drive Mode");
+        printf("%d",currentConfig.id);
+        switch(currentConfig.id){
+          case 0: //HOLO
+            lcdPrint(uart1,2,"Holonomic %d",currentConfig.id);
+            break;
+          case 1: //TANK
+            lcdPrint(uart1,2,"Tank %d",currentConfig.id);
+            break;
+          case 2: //SHUFFLE
+            lcdPrint(uart1,2,"Shuffle %d",currentConfig.id);
+            break;
+        }
+        if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+          count=1;
+        }
+        break;
+      case 6: //self test
+        //currentConfig = holonomicDrive;
+        lcdClear(uart1);
+        lcdPrint(uart1, 2, "Don't Touch!!!!!");
+        for(unsigned char x=1;x<=12;x++){
+          lcdPrint(uart1, 1, "Motor %d",x);
+          pulseMotor(x);
+        }
+        count=2;
+        break;
+      case 7: //manual test
+        lcdClear(uart1);
+        manualCount = 0; //TODO: this doesnt work fix it it doesnt switch in submenu
+        lcdPrint(uart1,1,"Choose Motor");
+        switch(manualCount){
+          case 0:
+            lcdPrint(uart1,2,"<    Motor 1   >");
+            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
+              manualCount=11;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+              manualCount++;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+              pulseMotor(manualCount+1);
+            }
+            break;
+          case 1:
+            lcdPrint(uart1,2,"<    Motor 2   >");
+            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
+              manualCount--;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+              manualCount++;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+              pulseMotor(manualCount+1);
+            }
+            break;
+          case 2:
+            lcdPrint(uart1,2,"<    Motor 3   >");
+            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
+              manualCount--;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+              manualCount++;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+              pulseMotor(manualCount+1);
+            }
+            break;
+          case 3:
+            lcdPrint(uart1,2,"<    Motor 4   >");
+            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
+              manualCount--;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+              manualCount++;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+              pulseMotor(manualCount+1);
+            }
+            break;
+          case 4:
+            lcdPrint(uart1,2,"<    Motor 5   >");
+            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
+              manualCount--;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+              manualCount++;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+              pulseMotor(manualCount+1);
+            }
+            break;
+          case 5:
+            lcdPrint(uart1,2,"<    Motor 6   >");
+            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
+              manualCount--;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+              manualCount++;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+              pulseMotor(manualCount+1);
+            }
+            break;
+          case 6:
+            lcdPrint(uart1,2,"<    Motor 7   >");
+            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
+              manualCount--;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+              manualCount++;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+              pulseMotor(manualCount+1);
+            }
+            break;
+          case 7:
+            lcdPrint(uart1,2,"<    Motor 8   >");
+            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
+              manualCount--;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+              manualCount++;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+              pulseMotor(manualCount+1);
+            }
+            break;
+          case 8:
+            lcdPrint(uart1,2,"<    Motor 9   >");
+            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
+              manualCount--;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+              manualCount++;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+              pulseMotor(manualCount+1);
+            }
+            break;
+          case 9:
+            lcdPrint(uart1,2,"<   Motor 10   >");
+            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
+              manualCount--;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+              manualCount++;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+              pulseMotor(manualCount+1);
+            }
+            break;
+          case 10:
+            lcdPrint(uart1,2,"<   Motor 11   >");
+            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
+              manualCount--;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+              manualCount++;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+              pulseMotor(manualCount+1);
+            }
+            break;
+          case 11:
+            lcdPrint(uart1,2,"<   Motor 12   >");
+            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
+              manualCount--;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+              manualCount=0;
+            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+              pulseMotor(manualCount+1);
+            }
+            break;
+
+
+        }
+        break;
+      default: count=0;
+        break;
+    }
+  }
+}
+
+
 void initialize() {
-	crabInit();
+  lcdInit(uart1);
+  lcdClear(uart1);
+  //LCD();
+  taskCreate(LCD,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+	//crabInit();
 }
