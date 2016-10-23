@@ -54,9 +54,21 @@ void crabInit(){
 
 	#if (DEBUG_MODE == 1 || DEBUG_MODE == 2)
 		void debug() {
+			int confOverride = -1;
 			while(1) {
 				printf("%c[2J", (char)27); // Clear Console
-				printf("=SWERVE DEBUG=\n\rLeft Potentiometer:\t%d\n\rRight Potentiometer:\t%d\n\r Config: %d,%d",analogRead(LP), analogRead(RP), currentConfig.leftWheel, currentConfig.rightWheel);
+				printf("=SWERVE DEBUG=\n\rLeft Potentiometer:\t%d\n\rRight Potentiometer:\t%d\n\r Config: %d,%d\n\r%d",
+						analogRead(LP), analogRead(RP), currentConfig.leftWheel, currentConfig.rightWheel,confOverride);
+
+				if( fcount(stdin) > 0) {
+					confOverride = ((int)getchar())-48;
+					if(confOverride >=0 ) {
+						setDriveConfigById(confOverride);
+					}
+				} else {
+					confOverride = -1;
+				}
+
 				delay(100);
 			}
 		}
@@ -73,6 +85,23 @@ void setDriveConfig(DriveConfiguration config) {
 	currentConfig = config;
 	leftWheel.errSum = 0;
 	rightWheel.errSum = 0;
+}
+
+void setDriveConfigById(int id) {
+	switch(id) {
+		case HOLONOMIC_DRIVE:
+			setDriveConfig(holonomicDrive);
+			break;
+		case TANK_DRIVE:
+			setDriveConfig(tankDrive);
+			break;
+		case SHUFFLE_DRIVE:
+			setDriveConfig(shuffleDrive);
+			break;
+		default:
+			setDriveConfig(currentConfig);
+			break;
+	}
 }
 
 
@@ -103,5 +132,5 @@ void crabPID(unsigned char motor, int currentValue, int targetValue, CrabGroup g
 			? (127 - PID_MOTOR_SCALE)
 			: (-127 + PID_MOTOR_SCALE)
 		 );
-	motorSet(motor, speed);
+	motorSet(motor, -speed);
 }
