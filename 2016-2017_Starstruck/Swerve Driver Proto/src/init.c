@@ -60,12 +60,17 @@ void initializeIO() {
  * will not start. An autonomous mode selection menu like the pre_auton() in other environments
  * can be implemented in this task if desired.
  */
+
 void pulseMotor(unsigned char x){
-  motorSet(x,127);
-  delay(250);
-  motorSet(x,-127);
-  delay(250);
-  motorSet(x,0);
+   motorSet(x,127);
+   delay(250);
+   motorSet(x,-127);
+   delay(250);
+   motorSet(x,0);
+ }
+
+void manualTestSwitch(int manualCount){
+
 }
 
 
@@ -78,19 +83,19 @@ void LCD(){
     delay(200);
      //uart1, line #, string, any variable for %d
     switch (count) {
-      case 0:
+      case POT_MENU:
         lcdSetText(uart1,1, " Potentiometers ");
         lcdSetText(uart1,2, "<    Select    >");
         if (lcdReadButtons(uart1)==LCD_BTN_LEFT){
-          count=3;
+          count=MEMES_MENU;
         } else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT){
           count++;
         }
         else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
-          count = 4;
+          count = POT_VAL;
         }
         break;
-      case 1:
+      case DRIVE_MENU:
         lcdSetText(uart1,1,"   Drive Mode   ");
         lcdSetText(uart1,2,"<    Select    >");
         if (lcdReadButtons(uart1)==LCD_BTN_LEFT){
@@ -100,11 +105,11 @@ void LCD(){
           count++;
         }
         else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
-          count=5;
+          count=DRIVE_VAL;
         }
         break;
-      case 2:
-        lcdSetText(uart1,1,"   Self Test   ");
+      case SELF_MENU:
+        lcdSetText(uart1,1,"   Self Test    ");
         lcdSetText(uart1,2,"<    Select    >");
         if (lcdReadButtons(uart1)==LCD_BTN_LEFT){
           count--;
@@ -113,29 +118,42 @@ void LCD(){
           count++;
         }
         else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
-          count=6;
+          count=SELF_VAL;
         }
         break;
-      case 3:
-        lcdSetText(uart1,1,"   Manual Test  ");
+      case MANUAL_MENU:
+        lcdSetText(uart1,1,"  Manual Test   ");
         lcdSetText(uart1,2,"<    Select    >");
         if (lcdReadButtons(uart1)==LCD_BTN_LEFT){
           count--;
         }
         else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT){
-          count=0;
+          count++;
         }
         else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
-          count=7;
+          count=MANUAL_VAL;
         }
         break;
-      case 4: //potentiometer readings
+      case MEMES_MENU:
+        lcdSetText(uart1,1,"   Dank Memes   ");
+        lcdSetText(uart1,2,"<    Select    >");
+        if (lcdReadButtons(uart1)==LCD_BTN_LEFT){
+          count--;
+        }
+        else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT){
+          count=POT_MENU;
+        }
+        else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+          count=MEMES_VAL;
+        }
+        break;
+      case POT_VAL: //potentiometer readings
         lcdPrint(uart1,1,"Left: %d", analogRead(LP));
         lcdPrint(uart1,2,"Right: %d", analogRead(RP));
         if(lcdReadButtons(uart1)==LCD_BTN_CENTER)
-          count = 0; //go back to select menu
+          count = POT_MENU; //go back to select menu
         break;
-      case 5: //get current drive mode
+      case DRIVE_VAL: //get current drive mode
         lcdPrint(uart1,1,"Drive Mode");
         printf("%d",currentConfig.id);
         switch(currentConfig.id){
@@ -150,30 +168,34 @@ void LCD(){
             break;
         }
         if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
-          count=1;
+          count=DRIVE_MENU;
         }
         break;
-      case 6: //self test
+      case SELF_VAL: //self test
         //currentConfig = holonomicDrive;
         lcdClear(uart1);
         lcdPrint(uart1, 2, "Don't Touch!!!!!");
-        for(unsigned char x=1;x<=12;x++){
+        for(unsigned char x=1;x<=10;x++){
           lcdPrint(uart1, 1, "Motor %d",x);
           pulseMotor(x);
         }
-        count=2;
+        count=SELF_MENU;
         break;
-      case 7: //manual test
+      case MANUAL_VAL: //manual test
         lcdClear(uart1);
-        manualCount = 0; //TODO: this doesnt work fix it it doesnt switch in submenu
+        //TODO: this doesnt work fix it it doesnt switch in submenu
         lcdPrint(uart1,1,"Choose Motor");
+        printf("%d",lcdReadButtons(uart1));
         switch(manualCount){
           case 0:
             lcdPrint(uart1,2,"<    Motor 1   >");
             if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
-              manualCount=11;
+              manualCount=10;
+              printf("reached");
             } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
               manualCount++;
+              printf("reached");
+              printf("%d",manualCount);
             } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
               pulseMotor(manualCount+1);
             }
@@ -269,35 +291,25 @@ void LCD(){
             }
             break;
           case 10:
-            lcdPrint(uart1,2,"<   Motor 11   >");
-            if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
-              manualCount--;
-            } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
-              manualCount++;
-            } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
-              pulseMotor(manualCount+1);
-            }
-            break;
-          case 11:
-            lcdPrint(uart1,2,"<   Motor 12   >");
+            lcdPrint(uart1,2,"<     Exit     >");
             if(lcdReadButtons(uart1)==LCD_BTN_LEFT){
               manualCount--;
             } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT){
               manualCount=0;
             } else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
-              pulseMotor(manualCount+1);
+              count=MANUAL_MENU;
+              manualCount=0;
             }
             break;
-
-
         }
+        break;
+      case MEMES_VAL:
         break;
       default: count=0;
         break;
     }
   }
 }
-
 
 void initialize() {
   lcdInit(uart1);

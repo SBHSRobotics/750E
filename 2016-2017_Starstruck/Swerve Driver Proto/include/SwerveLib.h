@@ -21,6 +21,18 @@
 // Default drive mode (MUST BE A GLOBAL DriveConfiguration LISTED BELOW)
 #define DEFAULT_DRIVE_MODE tankDrive
 
+//LCD Constants
+#define POT_MENU 0
+#define DRIVE_MENU 1
+#define SELF_MENU 2
+#define MANUAL_MENU 3
+#define MEMES_MENU 4
+#define POT_VAL 5
+#define DRIVE_VAL 6
+#define SELF_VAL 7
+#define MANUAL_VAL 8
+#define MEMES_VAL 9
+
 // Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
   	// Chassis
 	static const unsigned char LR = 1;	// Left side rotation control
