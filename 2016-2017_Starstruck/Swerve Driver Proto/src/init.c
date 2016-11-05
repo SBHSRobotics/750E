@@ -69,16 +69,11 @@ void pulseMotor(unsigned char x){
    motorSet(x,0);
  }
 
-void manualTestSwitch(int manualCount){
-
-}
-
-
 void LCD(){
   lcdClear(uart1);
   lcdSetBacklight(uart1, true);
   int count = 0;
-  int manualCount;
+  int manualCount = 0;
   while(1){
     delay(200);
      //uart1, line #, string, any variable for %d
@@ -314,7 +309,6 @@ void LCD(){
 void initialize() {
   lcdInit(uart1);
   lcdClear(uart1);
-  //LCD();
   taskCreate(LCD,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
-	//crabInit();
+	crabInit();
 }
