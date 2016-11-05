@@ -19,7 +19,7 @@
 #endif
 
 // Default drive mode (MUST BE A GLOBAL DriveConfiguration LISTED BELOW)
-#define DEFAULT_DRIVE_MODE tankDrive
+#define DEFAULT_DRIVE_MODE holonomicDrive
 
 //LCD Constants
 #define POT_MENU 0
