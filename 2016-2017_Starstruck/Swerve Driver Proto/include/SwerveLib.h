@@ -95,6 +95,7 @@
 	/*
 	 * Changes the active drive configuration
 	 */
-	void setDriveConfig(DriveConfiguration config);
+	 void setDriveConfig(DriveConfiguration config);
+		void setDriveConfigById(int id);
 
 #endif /* SWERVELIB_H_ */
