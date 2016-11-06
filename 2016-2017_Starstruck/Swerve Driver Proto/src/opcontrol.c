@@ -53,6 +53,8 @@
  */
 
 void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char frontRight, unsigned char backRight);
+void joystickMapMain();
+void joystickMapPartner();
 
 
 void operatorControl() {
@@ -71,30 +73,8 @@ void operatorControl() {
 				driveMap(LF,LB,RF,RB);
 				break;
 		}*/
-
-		if(joystickGetDigital(1,7,JOY_UP)){
-			motorSet(LF,127);
-			motorSet(LB,127);
-			motorSet(RF,127);
-			motorSet(RB,127);
-		}
-		if(joystickGetDigital(1,6,JOY_DOWN)) {
-			setDriveConfig(holonomicDrive);
-		}
-		if(joystickGetDigital(1,6,JOY_UP)) {
-			setDriveConfig(tankDrive);
-		}
-		if(joystickGetDigital(1,5,JOY_UP)){
-			setDriveConfig(shuffleDrive);
-		}
-		driveMap(LF,LB,RF,RB);
-
-		if(joystickGetDigital(1,8,JOY_UP)){
-			digitalWrite(SOL, HIGH);
-		}
-		if(joystickGetDigital(1,8,JOY_DOWN)){
-			digitalWrite(SOL, LOW);
-		}
+		joystickMapMain();
+		//joystickMapPartner();
 
 		delay(20);
 	}
@@ -150,7 +130,7 @@ void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char fro
 		motorStop(backRight);
 		motorStop(frontRight);
 	}
-	#define s 70
+	/*#define s 70
 	//Lift code
 	if (joystickGetDigital(1, 7, JOY_UP)) {
 		motorSet(TL, -s);
@@ -167,5 +147,49 @@ void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char fro
 		motorSet(BL, 0);
 		motorSet(TR, 0);
 		motorSet(BR, 0);
+	}*/
+}
+
+void joystickMapMain(){
+	if(joystickGetDigital(1,7,JOY_UP)){
+		motorSet(LF,127);
+		motorSet(LB,127);
+		motorSet(RF,127);
+		motorSet(RB,127);
 	}
+	/*if((joystickGetDigital(1,7,JOY_DOWN))&&(joystickGetDigital(1,7,JOY_RIGHT))){ //end crab default to tank
+		motorSet(LR, 127);
+		motorSet(RR, 127);
+		delay(1000);
+		motorSet(LR, 0);
+		motorSet(RR, 0);
+
+		setDriveConfig(tankDrive);
+		isCrabKilled = true;
+	}*/
+	if((joystickGetDigital(1,6,JOY_DOWN))&&(!isCrabKilled)) {
+		setDriveConfig(holonomicDrive);
+	}
+	if((joystickGetDigital(1,6,JOY_UP))&&(!isCrabKilled)) {
+		setDriveConfig(tankDrive);
+	}
+	if((joystickGetDigital(1,5,JOY_UP))&&(!isCrabKilled)){
+		setDriveConfig(shuffleDrive);
+	}
+	driveMap(LF,LB,RF,RB);
+	//pneumatics code
+	/*if(joystickGetDigital(1,8,JOY_UP)){
+		digitalWrite(SOL, HIGH);
+	}
+	if(joystickGetDigital(1,8,JOY_DOWN)){
+		digitalWrite(SOL, LOW);
+	}*/
+}
+
+void joystickMapPartner(){
+	//TODO: change joystick from 1 to 2
+			motorSet(TL,(joystickGetAnalog(1,2)<30)&&(joystickGetAnalog(1,2)>-30) ? 0 : -joystickGetAnalog(1,2)); //TODO: fuck this
+			motorSet(BL,(joystickGetAnalog(1,2)<30)&&(joystickGetAnalog(1,2)>-30) ? 0 : -joystickGetAnalog(1,2));
+			motorSet(TR,(joystickGetAnalog(1,2)<30)&&(joystickGetAnalog(1,2)>-30) ? 0 : joystickGetAnalog(1,2));
+			motorSet(BR,(joystickGetAnalog(1,2)<30)&&(joystickGetAnalog(1,2)>-30) ? 0 : joystickGetAnalog(1,2));
 }

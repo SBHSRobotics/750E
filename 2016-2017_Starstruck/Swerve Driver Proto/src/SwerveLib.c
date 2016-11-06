@@ -15,6 +15,8 @@ DriveConfiguration shuffleDrive = {SHUFFLE_DRIVE, 3900, 1800};
 
 DriveConfiguration currentConfig;
 
+bool isCrabKilled = false;
+
 // Private Global Constants
 static const double Kp=1.0,
 			 	 	Ki=1.0;
