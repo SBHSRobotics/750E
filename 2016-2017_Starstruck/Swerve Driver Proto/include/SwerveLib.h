@@ -80,6 +80,7 @@
 	extern DriveConfiguration shuffleDrive;	// Horizontal tank
 
 	extern DriveConfiguration currentConfig;
+	extern bool isCrabKilled;
 
 // Public function declarations
 	/*
