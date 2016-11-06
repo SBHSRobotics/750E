@@ -45,7 +45,6 @@
 
 #include <API.h>
 #include <SwerveLib.h>
-#include <JINX.h>
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
