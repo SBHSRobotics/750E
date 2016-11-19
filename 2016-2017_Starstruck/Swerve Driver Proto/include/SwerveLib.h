@@ -41,16 +41,15 @@
 	static const unsigned char RR = 10;	// Right side rotation control
 	static const unsigned char RF = 9;	// Front Right drive wheel
 	static const unsigned char RB = 8;	// Back right drive wheel
-	//TODO: CHANGE THESE PORTS (Not intuitive at all)
-
+	//TODO: CHANGE THESE PORTS (Not intuitive at all
 	static const unsigned char TL = 4; // Top left lift
 	static const unsigned char BL = 5; // Bottom left lift
 	static const unsigned char TR = 6; // Top right lift
 	static const unsigned char BR = 7; // Bottom right lift
 
 	// Sensors
-	static const unsigned char LP = 1;	// Left side rotation measurement
-	static const unsigned char RP = 8;	// Right side rotation measurement
+	static const unsigned char LP = 8;	// Left side rotation measurement
+	static const unsigned char RP = 1;	// Right side rotation measurement TODO: fix this mess the ports aren't intuitive
 
 	// Actuators
 	static const unsigned char SOL = 1; // Solenoid

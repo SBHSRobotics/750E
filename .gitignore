@@ -1,4 +1,4 @@
 **/.metadata
-**/.o
-**/.bin
-**/.elf
+*.o
+*.bin
+*.elf

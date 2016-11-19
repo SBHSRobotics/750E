@@ -10,8 +10,8 @@
 
 // Define drive configurations (Must be tuned based on potentiometer values at a given position)
 DriveConfiguration holonomicDrive = {HOLONOMIC_DRIVE, 2750, 2750};
-DriveConfiguration tankDrive = {TANK_DRIVE, 2200, 3400};
-DriveConfiguration shuffleDrive = {SHUFFLE_DRIVE, 3900, 1800};
+DriveConfiguration tankDrive = {TANK_DRIVE, 3400, 2200};
+DriveConfiguration shuffleDrive = {SHUFFLE_DRIVE, 1800, 3900};
 
 DriveConfiguration currentConfig;
 
