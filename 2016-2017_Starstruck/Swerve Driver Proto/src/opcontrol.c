@@ -157,6 +157,35 @@ void joystickMapMain(){
 		motorSet(RF,127);
 		motorSet(RB,127);
 	}
+
+	if(abs(joystickGetAnalog(1,3))>15){
+		motorSet(PL,joystickGetAnalog(1,3));
+	} else {
+		motorStop(PL);
+	}
+
+	if(abs(joystickGetAnalog(1,2))>15){
+		motorSet(PR,-joystickGetAnalog(1,2));
+	} else {
+		motorStop(PR);
+	}
+
+	if(joystickGetDigital(1,6,JOY_UP)&&!joystickGetDigital(1,6,JOY_DOWN)){
+		motorSet(AC,127);
+		motorSet(BD,-127);
+	} else {
+		motorStop(AC);
+		motorStop(BD);
+	}
+
+	if(joystickGetDigital(1,6,JOY_DOWN)&&!joystickGetDigital(1,6,JOY_UP)){
+		motorSet(AC,-127);
+		motorSet(BD,127);
+	} else {s
+		motorStop(AC);
+		motorStop(BD);
+	}
+
 	/*if((joystickGetDigital(1,7,JOY_DOWN))&&(joystickGetDigital(1,7,JOY_RIGHT))){ //end crab default to tank
 		motorSet(LR, 127);
 		motorSet(RR, 127);
@@ -167,29 +196,18 @@ void joystickMapMain(){
 		setDriveConfig(tankDrive);
 		isCrabKilled = true;
 	}*/
-	if((joystickGetDigital(1,6,JOY_DOWN))&&(!isCrabKilled)) {
+	if((joystickGetDigital(1,8,JOY_DOWN))&&(!isCrabKilled)) {
 		setDriveConfig(holonomicDrive);
 	}
-	if((joystickGetDigital(1,6,JOY_UP))&&(!isCrabKilled)) {
+	if((joystickGetDigital(1,8,JOY_UP))&&(!isCrabKilled)) {
 		setDriveConfig(tankDrive);
 	}
-	if((joystickGetDigital(1,5,JOY_UP))&&(!isCrabKilled)){
+	if((joystickGetDigital(1,8,JOY_LEFT))&&(!isCrabKilled)){
 		setDriveConfig(shuffleDrive);
 	}
 	driveMap(LF,LB,RF,RB);
-	//pneumatics code
-	/*if(joystickGetDigital(1,8,JOY_UP)){
-		digitalWrite(SOL, HIGH);
-	}
-	if(joystickGetDigital(1,8,JOY_DOWN)){
-		digitalWrite(SOL, LOW);
-	}*/
 }
 
 void joystickMapPartner(){
-	//TODO: change joystick from 1 to 2
-			motorSet(TL,(joystickGetAnalog(1,2)<30)&&(joystickGetAnalog(1,2)>-30) ? 0 : -joystickGetAnalog(1,2)); //TODO: fuck this
-			motorSet(BL,(joystickGetAnalog(1,2)<30)&&(joystickGetAnalog(1,2)>-30) ? 0 : -joystickGetAnalog(1,2));
-			motorSet(TR,(joystickGetAnalog(1,2)<30)&&(joystickGetAnalog(1,2)>-30) ? 0 : joystickGetAnalog(1,2));
-			motorSet(BR,(joystickGetAnalog(1,2)<30)&&(joystickGetAnalog(1,2)>-30) ? 0 : joystickGetAnalog(1,2));
+
 }
