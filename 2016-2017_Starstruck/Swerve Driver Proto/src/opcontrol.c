@@ -170,18 +170,13 @@ void joystickMapMain(){
 		motorStop(PR);
 	}
 
-	if(joystickGetDigital(1,6,JOY_UP)&&!joystickGetDigital(1,6,JOY_DOWN)){
+	if(joystickGetDigital(1,6,JOY_UP)){
 		motorSet(AC,127);
 		motorSet(BD,-127);
-	} else {
-		motorStop(AC);
-		motorStop(BD);
-	}
-
-	if(joystickGetDigital(1,6,JOY_DOWN)&&!joystickGetDigital(1,6,JOY_UP)){
+	} else if(joystickGetDigital(1,6,JOY_DOWN)) {
 		motorSet(AC,-127);
 		motorSet(BD,127);
-	} else {s
+	} else {
 		motorStop(AC);
 		motorStop(BD);
 	}
