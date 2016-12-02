@@ -62,7 +62,7 @@ void initializeIO() {
  */
 
 void initialize() {
-  lcdInit(uart1);
-  lcdClear(uart1);
+
+  delay(500);
 	crabInit();
 }
