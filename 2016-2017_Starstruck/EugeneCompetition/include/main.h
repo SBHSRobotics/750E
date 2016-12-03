@@ -45,7 +45,7 @@
 
 #include <API.h>
 #include <ServoLib.h>
-#include <Eugene.h>
+#include <SwerveLib.h>
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
