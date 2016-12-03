@@ -1,7 +1,7 @@
 /*
- * SwerveLib.h
+ * Eugene.h
  *
- *  Created on: Jul 24, 2016
+ *  Created on: Dec 3, 2016
  *      Author: Mikel Matticoli
  */
 
@@ -15,7 +15,7 @@
 	 */
 
 #ifndef DEBUG_MODE
-	#define DEBUG_MODE 0 // Enable or disable debug output
+	#define DEBUG_MODE 2 // Enable or disable debug output
 #endif
 
 // Default drive mode (MUST BE A GLOBAL DriveConfiguration LISTED BELOW)
@@ -73,7 +73,7 @@
 		int rightWheel;
 	}DriveConfiguration;
 
-// Public Global Variable declarations (defined in SwerveLib.c)
+// Public Global Variable declarations (defined in Eugene.c)
 	extern DriveConfiguration holonomicDrive;	// Standard holonomic-x
 	extern DriveConfiguration tankDrive;	// Standard tank
 	extern DriveConfiguration shuffleDrive;	// Horizontal tank
@@ -96,16 +96,6 @@
 	 * Changes the active drive configuration
 	 */
 	 void setDriveConfig(DriveConfiguration config);
-	 void setDriveConfigById(int id);
-
-	 /*
- 	 * Moves a motor in either direction to check if it works
- 	 */
-	void pulseMotor(unsigned char x);
-
-	/*
-	 * LCD Menu 
-	 */
- 	void LCD();
+		void setDriveConfigById(int id);
 
 #endif /* SWERVELIB_H_ */

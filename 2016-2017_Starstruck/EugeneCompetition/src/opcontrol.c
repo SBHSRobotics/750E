@@ -55,17 +55,11 @@
 void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char frontRight, unsigned char backRight);
 void joystickMapMain();
 void joystickMapPartner();
-//void LCD();
-//void pulseMotor(unsigned char x);
+
 
 void operatorControl() {
 
-	//	crabKill();
-	delay(500);
-	// lcdSetText(uart1,1,"  LCD Inactive  ");
-	// lcdSetText(uart1,2,"Pls Press L & R ");
-	lcdSetBacklight(uart1, 1);
-
+//	crabKill();
 
 	while (1) {
 		/*switch(currentConfig.id) {
@@ -81,12 +75,10 @@ void operatorControl() {
 		}*/
 		joystickMapMain();
 		//joystickMapPartner();
-		LCD();
 
-		delay(200);
+		delay(20);
 	}
 }
-
 
 void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char frontRight, unsigned char backRight) {
 	int thresh = 20;
@@ -158,8 +150,8 @@ void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char fro
 	}*/
 }
 
-void joystickMapMain() {
-	if(joystickGetDigital(1,7,JOY_UP)) {
+void joystickMapMain(){
+	if(joystickGetDigital(1,7,JOY_UP)){
 		motorSet(LF,127);
 		motorSet(LB,127);
 		motorSet(RF,127);
@@ -195,16 +187,12 @@ void joystickMapMain() {
 	if((joystickGetDigital(1,8,JOY_UP))&&(!isCrabKilled)) {
 		setDriveConfig(tankDrive);
 	}
-	if((joystickGetDigital(1,5,JOY_UP))&&(!isCrabKilled)) {
+	if((joystickGetDigital(1,8,JOY_LEFT))&&(!isCrabKilled)){
 		setDriveConfig(shuffleDrive);
 	}
 	driveMap(LF,LB,RF,RB);
 }
 
-void joystickMapPartner() {
+void joystickMapPartner(){
 
-	if((joystickGetDigital(1,8,JOY_LEFT))&&(!isCrabKilled)){
-		setDriveConfig(shuffleDrive);
-	}
-	driveMap(LF,LB,RF,RB);
 }

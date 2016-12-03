@@ -40,7 +40,7 @@ CrabGroup rightWheel;
 // Private function declarations
 /**/
 void crabPID(unsigned char motor, int currentValue, int targetValue, CrabGroup group);
-
+void pincerPID(unsigned char motor, int currentValue, int targetValue);
 
 // Public function definitions
 void crabInit() {
@@ -114,7 +114,6 @@ void setDriveConfigById(int id) {
 			break;
 	}
 }
-
 
 // Private function definitions
 
