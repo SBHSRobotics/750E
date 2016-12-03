@@ -1,7 +1,7 @@
 /*
- * SwerveLib.h
+ * Eugene.h
  *
- *  Created on: Jul 24, 2016
+ *  Created on: Dec 3, 2016
  *      Author: Mikel Matticoli
  */
 
@@ -73,7 +73,7 @@
 		int rightWheel;
 	}DriveConfiguration;
 
-// Public Global Variable declarations (defined in SwerveLib.c)
+// Public Global Variable declarations (defined in Eugene.c)
 	extern DriveConfiguration holonomicDrive;	// Standard holonomic-x
 	extern DriveConfiguration tankDrive;	// Standard tank
 	extern DriveConfiguration shuffleDrive;	// Horizontal tank
