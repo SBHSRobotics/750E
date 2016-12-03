@@ -15,7 +15,7 @@
 	 */
 
 #ifndef DEBUG_MODE
-	#define DEBUG_MODE 2 // Enable or disable debug output
+	#define DEBUG_MODE 0 // Enable or disable debug output
 #endif
 
 // Default drive mode (MUST BE A GLOBAL DriveConfiguration LISTED BELOW)
@@ -96,6 +96,16 @@
 	 * Changes the active drive configuration
 	 */
 	 void setDriveConfig(DriveConfiguration config);
-		void setDriveConfigById(int id);
+	 void setDriveConfigById(int id);
+
+	 /*
+ 	 * Moves a motor in either direction to check if it works
+ 	 */
+	void pulseMotor(unsigned char x);
+
+	/*
+	 * LCD Menu 
+	 */
+ 	void LCD();
 
 #endif /* SWERVELIB_H_ */
