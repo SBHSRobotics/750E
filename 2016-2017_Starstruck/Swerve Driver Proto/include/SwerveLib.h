@@ -98,7 +98,14 @@
 	 void setDriveConfig(DriveConfiguration config);
 	 void setDriveConfigById(int id);
 
+	 /*
+ 	 * Moves a motor in either direction to check if it works
+ 	 */
 	void pulseMotor(unsigned char x);
+
+	/*
+	 * LCD Menu 
+	 */
  	void LCD();
 
 #endif /* SWERVELIB_H_ */

@@ -80,24 +80,8 @@ void operatorControl() {
 				break;
 		}*/
 		joystickMapMain();
-		LCD();
-
 		//joystickMapPartner();
-		/*printf("%d\n\r", lcdReadButtons(uart1));
-
-		if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
-			lcdEnabled = (lcdEnabled==1 ? 0 : 1);
-			//delay(200);
-		}
-
-		if(lcdEnabled==0){
-			LCD();
-		} else {
-			lcdClear(uart1);
-			lcdSetText(uart1,1,"  LCD Inactive  ");
-			lcdSetText(uart1,2,"Pls Press L & R ");
-			printf("reached");
-		}*/
+		LCD();
 
 		delay(200);
 	}
@@ -174,14 +158,14 @@ void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char fro
 	}*/
 }
 
-void joystickMapMain(){
-	if(joystickGetDigital(1,7,JOY_UP)){
+void joystickMapMain() {
+	if(joystickGetDigital(1,7,JOY_UP)) {
 		motorSet(LF,127);
 		motorSet(LB,127);
 		motorSet(RF,127);
 		motorSet(RB,127);
 	}
-	/*if((joystickGetDigital(1,7,JOY_DOWN))&&(joystickGetDigital(1,7,JOY_RIGHT))){ //end crab default to tank
+	/*if((joystickGetDigital(1,7,JOY_DOWN))&&(joystickGetDigital(1,7,JOY_RIGHT))) { //end crab default to tank
 		motorSet(LR, 127);
 		motorSet(RR, 127);
 		delay(1000);
@@ -197,20 +181,20 @@ void joystickMapMain(){
 	if((joystickGetDigital(1,6,JOY_UP))&&(!isCrabKilled)) {
 		setDriveConfig(tankDrive);
 	}
-	if((joystickGetDigital(1,5,JOY_UP))&&(!isCrabKilled)){
+	if((joystickGetDigital(1,5,JOY_UP))&&(!isCrabKilled)) {
 		setDriveConfig(shuffleDrive);
 	}
 	driveMap(LF,LB,RF,RB);
 	//pneumatics code
-	/*if(joystickGetDigital(1,8,JOY_UP)){
+	/*if(joystickGetDigital(1,8,JOY_UP)) {
 		digitalWrite(SOL, HIGH);
 	}
-	if(joystickGetDigital(1,8,JOY_DOWN)){
+	if(joystickGetDigital(1,8,JOY_DOWN)) {
 		digitalWrite(SOL, LOW);
 	}*/
 }
 
-void joystickMapPartner(){
+void joystickMapPartner() {
 	//TODO: change joystick from 1 to 2
 			motorSet(TL,(joystickGetAnalog(1,2)<30)&&(joystickGetAnalog(1,2)>-30) ? 0 : -joystickGetAnalog(1,2)); //TODO: fuck this
 			motorSet(BL,(joystickGetAnalog(1,2)<30)&&(joystickGetAnalog(1,2)>-30) ? 0 : -joystickGetAnalog(1,2));
