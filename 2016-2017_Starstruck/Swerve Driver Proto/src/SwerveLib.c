@@ -16,10 +16,10 @@ DriveConfiguration shuffleDrive = {SHUFFLE_DRIVE, 1800, 3900};
 DriveConfiguration currentConfig;
 
 bool isCrabKilled = false;
-// LCD
 
-int count = 0;
-int manualCount = 0;
+// LCD
+int count = 0; //keeps track of position in main LCD menu
+int manualCount = 0; //kepps track of position in manual test LCD submenu
 
 
 // Private Global Constants
