@@ -22,13 +22,14 @@ ServoSystem crabLeftServo;
 ServoSystem crabRightServo;
 // Public function definitions
 void crabInit(){
-	crabLeftServo = servoInit(LP, {RL, null, null, null}, {false, null, null, null}, PID_MOTOR_SCALE, PID_THRESH);
-	crabRightServo = servoInit(RP, {RR, null, null, null}, {false, null, null, null}, PID_MOTOR_SCALE, PID_THRESH);
+	unsigned char leftArr[4] = {LR, 0, 0, 0};
+	unsigned char rightArr[4] = {RR, 0, 0, 0};
+	bool boolArr[4] = {false, false, false, false};
+	crabLeftServo = servoInit(LP, leftArr, boolArr, PID_MOTOR_SCALE, PID_THRESH);
+	crabRightServo = servoInit(RP, rightArr, boolArr, PID_MOTOR_SCALE, PID_THRESH);
 
 	#if (DEBUG_MODE == 0 || DEBUG_MODE == 2)
 		setDriveConfig(DEFAULT_DRIVE_MODE);
-		leftWheel.thread = taskCreate(leftSidePID,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
-		rightWheel.thread = taskCreate(rightSidePID,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 	#endif
 
 	#if (DEBUG_MODE == 1 || DEBUG_MODE == 2)

@@ -65,8 +65,12 @@ void operatorControl() {
 	// lcdSetText(uart1,1,"  LCD Inactive  ");
 	// lcdSetText(uart1,2,"Pls Press L & R ");
 	lcdSetBacklight(uart1, 1);
-
-
+	printf("Div by 1: %fmV\n",(analogRead(EXPANDER)/1.0));
+	printf("Div by 70.8: %fmV\n",(analogRead(EXPANDER)/70.8));
+	printf("Div by 45.6: %fmV\n",(analogRead(EXPANDER)/45.6));
+	printf("Div by 155: %fmV\n",(analogRead(EXPANDER)/155.0));
+	printf("Div by 70: %fmV\n",(analogRead(EXPANDER)/70.0));
+	printf("%f\n",(analogRead(EXPANDER)*35.84));
 	while (1) {
 		/*switch(currentConfig.id) {
 			case TANK_DRIVE:

@@ -181,6 +181,19 @@ void LCD() {
         count=DRIVE_VAL;
       }
       break;
+		case BATTERY_MENU:
+      lcdSetText(uart1,1,"Battery  Voltage");
+      lcdSetText(uart1,2,"<    Select    >");
+      if (lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+        count--;
+      }
+      else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+        count++;
+      }
+      else if(lcdReadButtons(uart1)==LCD_BTN_CENTER) {
+        count=BATTERY_VAL;
+      }
+      break;
     case SELF_MENU:
       lcdSetText(uart1,1,"   Self Test    ");
       lcdSetText(uart1,2,"<    Select    >");
@@ -242,6 +255,13 @@ void LCD() {
       }
       if(lcdReadButtons(uart1)==LCD_BTN_CENTER) {
         count=DRIVE_MENU;
+      }
+      break;
+		case BATTERY_VAL: //get battery voltage
+		  lcdPrint(uart1, 1, "Main: %dmV",powerLevelMain()); //Display main battery on LCD
+		  lcdPrint(uart1, 2, "Expander: %dmV",(int)(analogRead(EXPANDER)*35.84)); //Display power expander battery on LCD
+      if(lcdReadButtons(uart1)==LCD_BTN_CENTER) {
+        count=BATTERY_MENU;
       }
       break;
     case SELF_VAL: //self test
