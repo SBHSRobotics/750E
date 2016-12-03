@@ -86,7 +86,7 @@ void operatorControl() {
 		}*/
 		joystickMapMain();
 		//joystickMapPartner();
-		printf("%d\n\r", lcdReadButtons(uart1)+1);
+		printf("%d\n\r", lcdReadButtons(uart1));
 
 		if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
 			lcdEnabled = (lcdEnabled==1 ? 0 : 1);
