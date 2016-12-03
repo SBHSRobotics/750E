@@ -1,12 +1,12 @@
 /*
- * SwerveLib.h
+ * Eugene.h
  *
- *  Created on: Jul 24, 2016
+ *  Created on: Dec 3, 2016
  *      Author: Mikel Matticoli
  */
 
-#ifndef SWERVELIB_H_
-#define SWERVELIB_H_
+#ifndef EUGENE_H_
+#define EUGENE_H_
 
 	/*
 	 * This is the public API for 750E's Swerve Drive Library. This file should be placed in includes and
@@ -73,7 +73,7 @@
 		int rightWheel;
 	}DriveConfiguration;
 
-// Public Global Variable declarations (defined in SwerveLib.c)
+// Public Global Variable declarations (defined in Eugene.c)
 	extern DriveConfiguration holonomicDrive;	// Standard holonomic-x
 	extern DriveConfiguration tankDrive;	// Standard tank
 	extern DriveConfiguration shuffleDrive;	// Horizontal tank
@@ -98,4 +98,4 @@
 	 void setDriveConfig(DriveConfiguration config);
 		void setDriveConfigById(int id);
 
-#endif /* SWERVELIB_H_ */
+#endif /* EUGENE_H_ */
