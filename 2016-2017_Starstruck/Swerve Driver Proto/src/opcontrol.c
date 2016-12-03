@@ -181,16 +181,6 @@ void joystickMapMain(){
 		motorSet(BD,20);
 	}
 
-	/*if((joystickGetDigital(1,7,JOY_DOWN))&&(joystickGetDigital(1,7,JOY_RIGHT))){ //end crab default to tank
-		motorSet(LR, 127);
-		motorSet(RR, 127);
-		delay(1000);
-		motorSet(LR, 0);
-		motorSet(RR, 0);
-
-		setDriveConfig(tankDrive);
-		isCrabKilled = true;
-	}*/
 	if((joystickGetDigital(1,8,JOY_DOWN))&&(!isCrabKilled)) {
 		setDriveConfig(holonomicDrive);
 	}
