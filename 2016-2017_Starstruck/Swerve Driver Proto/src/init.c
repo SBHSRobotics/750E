@@ -62,15 +62,8 @@ void initializeIO() {
  */
 
 void initialize() {
-  bool breakOut = false;
   lcdInit(uart1);
 	lcdClear(uart1);
-  delay(50);
-
-  while(breakOut==false){
-    breakOut = LCD();
-    delay(200);
-  }
   delay(500);
 	crabInit();
 }

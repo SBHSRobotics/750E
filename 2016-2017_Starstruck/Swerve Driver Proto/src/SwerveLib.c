@@ -45,13 +45,17 @@ void crabPID(unsigned char motor, int currentValue, int targetValue, CrabGroup g
 // Public function definitions
 void crabInit(){
 	void leftSidePID(){
-		while(1)
+		while(1){
 			crabPID(LR, analogRead(LP), currentConfig.leftWheel, leftWheel);
+			delay(200);
+		}
 	}
 
 	void rightSidePID(){
-		while(1)
+		while(1){
 			crabPID(RR, analogRead(RP), currentConfig.rightWheel, rightWheel);
+			delay(200);
+		}
 	}
 	#if (DEBUG_MODE == 0 || DEBUG_MODE == 2)
 		setDriveConfig(DEFAULT_DRIVE_MODE);
@@ -150,8 +154,7 @@ void pulseMotor(unsigned char x){
    motorSet(x,0);
  }
 
-bool LCD(){
-	bool breakOut = false;
+void LCD(){
   lcdSetBacklight(uart1, true);
    //uart1, line #, string, any variable for %d
   switch (count) {
@@ -159,7 +162,7 @@ bool LCD(){
       lcdSetText(uart1,1, " Potentiometers ");
       lcdSetText(uart1,2, "<    Select    >");
       if (lcdReadButtons(uart1)==LCD_BTN_LEFT){
-        count=EXIT_MENU;
+        count=MEMES_MENU;
       } else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT){
         count++;
       }
@@ -213,32 +216,15 @@ bool LCD(){
         count--;
       }
       else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT){
-        count++;
+        count=POT_MENU;
       }
       else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
         count=MEMES_VAL;
       }
       break;
-		case EXIT_MENU: //exit
-      lcdSetText(uart1,1,"      Exit      ");
-      lcdSetText(uart1,2,"<    Select    >");
-      if (lcdReadButtons(uart1)==LCD_BTN_LEFT){
-        count--;
-      }
-      else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT){
-        count=POT_MENU;
-      }
-      else if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
-        breakOut = true;
-				lcdSetText(uart1,1,"LCD Inactive Pls");
-				lcdSetText(uart1,2," Restart Robot  ");
-
-      }
-			break;
     case 	POT_VAL: //potentiometer readings
-      //lcdPrint(uart1,1,"Left: %d", analogRead(LP));
-      //lcdPrint(uart1,2,"Right: %d", analogRead(RP));
-			lcdSetText(uart1,1,"Fuck you");
+      lcdPrint(uart1,1,"Left: %d", analogRead(LP));
+      lcdPrint(uart1,2,"Right: %d", analogRead(RP));
       if(lcdReadButtons(uart1)==LCD_BTN_CENTER)
         count = POT_MENU; //go back to select menu
       break;
@@ -398,5 +384,4 @@ bool LCD(){
     default: count=0;
       break;
   }
-	return breakOut;
 }

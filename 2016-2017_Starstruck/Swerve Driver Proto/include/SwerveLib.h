@@ -27,12 +27,11 @@
 #define SELF_MENU 2
 #define MANUAL_MENU 3
 #define MEMES_MENU 4
-#define EXIT_MENU 5
-#define POT_VAL 6
-#define DRIVE_VAL 7
-#define SELF_VAL 8
-#define MANUAL_VAL 9
-#define MEMES_VAL 10
+#define POT_VAL 5
+#define DRIVE_VAL 6
+#define SELF_VAL 7
+#define MANUAL_VAL 8
+#define MEMES_VAL 9
 
 // Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
   	// Chassis
@@ -100,6 +99,6 @@
 	 void setDriveConfigById(int id);
 
 	void pulseMotor(unsigned char x);
- 	bool LCD();
+ 	void LCD();
 
 #endif /* SWERVELIB_H_ */

@@ -80,6 +80,8 @@ void operatorControl() {
 				break;
 		}*/
 		joystickMapMain();
+		LCD();
+
 		//joystickMapPartner();
 		/*printf("%d\n\r", lcdReadButtons(uart1));
 
@@ -97,7 +99,7 @@ void operatorControl() {
 			printf("reached");
 		}*/
 
-		delay(100);
+		delay(200);
 	}
 }
 
