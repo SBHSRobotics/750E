@@ -5,8 +5,8 @@
  *      Author: Mikel Matticoli
  */
 
-#ifndef EUGENE_H_
-#define EUGENE_H_
+#ifndef SWERVELIB_H_
+#define SWERVELIB_H_
 
 	/*
 	 * This is the public API for 750E's Swerve Drive Library. This file should be placed in includes and
@@ -98,4 +98,4 @@
 	 void setDriveConfig(DriveConfiguration config);
 		void setDriveConfigById(int id);
 
-#endif /* EUGENE_H_ */
+#endif /* SWERVELIB_H_ */
