@@ -43,8 +43,6 @@
  * configure a UART port (usartOpen()) but cannot set up an LCD (lcdInit()).
  */
 void initializeIO() {
-    digitalWrite(SOL, LOW);
-    pinMode(SOL, OUTPUT);
 }
 
 /*
@@ -309,6 +307,6 @@ void LCD(){
 void initialize() {
   lcdInit(uart1);
   lcdClear(uart1);
-  taskCreate(LCD,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+  //taskCreate(LCD,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 	crabInit();
 }
