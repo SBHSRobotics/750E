@@ -17,37 +17,14 @@ DriveConfiguration currentConfig;
 
 bool isCrabKilled = false;
 
-// Private Global Constants
-static const double Kp=1.0,
-			 	 	Ki=1.0;
-
-// Private types
-typedef struct CrabGroup {
-	TaskHandle thread;
-	int errSum;
-	double timeSum;
-}CrabGroup;	// Defines a wheel or group of wheels controlled by a motor/potentiometer pair
-
 // Private Global variable declarations
-CrabGroup leftWheel;
-CrabGroup rightWheel;
-
-// Private function declarations
-/**/
-void crabPID(unsigned char motor, int currentValue, int targetValue, CrabGroup group);
-void pincerPID(unsigned char motor, int currentValue, int targetValue);
-
+ServoSystem crabLeftServo;
+ServoSystem crabRightServo;
 // Public function definitions
 void crabInit(){
-	void leftSidePID(){
-		while(1)
-			crabPID(LR, analogRead(LP), currentConfig.leftWheel, leftWheel);
-	}
+	crabLeftServo = servoInit(LP, {RL, null, null, null}, {false, null, null, null}, PID_MOTOR_SCALE, PID_THRESH);
+	crabRightServo = servoInit(RP, {RR, null, null, null}, {false, null, null, null}, PID_MOTOR_SCALE, PID_THRESH);
 
-	void rightSidePID(){
-		while(1)
-			crabPID(RR, analogRead(RP), currentConfig.rightWheel, rightWheel);
-	}
 	#if (DEBUG_MODE == 0 || DEBUG_MODE == 2)
 		setDriveConfig(DEFAULT_DRIVE_MODE);
 		leftWheel.thread = taskCreate(leftSidePID,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
@@ -79,14 +56,14 @@ void crabInit(){
 }
 
 void crabKill() {
-	taskDelete(leftWheel.thread);
-	taskDelete(rightWheel.thread);
+	taskDelete(crabLeftServo.task);
+	taskDelete(crabRightServo.task);
 }
 
 void setDriveConfig(DriveConfiguration config) {
 	currentConfig = config;
-	leftWheel.errSum = 0;
-	rightWheel.errSum = 0;
+	crabLeftServo.targetValue = config.leftWheel;
+	crabRightServo.targetValue = config.rightWheel;
 }
 
 void setDriveConfigById(int id) {
@@ -104,38 +81,4 @@ void setDriveConfigById(int id) {
 			setDriveConfig(currentConfig);
 			break;
 	}
-}
-
-// Private function definitions
-
-void crabPID(unsigned char motor, int currentValue, int targetValue, CrabGroup group) {
-	// TODO: Integral ~ motors still oscillate sporadically
-
-	// Do not run motors if they have reached the target position
-	if (abs(targetValue-currentValue)<PID_THRESH) {
-		motorStop(motor);
-		return;
-	}
-
-	// Proportional <calculate error>
-	double err = (double)Kp*((double)targetValue - (double)currentValue);
-
-	//Integral
-//	group.errSum += err;
-//	group.prevIter = time(NULL);
-
-	//Convert Target Value to Motor Speed
-	int speed = (int)(((double)err / ((double)4095) * (double)PID_MOTOR_SCALE) );
-
-	// Shift speed scale past deadzone
-	speed +=
-		( (speed > 0)
-			? (127 - PID_MOTOR_SCALE)
-			: (-127 + PID_MOTOR_SCALE)
-		 );
-	motorSet(motor, -speed);
-}
-
-void pincerPID(unsigned char motor, int currentValue, int targetValue){
-
 }

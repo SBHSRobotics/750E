@@ -15,7 +15,7 @@
 	 */
 
 #ifndef DEBUG_MODE
-	#define DEBUG_MODE 2 // Enable or disable debug output
+	#define DEBUG_MODE 0 // Enable or disable debug output
 #endif
 
 // Default drive mode (MUST BE A GLOBAL DriveConfiguration LISTED BELOW)
