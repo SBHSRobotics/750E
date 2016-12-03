@@ -158,27 +158,27 @@ void joystickMapMain(){
 		motorSet(RB,127);
 	}
 
-	if(abs(joystickGetAnalog(1,3))>15){
-		motorSet(PL,joystickGetAnalog(1,3));
+	if(abs(joystickGetAnalog(2,4))>15){
+		motorSet(PL,joystickGetAnalog(2,4));
 	} else {
 		motorStop(PL);
 	}
 
-	if(abs(joystickGetAnalog(1,2))>15){
-		motorSet(PR,-joystickGetAnalog(1,2));
+	if(abs(joystickGetAnalog(2,1))>15){
+		motorSet(PR,joystickGetAnalog(2,1));
 	} else {
 		motorStop(PR);
 	}
 
-	if(joystickGetDigital(1,6,JOY_UP)){
-		motorSet(AC,127);
-		motorSet(BD,-127);
-	} else if(joystickGetDigital(1,6,JOY_DOWN)) {
+	if(joystickGetDigital(2,6,JOY_UP)){
 		motorSet(AC,-127);
 		motorSet(BD,127);
+	} else if(joystickGetDigital(2,6,JOY_DOWN)) {
+		motorSet(AC,127);
+		motorSet(BD,-127);
 	} else {
-		motorStop(AC);
-		motorStop(BD);
+		motorSet(AC,-20);
+		motorSet(BD,20);
 	}
 
 	/*if((joystickGetDigital(1,7,JOY_DOWN))&&(joystickGetDigital(1,7,JOY_RIGHT))){ //end crab default to tank
