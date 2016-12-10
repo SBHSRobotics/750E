@@ -49,4 +49,43 @@
  * so, the robot will await a switch to another mode or disable/enable cycle.
  */
 void autonomous() {
+    //open pincers
+    int speed = 80;
+    motorSet(PL,speed);
+    motorSet(PR,-speed);
+    delay(800);
+
+    //stop pincers
+    motorStop(PL);
+    motorStop(PR);
+
+    //lift up
+    speed = 100;
+		motorSet(AC,-speed);
+		motorSet(BD,speed);
+		motorSet(TF,speed);
+		motorSet(TB,-speed);
+    delay(900);
+
+    //stop lift
+    motorStop(AC);
+    motorStop(BD);
+    motorStop(TF);
+    motorStop(TB);
+    delay(800);
+
+    //move forward to knock over stars on fence
+    motorSet(LF,127);
+    motorSet(RF,-127);
+    motorSet(LB,127);
+    motorSet(RB,-127);
+    delay(2100);
+
+    //stop drive
+    motorStop(LF);
+    motorStop(LB);
+    motorStop(RF);
+    motorStop(RB);
+
+    // if you're reading this you're the best <3
 }
