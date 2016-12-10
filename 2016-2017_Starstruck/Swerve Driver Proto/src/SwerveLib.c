@@ -142,7 +142,7 @@ void crabPID(unsigned char motor, int currentValue, int targetValue, CrabGroup g
 			? (127 - PID_MOTOR_SCALE)
 			: (-127 + PID_MOTOR_SCALE)
 		 );
-	motorSet(motor, -speed);
+	// motorSet(motor, -speed);
 }
 
 void pulseMotor(unsigned char x) {

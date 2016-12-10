@@ -173,12 +173,18 @@ void joystickMapMain(){
 	if(joystickGetDigital(2,6,JOY_UP)){
 		motorSet(AC,-127);
 		motorSet(BD,127);
+		motorSet(TF,127);
+		motorSet(TB,-127);
 	} else if(joystickGetDigital(2,6,JOY_DOWN)) {
 		motorSet(AC,127);
 		motorSet(BD,-127);
+		motorSet(TF,-127);
+		motorSet(TB,127);
 	} else {
-		motorSet(AC,-20);
-		motorSet(BD,20);
+		motorSet(AC,0);
+		motorSet(BD,0);
+		motorSet(TF,0);
+		motorSet(TB,0);
 	}
 
 	if((joystickGetDigital(1,8,JOY_DOWN))&&(!isCrabKilled)) {
