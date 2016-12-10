@@ -27,13 +27,15 @@
 #define BATTERY_MENU 2
 #define SELF_MENU 3
 #define MANUAL_MENU 4
-#define MEMES_MENU 5
-#define POT_VAL 6
-#define DRIVE_VAL 7
-#define BATTERY_VAL 8
-#define SELF_VAL 9
-#define MANUAL_VAL 10
-#define MEMES_VAL 11
+#define AUTON_MENU 5
+#define MEMES_MENU 6
+#define POT_VAL 7
+#define DRIVE_VAL 8
+#define BATTERY_VAL 9
+#define SELF_VAL 10
+#define MANUAL_VAL 11
+#define AUTON_VAL 12
+#define MEMES_VAL 13
 
 // Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
   	// Chassis

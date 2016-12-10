@@ -18,8 +18,10 @@ DriveConfiguration currentConfig;
 bool isCrabKilled = false;
 
 // LCD
-int count = 0; //keeps track of position in main LCD menu
-int manualCount = 0; //kepps track of position in manual test LCD submenu
+int count = 0; // keeps track of position in main LCD menu
+int manualCount = 0; // keeps track of position in manual test LCD submenu
+int memesCount = 0;
+
 
 
 // Private Global Constants
@@ -220,6 +222,19 @@ void LCD() {
         count=MANUAL_VAL;
       }
       break;
+    case AUTON_MENU: // runs auton
+      lcdSetText(uart1,1,"    Run Auton   ");
+      lcdSetText(uart1,2,"<    Select    >");
+      if (lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+        count--;
+      }
+      else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+        count++;
+      }
+      else if(lcdReadButtons(uart1)==LCD_BTN_CENTER) {
+        count=AUTON_VAL;
+      }
+      break;
     case MEMES_MENU:
       lcdSetText(uart1,1,"   Dank Memes   ");
       lcdSetText(uart1,2,"<    Select    >");
@@ -396,7 +411,68 @@ void LCD() {
           break;
       }
       break;
+    case AUTON_VAL: // run auton !!
+      //currentConfig = holonomicDrive;
+      lcdClear(uart1);
+			lcdPrint(uart1, 1, "Press Center to ");
+      lcdPrint(uart1, 2, "!!!End Auton!!! ");
+			autonomous();
+			delay(50);
+      count=AUTON_MENU;
+      break;
     case MEMES_VAL:
+			lcdPrint(uart1,1,"  Hall of Memes ");
+			int memesMaximum = 4;
+			switch(memesCount) {
+				case 0:
+					lcdPrint(uart1,2,"<     Fork     >");
+					if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+						memesCount=memesMaximum;
+						printf("reached");
+					} else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+						memesCount++;
+						printf("reached");
+						printf("%d",manualCount);
+					} else if(lcdReadButtons(uart1)==LCD_BTN_CENTER) {
+						pulseMotor(manualCount+1);
+					}
+					break;
+				case 1:
+					lcdPrint(uart1,2,"<     Damb     >");
+					if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+						memesCount--;
+					} else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+						memesCount++;
+					}
+					break;
+				case 2:
+					lcdPrint(uart1,2,"<What the Sus? >");
+					if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+						memesCount--;
+					} else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+						memesCount++;
+					}
+					break;
+
+				case 3:
+					lcdPrint(uart1,2,"<  >");
+					if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+						memesCount--;
+					} else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+						memesCount++;
+					}
+					break;
+				case 4:
+					lcdPrint(uart1,2,"Green Meme:Greme");
+					if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+						memesCount--;
+					} else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+						memesCount=0;
+					}
+					break;
+				default:
+					break;
+				}
       break;
     default: count=0;
       break;

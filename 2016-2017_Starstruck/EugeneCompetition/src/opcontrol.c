@@ -112,51 +112,15 @@ void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char fro
 		motorSet(frontLeft, ch3 + ch2 + ch4 + ch1);
 		motorSet(backRight, -(ch3 + ch2 - ch1 + ch4));
 		motorSet(frontRight, -(ch3 + ch2 - ch4 - ch1));
-	}
-	else if (joystickGetDigital(1, 7, JOY_LEFT)) {
-		motorSet(backLeft, 127);
-		motorSet(frontLeft, -127);
-		motorSet(backRight, -(-127));
-		motorSet(frontRight, -(127));
-	}
-	else if (joystickGetDigital(1, 7, JOY_RIGHT)) {
-		motorSet(backLeft, -127);
-		motorSet(frontLeft, 127);
-		motorSet(backRight, -127);
-		motorSet(frontRight, -(-127));
 	} else {
 		motorStop(backLeft);
 		motorStop(frontLeft);
 		motorStop(backRight);
 		motorStop(frontRight);
 	}
-	/*#define s 70
-	//Lift code
-	if (joystickGetDigital(1, 7, JOY_UP)) {
-		motorSet(TL, -s);
-		motorSet(BL, s);
-		motorSet(TR, s);
-		motorSet(BR, -s);
-	} else if (joystickGetDigital(1, 7, JOY_DOWN)) {
-		motorSet(TL, s);
-		motorSet(BL, -s);
-		motorSet(TR, -s);
-		motorSet(BR, s);
-	} else {
-		motorSet(TL, 0);
-		motorSet(BL, 0);
-		motorSet(TR, 0);
-		motorSet(BR, 0);
-	}*/
 }
 
 void joystickMapMain(){
-	if(joystickGetDigital(1,7,JOY_UP)){
-		motorSet(LF,127);
-		motorSet(LB,127);
-		motorSet(RF,127);
-		motorSet(RB,127);
-	}
 
 	if(abs(joystickGetAnalog(2,4))>15){
 		motorSet(PL,joystickGetAnalog(2,4));
