@@ -65,7 +65,7 @@ void autonomous() {
 		motorSet(BD,speed);
 		motorSet(TF,speed);
 		motorSet(TB,-speed);
-    delay(900);
+    delay(950);
 
     //stop lift
     motorStop(AC);
