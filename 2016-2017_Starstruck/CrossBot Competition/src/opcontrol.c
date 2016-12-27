@@ -30,7 +30,15 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
+	printf("Initializing Drive\n\r");
+	driveInit();
+	printf("Drive Init complete\n\r");
+
 	while (1) {
-		delay(20);
+		int drivePos = ( (joystickGetAnalog(1,4) + 128) * 3000 / 256 )  + 550; // Convert joystick input to wheel position
+		printf("setting drive pos\n\r");
+		driveSet(drivePos);
+		printf("drivepos set to %d\n\r", drivePos);
+		delay(200);
 	}
 }
