@@ -11,9 +11,7 @@
 ServoSystem drive;
 
 void driveInit() {
-	unsigned char motorPorts[] = {R, 0, 0, 0};
-	unsigned char motorInversion[] = {false, false, false, false};
-	drive = servoInit(RP, motorPorts, motorInversion, PID_MOTOR_SCALE, PID_THRESH);
+	drive = servoInit(RP, R, false, PID_MOTOR_SCALE, PID_THRESH);
 	driveSet(DRIVE_START);
 }
 

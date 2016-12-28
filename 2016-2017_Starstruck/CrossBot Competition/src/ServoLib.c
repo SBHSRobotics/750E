@@ -11,22 +11,40 @@
 
 // Private function declarations
 /**/
-void servoLoop(unsigned char motor, int currentValue, int targetValue, bool inverted);
+void servoLoop(unsigned char motor, unsigned char potentiometerPort, int targetValue, bool inverted);
 
 // Public function definitions
-ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPorts[], bool motorInversion[], int motorScale, int targetTolerance) {
-		ServoSystem servo = { potentiometerPort, motorPorts, motorInversion, motorScale, targetTolerance, analogRead(potentiometerPort), NULL };
-
+ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, bool motorInverted, int motorScale, int targetTolerance) {
+		printf("servo obj init");
+		delay(200);
+		ServoSystem servo = {
+			.potentiometerPort = potentiometerPort,
+			.motorPort = motorPort,
+			.motorInverted = motorInverted,
+			.motorScale = motorScale,
+			.targetTolerance = targetTolerance,
+			.targetValue = analogRead(potentiometerPort)
+		};
+		delay(200);
+		printf("done");
+		delay(200);
+		printf("loop def");
+		delay(200);
 		void loop(){
-			int i;
 			while(1) {
-				for( i = 0; i < (sizeof(motorPorts) / sizeof(motorPorts[0])); i++ ) {
-					servoLoop(servo.motorPorts[i], analogRead(potentiometerPort), servo.targetValue, servo.motorInversion[i]);
-				}
+				servoLoop(&servo.motorPort, servo.potentiometerPort, &servo.targetValue, &servo.motorInverted);
 			}
 		}
+		delay(200);
+		printf("done");
+		delay(200);
+		printf("task create");
+		delay(200);
 
 		servo.task = taskCreate(loop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+		delay(200);
+		printf("done");
+		delay(200);
 		return servo;
 }
 
@@ -40,8 +58,11 @@ void servoSet(ServoSystem servo, int targetValue) {
 
 // Private function definitions
 
-void servoLoop(unsigned char motor, int currentValue, int targetValue, bool inverted) {
-	printf("Motor: %d\tVal: %d\tTarget: %d\n\r", motor, currentValue, targetValue);
+void servoLoop(unsigned char *motor, unsigned char potentiometerPort, int *targetValue, bool *inverted) {
+	delay(200);
+	int currentValue = analogRead(1);
+	targetValue= 0;
+	printf("Motor: %d\tVal: %d;%d\tTarget: %d\n\r", *motor, potentiometerPort, currentValue, targetValue);
 	// TODO: Integral ~ motors still oscillate sporadically
 
 	// Do not run motors if they have reached the target position
