@@ -6,17 +6,44 @@
  */
 
 #include <main.h>
-#include <time.h>
 
 ServoSystem drive;
 
 void driveInit() {
 	drive = servoInit(RP, R, false, PID_MOTOR_SCALE, PID_THRESH);
-	driveSet(DRIVE_START);
+	delay(1000);
+	printf("RET Pot: %p\t%d\n\r",drive.targetValue, *drive.targetValue);
+	delay(1000);
+	printf("Target: %p\t%d\n\r", drive.targetValue, *drive.targetValue);
+	driveSetPos(0);
+	delay(1000);
+	printf("Target: %p\t%d\n\r", drive.targetValue, *drive.targetValue);
+	delay(1000);
 }
 
-void driveSet(int targetVal) {
+void driveSetPos(int targetVal) {
 	servoSet(drive, targetVal);
+	// printf("drivepos at %p set to %d is now %d\n\r", drive.targetValue, targetVal, *drive.targetValue);
+}
+
+void driveForward(int targetVal) {
+	motorSet(WF, targetVal);
+	motorSet(WL, targetVal);
+	motorSet(WR, -targetVal);
+	motorSet(WB, -targetVal);
+}
+
+//LIFT
+void lift(int speed) {
+	motorSet(LIFT_AB, speed);
+	motorSet(LIFT_CD, speed);
+	motorSet(LIFT_E, speed);
+}
+
+//PINCER
+void pince(int speed) {
+	motorSet(PL, speed);
+	motorSet(PR, speed);
 }
 
 // LCD
@@ -31,7 +58,11 @@ void pulseMotor(unsigned char x) {
    motorSet(x,0);
  }
 
-void LCD() {
+ void lcdStart() {
+	 //TODO IMplement
+ }
+
+void lcdLoop() {
   lcdSetBacklight(uart1, true);
   switch (count) {
     case POT_MENU:

@@ -64,4 +64,5 @@ void initialize() {
 	lcdClear(uart1);
   delay(500);
 	crabInit();
+  lcdStart();
 }

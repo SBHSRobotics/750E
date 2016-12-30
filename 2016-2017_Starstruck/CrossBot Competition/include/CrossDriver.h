@@ -15,12 +15,6 @@
 	 * This library is dependent on ServoLib. Make sure to include ServoLib before CrossDriver in main.h
 	 */
 
-#ifndef DEBUG_MODE
-	#define DEBUG_MODE 0 // Enable or disable debug output
-#endif
-
-// Default drive mode (MUST BE A GLOBAL DriveConfiguration LISTED BELOW)
-#define DEFAULT_DRIVE_MODE holonomicDrive
 
 //LCD Constants
 #define POT_MENU 0
@@ -38,19 +32,20 @@
 
 // Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
   	// Chassis
-	static const unsigned char R = 1;	// Swerve rotation control motor
+	static const unsigned char R = 7;	// Swerve rotation control motor
 	static const unsigned char WF = 2;	// Front drive wheel
 	static const unsigned char WL = 3;	// Left drive wheel
 	static const unsigned char WR = 8;	// Right drive wheel
 	static const unsigned char WB = 9;	// Back drive wheel
 
 	// Lift
-	// static const unsigned char AC = 4; // Motor A and C y-ed into one port, same dir
-	// static const unsigned char BD = 5; // Motor B and D y-ed into one port, same dir
+	static const unsigned char LIFT_AB = 4; // Motor A and C y-ed into one port, same dir
+	static const unsigned char LIFT_CD = 5; // Motor B and D y-ed into one port, same dir
+	static const unsigned char LIFT_E = 6; // Motor B and D y-ed into one port, same dir
 
 	//Pincers
-	// static const unsigned char PL = 6; // Left pincer
-	// static const unsigned char PR = 7; // Right pincer
+	static const unsigned char PL = 1; // Left pincer
+	static const unsigned char PR = 10; // Right pincer
 
 	// Sensors
 		// Analog
@@ -62,8 +57,8 @@
 
 // Constants
 	// PID (These may need tuning depending on mechanical implementation and weight)
-	static const int PID_MOTOR_SCALE = 80;	// Lower = faster, Higher = More precise
-	static const int PID_THRESH = 60;		// Minimum power (motor speed as error approaches zero)
+	static const int PID_MOTOR_SCALE = 65;	// Lower = faster, Higher = More precise
+	static const int PID_THRESH = 80;		// Minimum power (motor speed as error approaches zero)
 	// NOTE: When modifying other parts of the robot, these constants may need to be adjusted
 	// to accommodate weight changes
 	static const int DRIVE_START = 2040;
@@ -75,9 +70,12 @@
 // Drive
 void driveInit();
 
-void driveSet(int targetValue);
+void driveSetPos(int targetValue);
+void driveForward(int speed);
+void lift(int speed);
+void pince(int speed);
 
 // LCD TODO:  MOVE INTO SEPARATE MODULE (MenuLib?)
-void LCD();
+void lcdStart();
 
 #endif /* CROSSDRIVER_H_ */

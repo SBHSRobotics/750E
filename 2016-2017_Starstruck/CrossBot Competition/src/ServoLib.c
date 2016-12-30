@@ -6,76 +6,93 @@
  */
 
 #include <main.h>
-#include <time.h>
 
+/*
+ * This is the core for Mikel's Servo Module. This file should be placed
+ * in the src directory. Please note that this file will not compile
+ * if ServoLib.h has not been included properly.
+ */
 
 // Private function declarations
-/**/
-void servoLoop(unsigned char motor, unsigned char potentiometerPort, int targetValue, bool inverted);
+
+/*
+ * Updates the speed of given motor based on current and target potentiometer values
+ */
+void servoLoop(ServoSystem servo);
 
 // Public function definitions
 ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, bool motorInverted, int motorScale, int targetTolerance) {
-		printf("servo obj init");
-		delay(200);
+		printf("Initializing servo with potentiometer %d and motor %d\n\r", potentiometerPort, motorPort);
+		delay(100);
 		ServoSystem servo = {
 			.potentiometerPort = potentiometerPort,
 			.motorPort = motorPort,
 			.motorInverted = motorInverted,
 			.motorScale = motorScale,
 			.targetTolerance = targetTolerance,
-			.targetValue = analogRead(potentiometerPort)
+			.targetValue = malloc(sizeof(int *)),
+			.task = malloc(sizeof(TaskHandle *))
 		};
-		delay(200);
-		printf("done");
-		delay(200);
-		printf("loop def");
-		delay(200);
-		void loop(){
-			while(1) {
-				servoLoop(&servo.motorPort, servo.potentiometerPort, &servo.targetValue, &servo.motorInverted);
-			}
-		}
-		delay(200);
-		printf("done");
-		delay(200);
-		printf("task create");
+		printf("Setting target");
+		delay(100);
+		*servo.targetValue = analogRead(potentiometerPort);
+		delay(100);
+		printf("Target aquired");
+		delay(100);
+		printf("INIT Pot: %p\t%d\n\r",servo.targetValue, *servo.targetValue);
+		delay(100);
+		printf("Done.\n\r");
+		delay(100);
+		printf("Defining loop function\n\r");
 		delay(200);
 
-		servo.task = taskCreate(loop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+		void loop() {
+			ServoSystem s = servo;
+			while(1) {
+				servoLoop(s);
+				delay(100);
+			}
+		}
+
 		delay(200);
-		printf("done");
+		printf("done\n\r");
+		delay(200);
+		printf("task create\n\r");
+		delay(200);
+
+		*servo.task = taskCreate(loop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+		delay(200);
+		printf("done\n\r");
 		delay(200);
 		return servo;
 }
 
 void servoKill(ServoSystem servo) {
-	taskDelete(servo.task);
+	taskDelete(*servo.task);
 }
 
-void servoSet(ServoSystem servo, int targetValue) {
-	servo.targetValue = targetValue;
+void servoSet(ServoSystem servo, int target) {
+	// printf("SET1 Pot: %p\t%d\n\r", servo.targetValue, *servo.targetValue);
+	*servo.targetValue = target;
+	// printf("SET2 Pot: %p\t%d\n\r", servo.targetValue, *servo.targetValue);
 }
 
 // Private function definitions
 
-void servoLoop(unsigned char *motor, unsigned char potentiometerPort, int *targetValue, bool *inverted) {
-	delay(200);
+void servoLoop(ServoSystem servo) {
 	int currentValue = analogRead(1);
-	targetValue= 0;
-	printf("Motor: %d\tVal: %d;%d\tTarget: %d\n\r", *motor, potentiometerPort, currentValue, targetValue);
-	// TODO: Integral ~ motors still oscillate sporadically
 
 	// Do not run motors if they have reached the target position
-	if (abs(targetValue-currentValue)<PID_THRESH) {
-		motorStop(motor);
+	if (abs(*servo.targetValue-currentValue)<PID_THRESH) {
+		motorStop(servo.motorPort);
 		return;
 	}
 
-	// Proportional <calculate error>
-	double err = (double)((double)targetValue - (double)currentValue);
+	// Calculate instantaneous error
+	double err = (double)((double)*servo.targetValue - (double)currentValue);
 
 	//Convert Target Value to Motor Speed
-	int speed = (inverted ? -1 : 1) * (int)(((double)err / ((double)4095) * (double)PID_MOTOR_SCALE) );
+	int speed = (servo.motorInverted ? -1 : 1) * (int)(((double)err / ((double)4095) * (double)PID_MOTOR_SCALE) );
 
 	// Shift speed scale past deadzone
 	speed +=
@@ -83,5 +100,10 @@ void servoLoop(unsigned char *motor, unsigned char potentiometerPort, int *targe
 			? (127 - PID_MOTOR_SCALE)
 			: (-127 + PID_MOTOR_SCALE)
 		 );
-	motorSet(motor, -speed);
+	motorSet(servo.motorPort, -speed);
+
+	#if DEBUG_MODE == 1 || DEBUG_MODE == 2
+		printf("M: %d\tVal: %d\Tar: %d\tS: %e\n\r", servo.motorPort, currentValue, *servo.targetValue, speed);
+		//TODO: Move debug info to on-board menu
+	#endif
 }
