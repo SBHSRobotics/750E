@@ -25,13 +25,13 @@
 		bool motorInverted;
 		int motorScale;
 		int targetTolerance;
-		int *targetValue;
+		int *targetValue; // Changing values are stored as pointers so that ServoSystem variables can be passed by value
 		TaskHandle *task; // Ignore error here, API.h is included before ServoLib.h
 	}ServoSystem;
 
 // Public function declarations
 	/*
-	 * Initializes servo system and starts background tasks
+	 * Initializes a servo system and starts background tasks
 	 */
 	ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, bool motorInverted, int motorScale, int targetTolerance);
 

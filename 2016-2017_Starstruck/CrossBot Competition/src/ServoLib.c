@@ -24,18 +24,20 @@ void servoLoop(ServoSystem servo);
 ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, bool motorInverted, int motorScale, int targetTolerance) {
 		printf("Initializing servo with potentiometer %d and motor %d\n\r", potentiometerPort, motorPort);
 		delay(100);
+		// Create ServoSystem struct
 		ServoSystem servo = {
 			.potentiometerPort = potentiometerPort,
 			.motorPort = motorPort,
 			.motorInverted = motorInverted,
 			.motorScale = motorScale,
 			.targetTolerance = targetTolerance,
-			.targetValue = malloc(sizeof(int *)),
-			.task = malloc(sizeof(TaskHandle *))
+			.targetValue = malloc(sizeof(int *)), // Initializes .targetValue with an empty integer pointer
+			.task = malloc(sizeof(TaskHandle *)) // Initializes .targetValue with an empty TaskHandle pointer
 		};
 		printf("Setting target");
 		delay(100);
-		*servo.targetValue = analogRead(potentiometerPort);
+		// Set target to current value to prevent system from moving to 0 and potentially breaking itself
+		*servo.targetValue = analogRead(potentiometerPort); 
 		delay(100);
 		printf("Target aquired");
 		delay(100);
@@ -46,6 +48,8 @@ ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, 
 		printf("Defining loop function\n\r");
 		delay(200);
 
+		// This nested loop function runs servoLoop with the proper parameters and delays. This is
+		// necessary since taskCreate doesn't accept functions with parameters.
 		void loop() {
 			ServoSystem s = servo;
 			while(1) {
@@ -60,21 +64,25 @@ ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, 
 		printf("task create\n\r");
 		delay(200);
 
+		// Create a new async task to run servo loop
 		*servo.task = taskCreate(loop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 		delay(200);
-		printf("done\n\r");
+		printf("Done.\n\r");
 		delay(200);
+
+		// Note: This will return a copy of servo, so the location of the return value != &servo
 		return servo;
 }
 
 void servoKill(ServoSystem servo) {
+	// Stops the task associated with a servo system
+	// TODO: Delete servo to prevent memory leaks
 	taskDelete(*servo.task);
 }
 
 void servoSet(ServoSystem servo, int target) {
-	// printf("SET1 Pot: %p\t%d\n\r", servo.targetValue, *servo.targetValue);
+	// Sets the target value of the given servo system
 	*servo.targetValue = target;
-	// printf("SET2 Pot: %p\t%d\n\r", servo.targetValue, *servo.targetValue);
 }
 
 // Private function definitions
@@ -104,6 +112,6 @@ void servoLoop(ServoSystem servo) {
 
 	#if DEBUG_MODE == 1 || DEBUG_MODE == 2
 		printf("M: %d\tVal: %d\Tar: %d\tS: %e\n\r", servo.motorPort, currentValue, *servo.targetValue, speed);
-		//TODO: Move debug info to on-board menu
+		//TODO: Move debug info to on-board menu if LCDLib is included
 	#endif
 }
