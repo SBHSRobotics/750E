@@ -39,7 +39,7 @@ ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, 
 		// Set target to current value to prevent system from moving to 0 and potentially breaking itself
 		*servo.targetValue = analogRead(potentiometerPort);
 		delay(100);
-		printf("Target aquired");
+		printf("Target acquired");
 		delay(100);
 		printf("INIT Pot: %p\t%d\n\r",servo.targetValue, *servo.targetValue);
 		delay(100);

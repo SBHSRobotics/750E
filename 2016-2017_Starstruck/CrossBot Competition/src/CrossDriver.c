@@ -26,18 +26,42 @@ void driveSetPos(int targetVal) {
 	// printf("drivepos at %p set to %d is now %d\n\r", drive.targetValue, targetVal, *drive.targetValue);
 }
 
-void driveForward(int targetVal) {
-	motorSet(WF, targetVal);
-	motorSet(WL, targetVal);
-	motorSet(WR, -targetVal);
-	motorSet(WB, -targetVal);
+void driveForward(int speed) {
+	motorSet(WF, speed);
+	motorSet(WL, speed);
+	motorSet(WR, -speed);
+	motorSet(WB, -speed);
+}
+
+void pointTurn(int speed){ //potentiometer values: LEFT: 3550 FORWARD: 2050 RIGHT: 550
+	int pot = analogRead(drive.potentiometerPort);
+	if(abs(pot-2050)<PID_THRESH){ //straight forward
+		motorSet(WL,motorGet(WL)+speed);
+		motorSet(WR,motorGet(WR)-speed);
+	} else if (abs(pot-3550)<PID_THRESH){ //straight left
+		motorSet(WF,motorGet(WF)+speed);
+		motorSet(WB,motorGet(WB)-speed);
+	} else if (abs(pot-550)<PID_THRESH){ //straight right
+		motorSet(WF,motorGet(WF)-speed);
+		motorSet(WB,motorGet(WB)+speed);
+	} else if((pot<3550-PID_THRESH)&&(pot>2050+PID_THRESH)){ //between forward and left
+		motorSet(WF,motorGet(WF)+speed);
+		motorSet(WL,motorGet(WL)+speed);
+		motorSet(WB,motorGet(WB)-speed);
+		motorSet(WR,motorGet(WR)-speed);
+	} else if((pot<2050-PID_THRESH)&&(pot>550+PID_THRESH)){ //between forward and right
+		motorSet(WF,motorGet(WF)-speed);
+		motorSet(WL,motorGet(WL)-speed);
+		motorSet(WB,motorGet(WB)+speed);
+		motorSet(WR,motorGet(WR)+speed);
+	}
 }
 
 // LIFT
 void lift(int speed) {
-	motorSet(LIFT_AB, speed);
-	motorSet(LIFT_CD, speed);
-	motorSet(LIFT_E, speed);
+	motorSet(LIFT_AB, -speed); // Clockwise is down, counterclockwise is up
+	motorSet(LIFT_CD, -speed);
+	motorSet(LIFT_E, -speed);
 }
 
 // PINCER
