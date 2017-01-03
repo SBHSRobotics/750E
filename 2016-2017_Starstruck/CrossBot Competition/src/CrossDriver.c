@@ -33,22 +33,22 @@ void driveForward(int targetVal) {
 	motorSet(WB, -targetVal);
 }
 
-//LIFT
+// LIFT
 void lift(int speed) {
 	motorSet(LIFT_AB, speed);
 	motorSet(LIFT_CD, speed);
 	motorSet(LIFT_E, speed);
 }
 
-//PINCER
+// PINCER
 void pince(int speed) {
 	motorSet(PL, speed);
 	motorSet(PR, speed);
 }
 
 // LCD
-int count = 0; //keeps track of position in main LCD menu
-int manualCount = 0; //kepps track of position in manual test LCD submenu
+int count = 0; // keeps track of position in main LCD menu
+int manualCount = 0; // keeps track of position in manual test LCD submenu
 
 void pulseMotor(unsigned char x) {
    motorSet(x,127);
@@ -59,7 +59,7 @@ void pulseMotor(unsigned char x) {
  }
 
  void lcdStart() {
-	 //TODO IMplement
+	 //TODO Implement
  }
 
 void lcdLoop() {
@@ -142,12 +142,12 @@ void lcdLoop() {
         count=MEMES_VAL;
       }
       break;
-    case 	POT_VAL: //potentiometer readings
+    case 	POT_VAL: // potentiometer readings
       lcdPrint(uart1,1,"Drive: %d", analogRead(RP));
       if(lcdReadButtons(uart1)==LCD_BTN_CENTER)
         count = POT_MENU; //go back to select menu
       break;
-    case DRIVE_VAL: //get current drive mode
+    case DRIVE_VAL: // get current drive mode
       lcdPrint(uart1,1,"Drive Mode:");
       lcdPrint(uart1,2,"Function Disabled");
 
@@ -155,15 +155,14 @@ void lcdLoop() {
         count=DRIVE_MENU;
       }
       break;
-		case BATTERY_VAL: //get battery voltage
+		case BATTERY_VAL: // get battery voltage
 		  lcdPrint(uart1, 1, "Main: %dmV",powerLevelMain()); //Display main battery on LCD
 		  lcdPrint(uart1, 2, "Expander: %dmV",(int)(analogRead(EXPANDER)*35.84)); //Display power expander battery on LCD
       if(lcdReadButtons(uart1)==LCD_BTN_CENTER) {
         count=BATTERY_MENU;
       }
       break;
-    case SELF_VAL: //self test
-      //currentConfig = holonomicDrive;
+    case SELF_VAL: // self test
       lcdClear(uart1);
       lcdPrint(uart1, 2, "Don't Touch!!!!!");
       for(unsigned char x=1;x<=10;x++) {

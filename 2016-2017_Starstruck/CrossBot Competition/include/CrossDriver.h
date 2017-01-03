@@ -16,7 +16,7 @@
 	 */
 
 
-//LCD Constants
+// LCD Constants
 #define POT_MENU 0
 #define DRIVE_MENU 1
 #define BATTERY_MENU 2
@@ -39,11 +39,11 @@
 	static const unsigned char WB = 9;	// Back drive wheel
 
 	// Lift
-	static const unsigned char LIFT_AB = 4; // Motor A and C y-ed into one port, same dir
-	static const unsigned char LIFT_CD = 5; // Motor B and D y-ed into one port, same dir
-	static const unsigned char LIFT_E = 6; // Motor B and D y-ed into one port, same dir
+	static const unsigned char LIFT_AB = 4; // Motor A and B y-ed into one port, same dir
+	static const unsigned char LIFT_CD = 5; // Motor C and D y-ed into one port, same dir
+	static const unsigned char LIFT_E = 6; // Motor E not on PE
 
-	//Pincers
+	// Pincers
 	static const unsigned char PL = 1; // Left pincer
 	static const unsigned char PR = 10; // Right pincer
 
