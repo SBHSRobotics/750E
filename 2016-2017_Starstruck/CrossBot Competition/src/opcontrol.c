@@ -34,11 +34,20 @@ void operatorControl() {
 	driveInit();
 	printf("Drive Init complete\n\r");
 
+	int drivePos, driveSpeed;
+
 	while (1) {
-		int drivePos = ( (-joystickGetAnalog(1,4) + 128) * 3000 / 256 )  + 550; // Convert joystick input to wheel position
+		driveSpeed = joystickGetAnalog(1,3);
 		// printf("setting drive pos\n\r");
-		driveSetPos(drivePos);
-		driveForward(joystickGetAnalog(1,3)+joystickGetAnalog(1,4));
+		driveForward(driveSpeed);
+		if ( joystickGetDigital(1,6,JOY_UP) ) {
+			pointTurn(joystickGetDigital(1,6,JOY_UP) ? joystickGetAnalog(1,1) : 0);
+		} else {
+			drivePos = ( (-joystickGetAnalog(1,1) + 128) * 3000 / 256 )  + 550; // Convert joystick input to wheel position
+			driveSetPos(drivePos);
+		}
+
+		printf("4+3: %d\t 1: %d\n",(joystickGetAnalog(1,4)+joystickGetAnalog(1,3)),joystickGetAnalog(1,1));
 
 		lift(joystickGetAnalog(2,3));
 		pince(joystickGetAnalog(2,2));
