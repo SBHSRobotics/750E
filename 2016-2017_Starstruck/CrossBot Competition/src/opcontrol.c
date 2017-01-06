@@ -40,10 +40,12 @@ void operatorControl() {
 		driveSpeed = joystickGetAnalog(1,3);
 		// printf("setting drive pos\n\r");
 		driveForward(driveSpeed);
+		drivePos = ( (-joystickGetAnalog(1,1) + 128) * 3000 / 256 )  + 550; // Convert joystick input to wheel position
+
 		if ( joystickGetDigital(1,6,JOY_UP) ) {
 			pointTurn(joystickGetDigital(1,6,JOY_UP) ? joystickGetAnalog(1,1) : 0);
+			//servoSet(drive,drivePos);
 		} else {
-			drivePos = ( (-joystickGetAnalog(1,1) + 128) * 3000 / 256 )  + 550; // Convert joystick input to wheel position
 			driveSetPos(drivePos);
 		}
 

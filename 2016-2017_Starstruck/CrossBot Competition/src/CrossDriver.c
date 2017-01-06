@@ -40,21 +40,21 @@ void pointTurn(int speed){ //potentiometer values: LEFT: 3550 FORWARD: 2050 RIGH
 		motorSet(WL,motorGet(WL)+speed);
 		motorSet(WR,motorGet(WR)+speed);
 	} else if (abs(pot-3550)<PID_THRESH){ //straight left
-		motorSet(WF,motorGet(WF)+speed);
-		motorSet(WB,motorGet(WB)+speed);
-	} else if (abs(pot-550)<PID_THRESH){ //straight right
 		motorSet(WF,motorGet(WF)-speed);
 		motorSet(WB,motorGet(WB)-speed);
+	} else if (abs(pot-550)<PID_THRESH){ //straight right
+		motorSet(WF,motorGet(WF)+speed);
+		motorSet(WB,motorGet(WB)+speed);
 	} else if((pot<3550-PID_THRESH)&&(pot>2050+PID_THRESH)){ //between forward and left
+		motorSet(WF,motorGet(WF)-speed);
+		motorSet(WL,motorGet(WL)+speed);
+		motorSet(WB,motorGet(WB)-speed);
+		motorSet(WR,motorGet(WR)+speed);
+	} else if((pot<2050-PID_THRESH)&&(pot>550+PID_THRESH)){ //between forward and right
 		motorSet(WF,motorGet(WF)+speed);
 		motorSet(WL,motorGet(WL)+speed);
 		motorSet(WB,motorGet(WB)+speed);
 		motorSet(WR,motorGet(WR)+speed);
-	} else if((pot<2050-PID_THRESH)&&(pot>550+PID_THRESH)){ //between forward and right
-		motorSet(WF,motorGet(WF)-speed);
-		motorSet(WL,motorGet(WL)-speed);
-		motorSet(WB,motorGet(WB)-speed);
-		motorSet(WR,motorGet(WR)-speed);
 	} else {
 		motorStop(WF);
 		motorStop(WB);
