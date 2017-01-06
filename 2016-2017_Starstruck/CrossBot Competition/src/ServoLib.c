@@ -39,7 +39,7 @@ ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, 
 		// Set target to current value to prevent system from moving to 0 and potentially breaking itself
 		*servo.targetValue = analogRead(potentiometerPort);
 		delay(100);
-		printf("Target aquired");
+		printf("Target acquired");
 		delay(100);
 		printf("INIT Pot: %p\t%d\n\r",servo.targetValue, *servo.targetValue);
 		delay(100);
@@ -52,6 +52,7 @@ ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, 
 		// necessary since taskCreate doesn't accept functions with parameters.
 		void loop() {
 			ServoSystem s = servo;
+			delay(1000);
 			while(1) {
 				servoLoop(s);
 				delay(100);
@@ -111,7 +112,7 @@ void servoLoop(ServoSystem servo) {
 	motorSet(servo.motorPort, -speed);
 
 	#if DEBUG_MODE == 1 || DEBUG_MODE == 2
-		printf("M: %d\tVal: %d\tTar: %d\tS: %e\n\r", servo.motorPort, currentValue, *servo.targetValue, speed);
+		printf("M: %d\tVal: %d\tTar: %d\tSpeed: %d\n\r", servo.motorPort, currentValue, *servo.targetValue, speed);
 		//TODO: Move debug info to on-board menu if LCDLib is included
 	#endif
 }

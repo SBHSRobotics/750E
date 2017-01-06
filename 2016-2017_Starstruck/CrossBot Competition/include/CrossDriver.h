@@ -58,7 +58,7 @@
 // Constants
 	// PID (These may need tuning depending on mechanical implementation and weight)
 	static const int PID_MOTOR_SCALE = 65;	// Lower = faster, Higher = More precise
-	static const int PID_THRESH = 80;		// Minimum power (motor speed as error approaches zero)
+	static const int PID_THRESH = 100;		// Minimum power (motor speed as error approaches zero)
 	// NOTE: When modifying other parts of the robot, these constants may need to be adjusted
 	// to accommodate weight changes
 	static const int DRIVE_START = 2040;
@@ -72,6 +72,7 @@ void driveInit();
 
 void driveSetPos(int targetValue);
 void driveForward(int speed);
+void pointTurn(int speed);
 void lift(int speed);
 void pince(int speed);
 
