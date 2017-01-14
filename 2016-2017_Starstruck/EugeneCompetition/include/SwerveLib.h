@@ -24,14 +24,16 @@
 //LCD Constants
 #define POT_MENU 0
 #define DRIVE_MENU 1
-#define SELF_MENU 2
-#define MANUAL_MENU 3
-#define MEMES_MENU 4
-#define POT_VAL 5
-#define DRIVE_VAL 6
-#define SELF_VAL 7
-#define MANUAL_VAL 8
-#define MEMES_VAL 9
+#define BATTERY_MENU 2
+#define SELF_MENU 3
+#define MANUAL_MENU 4
+#define MEMES_MENU 5
+#define POT_VAL 6
+#define DRIVE_VAL 7
+#define BATTERY_VAL 8
+#define SELF_VAL 9
+#define MANUAL_VAL 10
+#define MEMES_VAL 11
 
 // Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
   	// Chassis
@@ -52,8 +54,8 @@
 
 	// Sensors
 	static const unsigned char LP = 8;	// Left side rotation measurement
-	static const unsigned char RP = 1;	// Right side rotation measurement TODO: fix this mess the ports aren't intuitive
-
+	static const unsigned char RP = 1;	// Right side rotation measurement
+	static const unsigned char EXPANDER = 2; // Power Expander
 // Constants
 	// PID (These may need tuning depending on mechanical implementation and weight)
 	static const int PID_MOTOR_SCALE = 80;	// Lower = faster, Higher = More precise
@@ -96,6 +98,16 @@
 	 * Changes the active drive configuration
 	 */
 	 void setDriveConfig(DriveConfiguration config);
-		void setDriveConfigById(int id);
+	 void setDriveConfigById(int id);
+
+	 /*
+ 	 * Moves a motor in either direction to check if it works
+ 	 */
+	void pulseMotor(unsigned char x);
+
+	/*
+	 * LCD Menu
+	 */
+ 	void LCD();
 
 #endif /* SWERVELIB_H_ */
