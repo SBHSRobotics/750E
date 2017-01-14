@@ -31,6 +31,7 @@
  */
 void operatorControl() {
 	int drivePos, driveSpeed;
+	int pincerPos = 20;
 
 	while (1) {
 		lcdLoop();
@@ -50,9 +51,7 @@ void operatorControl() {
 			motorSet(PL, -joystickGetAnalog(2,4));
 			motorSet(PR, joystickGetAnalog(2,1));
 		} else {
-			motorStop(PL);
-			motorStop(PR);
-			pince(joystickGetAnalog(2,1));
+			pince((joystickGetAnalog(1,1)/abs(joystickGetAnalog(1,1)))*pincerPos); //TODO: change back to partner joystick
 			lift(joystickGetAnalog(2,3));
 		}
 
@@ -60,7 +59,7 @@ void operatorControl() {
 			autonomous();
 		}
 
-		printf("4+3: %d\t 1: %d\n",(joystickGetAnalog(1,4)+joystickGetAnalog(1,3)),joystickGetAnalog(1,1));
+		//printf("4+3: %d\t 1: %d\n",(joystickGetAnalog(1,4)+joystickGetAnalog(1,3)),joystickGetAnalog(1,1));
 
 		delay(200);
 	}

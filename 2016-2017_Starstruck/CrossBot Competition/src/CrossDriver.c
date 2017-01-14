@@ -10,16 +10,20 @@
 void lcdLoop();
 
 ServoSystem drive;
+ServoSystem leftPincer;
+ServoSystem rightPincer;
 
 void driveInit() {
 	drive = servoInit(ROT_POT, R, false, PID_MOTOR_SCALE, PID_THRESH);
+	leftPincer = servoInit(PL_POT, PL, false, PID_MOTOR_SCALE, PID_THRESH);
+	rightPincer = servoInit(PR_POT, PR, false, PID_MOTOR_SCALE, PID_THRESH);
 	delay(1000);
-	printf("RET Pot: %p\t%d\n\r",drive.targetValue, *drive.targetValue);
+	//printf("RET Pot: %p\t%d\n\r",drive.targetValue, *drive.targetValue);
 	delay(1000);
-	printf("Target: %p\t%d\n\r", drive.targetValue, *drive.targetValue);
+	//printf("Target: %p\t%d\n\r", drive.targetValue, *drive.targetValue);
 	driveSetPos(0);
 	delay(1000);
-	printf("Target: %p\t%d\n\r", drive.targetValue, *drive.targetValue);
+	//printf("Target: %p\t%d\n\r", drive.targetValue, *drive.targetValue);
 	delay(1000);
 }
 
@@ -73,9 +77,25 @@ void lift(int speed) {
 }
 
 // PINCER
-void pince(int speed) {
-	motorSet(PL, speed);
-	motorSet(PR, speed);
+void pince(int target) {
+	int newLeftTarget = servoGetTarget(leftPincer)+target;
+	int newRightTarget = servoGetTarget(rightPincer)-target;
+
+	if(newLeftTarget>3800){
+		newLeftTarget = 3800;
+	} else if (newLeftTarget<200){
+		newLeftTarget = 200;
+	}
+	if(newRightTarget>3800){
+		newRightTarget = 3800;
+	} else if (newRightTarget<200){
+		newRightTarget = 200;
+	}
+	printf("Left Pot: %d\tRight Pot: %d\n",analogRead(PL_POT),analogRead(PR_POT));
+	printf("newLeftTarget: %d\tnewRightTarget: %d\tJS: %d\n",newLeftTarget,newRightTarget,joystickGetAnalog(1,1)); //TODO: uncomment all the print statements
+
+	servoSet(leftPincer,newLeftTarget);
+	servoSet(rightPincer,newRightTarget);
 }
 
 // LCD

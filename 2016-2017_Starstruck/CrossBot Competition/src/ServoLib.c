@@ -22,7 +22,7 @@ void servoLoop(ServoSystem servo);
 
 // Public function definitions
 ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, bool motorInverted, int motorScale, int targetTolerance) {
-		printf("Initializing servo with potentiometer %d and motor %d\n\r", potentiometerPort, motorPort);
+		// printf("Initializing servo with potentiometer %d and motor %d\n\r", potentiometerPort, motorPort);
 		delay(100);
 		// Create ServoSystem struct
 		ServoSystem servo = {
@@ -34,18 +34,18 @@ ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, 
 			.targetValue = malloc(sizeof(int *)), // Initializes .targetValue with an empty integer pointer
 			.task = malloc(sizeof(TaskHandle *)) // Initializes .targetValue with an empty TaskHandle pointer
 		};
-		printf("Setting target");
+		// printf("Setting target");
 		delay(100);
 		// Set target to current value to prevent system from moving to 0 and potentially breaking itself
 		*servo.targetValue = analogRead(potentiometerPort);
 		delay(100);
-		printf("Target acquired");
+		// printf("Target acquired");
 		delay(100);
-		printf("INIT Pot: %p\t%d\n\r",servo.targetValue, *servo.targetValue);
+		// printf("INIT Pot: %p\t%d\n\r",servo.targetValue, *servo.targetValue);
 		delay(100);
-		printf("Done.\n\r");
+		// printf("Done.\n\r");
 		delay(100);
-		printf("Defining loop function\n\r");
+		// printf("Defining loop function\n\r");
 		delay(200);
 
 		// This nested loop function runs servoLoop with the proper parameters and delays. This is
@@ -60,15 +60,15 @@ ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, 
 		}
 
 		delay(200);
-		printf("done\n\r");
+		// printf("done\n\r");
 		delay(200);
-		printf("task create\n\r");
+		// printf("task create\n\r");
 		delay(200);
 
 		// Create a new async task to run servo loop
 		*servo.task = taskCreate(loop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 		delay(200);
-		printf("Done.\n\r");
+		// printf("Done.\n\r");
 		delay(200);
 
 		// Note: This will return a copy of servo, so the location of the return value != &servo
@@ -86,10 +86,18 @@ void servoSet(ServoSystem servo, int target) {
 	*servo.targetValue = target;
 }
 
+int servoGetTarget(ServoSystem servo){
+	return *servo.targetValue;
+}
+
+int servoGetPosition(ServoSystem servo){
+	return analogRead(servo.potentiometerPort);
+}
+
 // Private function definitions
 
 void servoLoop(ServoSystem servo) {
-	int currentValue = analogRead(1);
+	int currentValue = analogRead(servo.potentiometerPort); // this could be an issue ??
 
 	// Do not run motors if they have reached the target position
 	if (abs(*servo.targetValue-currentValue)<PID_THRESH) {
@@ -112,7 +120,7 @@ void servoLoop(ServoSystem servo) {
 	motorSet(servo.motorPort, -speed);
 
 	#if DEBUG_MODE == 1 || DEBUG_MODE == 2
-		printf("M: %d\tVal: %d\tTar: %d\tSpeed: %d\n\r", servo.motorPort, currentValue, *servo.targetValue, speed);
+		//printf("M: %d\tVal: %d\tTar: %d\tSpeed: %d\n\r", servo.motorPort, currentValue, *servo.targetValue, speed);
 		//TODO: Move debug info to on-board menu if LCDLib is included
 	#endif
 }

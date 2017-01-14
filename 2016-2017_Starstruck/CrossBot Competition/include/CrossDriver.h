@@ -50,8 +50,8 @@
 	// Sensors
 		// Analog
 	static const unsigned char ROT_POT = 1;	// Swerve rotation control potentiometer
-	static const unsigned char PL_POT = 2; // Left pincer potentiometer
-	static const unsigned char PR_POT = 3; // Right pincer potentiometer
+	static const unsigned char PL_POT = 1; // Left pincer potentiometer
+	static const unsigned char PR_POT = 38; // Right pincer potentiometer
 
 	static const unsigned char EXPANDER = 2;
 	static const unsigned char GYRO = 3;
