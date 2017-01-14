@@ -78,24 +78,18 @@ void lift(int speed) {
 
 // PINCER
 void pince(int target) {
-	int newLeftTarget = servoGetTarget(leftPincer)+target;
-	int newRightTarget = servoGetTarget(rightPincer)-target;
+	int newTarget = servoGetTarget(leftPincer)+target;
 
-	if(newLeftTarget>3800){
-		newLeftTarget = 3800;
-	} else if (newLeftTarget<200){
-		newLeftTarget = 200;
-	}
-	if(newRightTarget>3800){
-		newRightTarget = 3800;
-	} else if (newRightTarget<200){
-		newRightTarget = 200;
+	if(newTarget>3800){
+		newTarget = 3800;
+	} else if (newTarget<200){
+		newTarget = 200;
 	}
 	printf("Left Pot: %d\tRight Pot: %d\n",analogRead(PL_POT),analogRead(PR_POT));
-	printf("newLeftTarget: %d\tnewRightTarget: %d\tJS: %d\n",newLeftTarget,newRightTarget,joystickGetAnalog(1,1)); //TODO: uncomment all the print statements
+	printf("newTarget: %d\tJS: %d\n",newTarget,joystickGetAnalog(1,1)); //TODO: uncomment all the print statements
 
-	servoSet(leftPincer,newLeftTarget);
-	servoSet(rightPincer,newRightTarget);
+	servoSet(leftPincer,newTarget);
+	servoSet(rightPincer,newTarget);
 }
 
 // LCD
