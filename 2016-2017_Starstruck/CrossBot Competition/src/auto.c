@@ -31,23 +31,20 @@ void autonomous() {
   //lift up
   //forward to fence, rotate drive to the right (or left maybe add a menu functionality)
   //knock off all stars
-  driveSetPos(0);
-  delay(8000);
-  driveSetPos(0);
 
-  pince(80);
+  pince(-80);
   delay(800);
   pince(0);
 
   lift(80);
-  delay(1400);
+  delay(1100);
   lift(0);
 
   driveForward(127);
-  delay(1500);
+  delay(2700);
   driveForward(0);
 
-  driveSetPos(550);
+  driveSetPos(3550);
   delay(1000);
   driveForward(127);
   delay(10000);

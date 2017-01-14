@@ -30,13 +30,10 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
-	printf("Initializing Drive\n\r");
-	driveInit();
-	printf("Drive Init complete\n\r");
-
 	int drivePos, driveSpeed;
 
 	while (1) {
+		lcdLoop();
 		driveSpeed = joystickGetAnalog(1,3);
 		// printf("setting drive pos\n\r");
 		driveForward(driveSpeed);
@@ -49,10 +46,21 @@ void operatorControl() {
 			driveSetPos(drivePos);
 		}
 
-		printf("4+3: %d\t 1: %d\n",(joystickGetAnalog(1,4)+joystickGetAnalog(1,3)),joystickGetAnalog(1,1));
+		if(joystickGetDigital(2,6,JOY_UP)){
+			motorSet(PL, -joystickGetAnalog(2,4));
+			motorSet(PR, joystickGetAnalog(2,1));
+		} else {
+			motorStop(PL);
+			motorStop(PR);
+			pince(joystickGetAnalog(2,1));
+			lift(joystickGetAnalog(2,3));
+		}
 
-		lift(joystickGetAnalog(2,3));
-		pince(joystickGetAnalog(2,2));
+		if((joystickGetDigital(1,7,JOY_UP))&&(joystickGetDigital(1,7,JOY_DOWN))&&(joystickGetDigital(1,7,JOY_LEFT))&&(joystickGetDigital(1,7,JOY_RIGHT))){
+			autonomous();
+		}
+
+		printf("4+3: %d\t 1: %d\n",(joystickGetAnalog(1,4)+joystickGetAnalog(1,3)),joystickGetAnalog(1,1));
 
 		delay(200);
 	}
