@@ -7,10 +7,12 @@
 
 #include <main.h>
 
+void lcdLoop();
+
 ServoSystem drive;
 
 void driveInit() {
-	drive = servoInit(RP, R, false, PID_MOTOR_SCALE, PID_THRESH);
+	drive = servoInit(ROT_POT, R, false, PID_MOTOR_SCALE, PID_THRESH);
 	delay(1000);
 	printf("RET Pot: %p\t%d\n\r",drive.targetValue, *drive.targetValue);
 	delay(1000);
@@ -89,7 +91,7 @@ void pulseMotor(unsigned char x) {
  }
 
  void lcdStart() {
-	 //TODO Implement
+	 taskCreate(lcdLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
  }
 
 void lcdLoop() {
@@ -107,19 +109,6 @@ void lcdLoop() {
         count = POT_VAL;
       }
       break;
-    case DRIVE_MENU:
-      lcdSetText(uart1,1,"   Drive Mode   ");
-      lcdSetText(uart1,2,"<    Select    >");
-      if (lcdReadButtons(uart1)==LCD_BTN_LEFT) {
-        count--;
-      }
-      else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
-        count++;
-      }
-      else if(lcdReadButtons(uart1)==LCD_BTN_CENTER) {
-        count=DRIVE_VAL;
-      }
-      break;
 		case BATTERY_MENU:
       lcdSetText(uart1,1,"Battery  Voltage");
       lcdSetText(uart1,2,"<    Select    >");
@@ -133,6 +122,19 @@ void lcdLoop() {
         count=BATTERY_VAL;
       }
       break;
+		case AUTON_MENU:
+      lcdSetText(uart1,1," Run Autonomous ");
+      lcdSetText(uart1,2,"<    Select    >");
+			if (lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+        count--;
+      }
+      else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+        count++;
+      }
+      else if(lcdReadButtons(uart1)==LCD_BTN_CENTER) {
+        count=AUTON_VAL;
+      }
+			break;
     case SELF_MENU:
       lcdSetText(uart1,1,"   Self Test    ");
       lcdSetText(uart1,2,"<    Select    >");
@@ -173,17 +175,10 @@ void lcdLoop() {
       }
       break;
     case 	POT_VAL: // potentiometer readings
-      lcdPrint(uart1,1,"Drive: %d", analogRead(RP));
+			lcdClear(uart1);
+      lcdPrint(uart1,1,"Drive: %d", analogRead(ROT_POT));
       if(lcdReadButtons(uart1)==LCD_BTN_CENTER)
         count = POT_MENU; //go back to select menu
-      break;
-    case DRIVE_VAL: // get current drive mode
-      lcdPrint(uart1,1,"Drive Mode:");
-      lcdPrint(uart1,2,"Function Disabled");
-
-      if(lcdReadButtons(uart1)==LCD_BTN_CENTER) {
-        count=DRIVE_MENU;
-      }
       break;
 		case BATTERY_VAL: // get battery voltage
 		  lcdPrint(uart1, 1, "Main: %dmV",powerLevelMain()); //Display main battery on LCD
@@ -192,6 +187,12 @@ void lcdLoop() {
         count=BATTERY_MENU;
       }
       break;
+		case AUTON_VAL:
+			lcdPrint(uart1, 1, " Running Auton  ");
+			lcdPrint(uart1, 2, "Don't Touch!!!!!");
+			autonomous();
+			count=AUTON_MENU;
+			break;
     case SELF_VAL: // self test
       lcdClear(uart1);
       lcdPrint(uart1, 2, "Don't Touch!!!!!");

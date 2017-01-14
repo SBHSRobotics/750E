@@ -18,14 +18,14 @@
 
 // LCD Constants
 #define POT_MENU 0
-#define DRIVE_MENU 1
-#define BATTERY_MENU 2
+#define BATTERY_MENU 1
+#define AUTON_MENU 2
 #define SELF_MENU 3
 #define MANUAL_MENU 4
 #define MEMES_MENU 5
 #define POT_VAL 6
-#define DRIVE_VAL 7
-#define BATTERY_VAL 8
+#define BATTERY_VAL 7
+#define AUTON_VAL 8
 #define SELF_VAL 9
 #define MANUAL_VAL 10
 #define MEMES_VAL 11
@@ -49,7 +49,10 @@
 
 	// Sensors
 		// Analog
-	static const unsigned char RP = 1;	// Swerve rotation control potentiometer
+	static const unsigned char ROT_POT = 1;	// Swerve rotation control potentiometer
+	static const unsigned char PL_POT = 2; // Left pincer potentiometer
+	static const unsigned char PR_POT = 3; // Right pincer potentiometer
+
 	static const unsigned char EXPANDER = 2;
 	static const unsigned char GYRO = 3;
 		// Digital
@@ -78,5 +81,6 @@ void pince(int speed);
 
 // LCD TODO:  MOVE INTO SEPARATE MODULE (MenuLib?)
 void lcdStart();
+void lcdLoop();
 
 #endif /* CROSSDRIVER_H_ */

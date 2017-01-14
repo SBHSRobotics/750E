@@ -37,4 +37,10 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
+  printf("Initializing Drive\n\r");
+	driveInit();
+	printf("Drive Init complete\n\r");
+  
+  lcdInit(uart1);
+  lcdClear(uart1);
 }
