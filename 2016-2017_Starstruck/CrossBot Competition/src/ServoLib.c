@@ -19,6 +19,7 @@
  * Updates the speed of given motor based on current and target potentiometer values
  */
 void servoLoop(ServoSystem servo);
+int currentValue;
 
 // Public function definitions
 ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, bool motorInverted, int motorScale, int targetTolerance) {
@@ -38,15 +39,17 @@ ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, 
 		delay(100);
 		// Set target to current value to prevent system from moving to 0 and potentially breaking itself
 		*servo.targetValue = analogRead(potentiometerPort);
+		/*
 		delay(100);
-		// printf("Target acquired");
+		printf("Target acquired");
 		delay(100);
-		// printf("INIT Pot: %p\t%d\n\r",servo.targetValue, *servo.targetValue);
+		printf("INIT Pot: %p\t%d\n\r",servo.targetValue, *servo.targetValue);
 		delay(100);
-		// printf("Done.\n\r");
+		printf("Done.\n\r");
 		delay(100);
-		// printf("Defining loop function\n\r");
+		printf("Defining loop function\n\r");
 		delay(200);
+		*/
 
 		// This nested loop function runs servoLoop with the proper parameters and delays. This is
 		// necessary since taskCreate doesn't accept functions with parameters.
@@ -58,17 +61,16 @@ ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, 
 				delay(100);
 			}
 		}
-
 		delay(200);
-		// printf("done\n\r");
+		printf("done\n\r");
 		delay(200);
-		// printf("task create\n\r");
+		printf("task create\n\r");
 		delay(200);
 
 		// Create a new async task to run servo loop
 		*servo.task = taskCreate(loop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 		delay(200);
-		// printf("Done.\n\r");
+		printf("Done.\n\r");
 		delay(200);
 
 		// Note: This will return a copy of servo, so the location of the return value != &servo
@@ -97,10 +99,10 @@ int servoGetPosition(ServoSystem servo){
 // Private function definitions
 
 void servoLoop(ServoSystem servo) {
-	int currentValue = analogRead(servo.potentiometerPort); // this could be an issue ??
+	currentValue = analogRead(servo.potentiometerPort); // this could be an issue ??
 
 	// Do not run motors if they have reached the target position
-	if (abs(*servo.targetValue-currentValue)<PID_THRESH) {
+	if (abs(*servo.targetValue-currentValue)<servo.targetTolerance) {
 		motorStop(servo.motorPort);
 		return;
 	}
@@ -109,13 +111,13 @@ void servoLoop(ServoSystem servo) {
 	double err = (double)((double)*servo.targetValue - (double)currentValue);
 
 	//Convert Target Value to Motor Speed
-	int speed = (servo.motorInverted ? -1 : 1) * (int)(((double)err / ((double)4095) * (double)PID_MOTOR_SCALE) );
+	int speed = (servo.motorInverted ? -1 : 1) * (int)(((double)err / ((double)4095) * (double)servo.motorScale) );
 
 	// Shift speed scale past deadzone
 	speed +=
 		( (speed > 0)
-			? (127 - PID_MOTOR_SCALE)
-			: (-127 + PID_MOTOR_SCALE)
+			? (127 - servo.motorScale)
+			: (-127 + servo.motorScale)
 		 );
 	motorSet(servo.motorPort, -speed);
 
