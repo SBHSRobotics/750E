@@ -50,4 +50,14 @@
 	 */
 	 void servoSet(ServoSystem servo, int targetValue);
 
+	 /*
+ 	 * Returns current target value
+ 	 */
+	 int servoGetTarget(ServoSystem servo);
+
+	 /*
+ 	 * Returns servo's current position (AnalogRead)
+ 	 */
+	 int servoGetPosition(ServoSystem servo); 
+
 #endif /* EUGENE_H_ */
