@@ -89,10 +89,10 @@ void servoSet(ServoSystem servo, int target) {
 // Private function definitions
 
 void servoLoop(ServoSystem servo) {
-	int currentValue = analogRead(1);
+	currentValue = analogRead(servo.potentiometerPort); // this could be an issue ??
 
 	// Do not run motors if they have reached the target position
-	if (abs(*servo.targetValue-currentValue)<PID_THRESH) {
+	if (abs(*servo.targetValue-currentValue)<servo.targetTolerance) {
 		motorStop(servo.motorPort);
 		return;
 	}
@@ -101,18 +101,18 @@ void servoLoop(ServoSystem servo) {
 	double err = (double)((double)*servo.targetValue - (double)currentValue);
 
 	//Convert Target Value to Motor Speed
-	int speed = (servo.motorInverted ? -1 : 1) * (int)(((double)err / ((double)4095) * (double)PID_MOTOR_SCALE) );
+	int speed = (servo.motorInverted ? -1 : 1) * (int)(((double)err / ((double)4095) * (double)servo.motorScale) );
 
 	// Shift speed scale past deadzone
 	speed +=
 		( (speed > 0)
-			? (127 - PID_MOTOR_SCALE)
-			: (-127 + PID_MOTOR_SCALE)
+			? (127 - servo.motorScale)
+			: (-127 + servo.motorScale)
 		 );
 	motorSet(servo.motorPort, -speed);
 
 	#if DEBUG_MODE == 1 || DEBUG_MODE == 2
-		printf("M: %d\tVal: %d\tTar: %d\tSpeed: %d\n\r", servo.motorPort, currentValue, *servo.targetValue, speed);
+		//printf("M: %d\tVal: %d\tTar: %d\tSpeed: %d\n\r", servo.motorPort, currentValue, *servo.targetValue, speed);
 		//TODO: Move debug info to on-board menu if LCDLib is included
 	#endif
 }
