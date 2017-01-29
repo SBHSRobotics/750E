@@ -37,10 +37,10 @@
 
 // Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
   	// Chassis
-	static const unsigned char LR = 1;	// Left side rotation control
+	static const unsigned char LR = 0;	// Left side rotation control
 	static const unsigned char LF = 2;	// Front left drive wheel
 	static const unsigned char LB = 3;	// Back left drive wheel
-	static const unsigned char RR = 10;	// Right side rotation control
+	static const unsigned char RR = 0;	// Right side rotation control
 	static const unsigned char RF = 9;	// Front Right drive wheel
 	static const unsigned char RB = 8;	// Back right drive wheel
 
@@ -49,12 +49,12 @@
 	static const unsigned char BD = 5; // Motor B and D y-ed into one port, same dir
 
 	//Pincers
-	static const unsigned char PL = 6; // Left pincer
-	static const unsigned char PR = 7; // Right pincer
+	static const unsigned char PL = 1; // Left pincer
+	static const unsigned char PR = 10; // Right pincer
 
 	// Sensors
-	static const unsigned char LP = 8;	// Left side rotation measurement
-	static const unsigned char RP = 1;	// Right side rotation measurement
+	static const unsigned char LP = 0;	// Left side rotation measurement
+	static const unsigned char RP = 0;	// Right side rotation measurement
 	static const unsigned char EXPANDER = 2; // Power Expander
 // Constants
 	// PID (These may need tuning depending on mechanical implementation and weight)

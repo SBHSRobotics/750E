@@ -20,6 +20,7 @@
  */
 void servoLoop(ServoSystem servo);
 
+int currentValue;
 // Public function definitions
 ServoSystem servoInit(unsigned char potentiometerPort, unsigned char motorPort, bool motorInverted, int motorScale, int targetTolerance) {
 		printf("Initializing servo with potentiometer %d and motor %d\n\r", potentiometerPort, motorPort);

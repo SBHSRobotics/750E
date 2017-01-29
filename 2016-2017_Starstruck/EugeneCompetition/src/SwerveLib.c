@@ -18,8 +18,8 @@ DriveConfiguration currentConfig;
 bool isCrabKilled = false;
 
 // Private Global variable declarations
-ServoSystem crabLeftServo;
-ServoSystem crabRightServo;
+// ServoSystem crabLeftServo;
+// ServoSystem crabRightServo;
 
 //LCD
 int count = 0;
@@ -29,8 +29,8 @@ void crabInit(){
 	unsigned char leftArr[4] = {LR, 0, 0, 0};
 	unsigned char rightArr[4] = {RR, 0, 0, 0};
 	bool boolArr[4] = {false, false, false, false};
-	crabLeftServo = servoInit(LP, leftArr, boolArr, PID_MOTOR_SCALE, PID_THRESH);
-	crabRightServo = servoInit(RP, rightArr, boolArr, PID_MOTOR_SCALE, PID_THRESH);
+	// crabLeftServo = servoInit(LP, leftArr, boolArr, PID_MOTOR_SCALE, PID_THRESH);
+	// crabRightServo = servoInit(RP, rightArr, boolArr, PID_MOTOR_SCALE, PID_THRESH);
 
 	#if (DEBUG_MODE == 0 || DEBUG_MODE == 2)
 		setDriveConfig(DEFAULT_DRIVE_MODE);
@@ -47,7 +47,7 @@ void crabInit(){
 				if( fcount(stdin) > 0) {
 					confOverride = ((int)getchar())-48;
 					if(confOverride >=0 ) {
-						setDriveConfigById(confOverride);
+						// setDriveConfigById(confOverride);
 					}
 				} else {
 					confOverride = -1;
@@ -61,31 +61,31 @@ void crabInit(){
 }
 
 void crabKill() {
-	taskDelete(crabLeftServo.task);
-	taskDelete(crabRightServo.task);
+	// taskDelete(crabRightServo.task);
+	// taskDelete(crabLeftServo.task);
 }
 
 void setDriveConfig(DriveConfiguration config) {
 	currentConfig = config;
-	crabLeftServo.targetValue = config.leftWheel;
-	crabRightServo.targetValue = config.rightWheel;
+	// crabLeftServo.targetValue = config.leftWheel;
+	// crabRightServo.targetValue = config.rightWheel;
 }
 
-void setDriveConfigById(int id) {
-	switch(id) {
-		case HOLONOMIC_DRIVE:
-			setDriveConfig(holonomicDrive);
-			break;
-		case TANK_DRIVE:
-			setDriveConfig(tankDrive);
-			break;
-		case SHUFFLE_DRIVE:
-			setDriveConfig(shuffleDrive);
-			break;
-		default:
-			setDriveConfig(currentConfig);
-			break;
-	}
+// void setDriveConfigById(int id) {
+// 	switch(id) {
+// 		case HOLONOMIC_DRIVE:
+// 			setDriveConfig(holonomicDrive);
+// 			break;
+// 		case TANK_DRIVE:
+// 			setDriveConfig(tankDrive);
+// 			break;
+// 		case SHUFFLE_DRIVE:
+// 			setDriveConfig(shuffleDrive);
+// 			break;
+// 		default:
+// 			setDriveConfig(currentConfig);
+// 			break;
+// 	}
 
 	void pulseMotor(unsigned char x) {
 	   motorSet(x,127);
