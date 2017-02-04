@@ -32,16 +32,14 @@
 
  // Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
    	// Chassis
- 	static const unsigned char LR = 0;	// Left side rotation control
  	static const unsigned char LF = 2;	// Front left drive wheel
  	static const unsigned char LB = 3;	// Back left drive wheel
- 	static const unsigned char RR = 0;	// Right side rotation control
  	static const unsigned char RF = 9;	// Front Right drive wheel
  	static const unsigned char RB = 8;	// Back right drive wheel
 
  	// Lift
- 	static const unsigned char AC = 4; // Motor A and C y-ed into one port, same dir
- 	static const unsigned char BD = 5; // Motor B and D y-ed into one port, same dir
+ 	static const unsigned char AB = 4; // Motor A and C y-ed into one port, same dir
+ 	static const unsigned char CD = 5; // Motor B and D y-ed into one port, same dir
 
  	//Pincers
  	static const unsigned char PL = 1; // Left pincer
@@ -105,31 +103,13 @@
 	void joystickMapMain();
 	void joystickMapPartner();
 
-
 	void operatorControl() {
-
-	//	crabKill();
-
-		while (1) {
-			/*switch(currentConfig.id) {
-				case TANK_DRIVE:
-					driveMap(LF,LB,RF,RB);
-					break;
-				case SHUFFLE_DRIVE:
-					driveMap(LF,LB,RF,RB);
-				case HOLONOMIC_DRIVE:
-				default:
-					driveMap(LF,LB,RF,RB);
-					break;
-			}*/
 			joystickMapMain();
-			//joystickMapPartner();
-
 			delay(20);
-		}
 	}
 
 	void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char frontRight, unsigned char backRight) {
+    // Begin holo code
 		int thresh = 20;
 		int ch1 = joystickGetAnalog(1, 1);
 		int ch2 = joystickGetAnalog(1, 2);
@@ -179,34 +159,18 @@
 			motorStop(backRight);
 			motorStop(frontRight);
 		}
-		/*#define s 70
-		//Lift code
-		if (joystickGetDigital(1, 7, JOY_UP)) {
-			motorSet(TL, -s);
-			motorSet(BL, s);
-			motorSet(TR, s);
-			motorSet(BR, -s);
-		} else if (joystickGetDigital(1, 7, JOY_DOWN)) {
-			motorSet(TL, s);
-			motorSet(BL, -s);
-			motorSet(TR, -s);
-			motorSet(BR, s);
-		} else {
-			motorSet(TL, 0);
-			motorSet(BL, 0);
-			motorSet(TR, 0);
-			motorSet(BR, 0);
-		}*/
+    //end holo code
 	}
 
-	void joystickMapMain(){
+	void joystickMap(){
+    //get drive input
 		if(joystickGetDigital(1,7,JOY_UP)){
 			motorSet(LF,127);
 			motorSet(LB,127);
 			motorSet(RF,127);
 			motorSet(RB,127);
 		}
-
+    //get pincer input
 		if(abs(joystickGetAnalog(2,4))>15){
 			motorSet(PL,joystickGetAnalog(2,4));
 		} else {
@@ -219,6 +183,7 @@
 			motorStop(PR);
 		}
 
+    //get lift input
 		if(joystickGetDigital(2,6,JOY_UP)){
 			motorSet(AC,127);
 			motorSet(BD,-127);
@@ -230,9 +195,6 @@
 			motorSet(BD,0);
 		}
 
+    //set drive
 		driveMap(LF,LB,RF,RB);
-	}
-
-	void joystickMapPartner(){
-
 	}
