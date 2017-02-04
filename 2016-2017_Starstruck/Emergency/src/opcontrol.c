@@ -30,21 +30,6 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 
- // Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
-   	// Chassis
- 	static const unsigned char LF = 2;	// Front left drive wheel
- 	static const unsigned char LB = 3;	// Back left drive wheel
- 	static const unsigned char RF = 9;	// Front Right drive wheel
- 	static const unsigned char RB = 8;	// Back right drive wheel
-
- 	// Lift
- 	static const unsigned char AB = 4; // Motor A and C y-ed into one port, same dir
- 	static const unsigned char CD = 5; // Motor B and D y-ed into one port, same dir
-
- 	//Pincers
- 	static const unsigned char PL = 1; // Left pincer
- 	static const unsigned char PR = 10; // Right pincer
-
 	/** @file opcontrol.c
 	 * @brief File for operator control code
 	 *
@@ -100,11 +85,11 @@
 	 */
 
 	void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char frontRight, unsigned char backRight);
-	void joystickMapMain();
+	void joystickMap();
 	void joystickMapPartner();
 
 	void operatorControl() {
-			joystickMapMain();
+			joystickMap();
 			delay(20);
 	}
 
@@ -185,14 +170,14 @@
 
     //get lift input
 		if(joystickGetDigital(2,6,JOY_UP)){
-			motorSet(AC,127);
-			motorSet(BD,-127);
+			motorSet(AB,127);
+			motorSet(CD,-127);
 		} else if(joystickGetDigital(2,6,JOY_DOWN)) {
-			motorSet(AC,-127);
-			motorSet(BD,127);
+			motorSet(AB,-127);
+			motorSet(CD,127);
 		} else {
-			motorSet(AC,0);
-			motorSet(BD,0);
+			motorSet(AB,0);
+			motorSet(CD,0);
 		}
 
     //set drive
