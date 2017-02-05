@@ -5,7 +5,7 @@
  *      Author: Kirsten Meidlinger
  */
 
-#ifndef EUGENELIB_H_ //TODO ASk abt this wtf
+#ifndef EUGENELIB_H_
 #define EUGENELIB_H_
 
   /*
