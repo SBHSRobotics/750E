@@ -90,6 +90,6 @@
       printf("opcontrol");
 			delay(20);
 			lcdLoop();
-			delay(20);
+			delay(200);
 		}
 	}
