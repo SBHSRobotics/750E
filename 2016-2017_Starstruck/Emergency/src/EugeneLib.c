@@ -49,23 +49,23 @@
       lift(0);
     }
     if(joystickGetDigital(2,7,JOY_UP)){
-      motorSet(AB,127);
+      motorSet(CD,127);//-
     }
     if(joystickGetDigital(2,7,JOY_LEFT)){
-      motorSet(CD,127);
+      motorSet(AB,127);//?
     }
     if(joystickGetDigital(2,7,JOY_RIGHT)){
       motorSet(E,127);
     }
     if(joystickGetDigital(2,7,JOY_DOWN)){
-      motorSet(F,127);
+      motorSet(F,127);//-?
     }
 
     if(joystickGetDigital(2,8,JOY_UP)){
-      motorSet(AB,-127);
+      motorSet(CD,-127);
     }
     if(joystickGetDigital(2,8,JOY_LEFT)){
-      motorSet(CD,-127);
+      motorSet(AB,-127);
     }
     if(joystickGetDigital(2,8,JOY_RIGHT)){
       motorSet(E,-127);
@@ -77,10 +77,10 @@
 
 // Robot functions
   void lift(int speed){
-    motorSet(AB,-speed);
-    motorSet(CD,speed);
-    //motorSet(E,speed);
-    //motorSet(F,-speed);
+    motorSet(AB,speed);
+    motorSet(CD,-speed);
+    motorSet(E,speed);
+    motorSet(F,-speed);
   }
 
   void pince(int speed){
