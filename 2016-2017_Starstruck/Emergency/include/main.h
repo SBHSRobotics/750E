@@ -44,21 +44,7 @@
 #define MAIN_H_
 
 #include <API.h>
-
-// Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
-   // Chassis
- static const unsigned char LF = 2;	// Front left drive wheel
- static const unsigned char LB = 3;	// Back left drive wheel
- static const unsigned char RF = 9;	// Front Right drive wheel
- static const unsigned char RB = 8;	// Back right drive wheel
-
- // Lift
- static const unsigned char AB = 4; // Motor A and C y-ed into one port, same dir
- static const unsigned char CD = 5; // Motor B and D y-ed into one port, same dir
-
- //Pincers
- static const unsigned char PL = 1; // Left pincer
- static const unsigned char PR = 10; // Right pincer
+#include <EugeneLib.h>
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus

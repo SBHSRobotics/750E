@@ -27,4 +27,24 @@
  * so, the robot will await a switch to another mode or disable/enable cycle.
  */
 void autonomous() {
+  //open pincers
+  //lift up
+  //forward to fence, rotate drive to the right (or left maybe add a menu functionality)
+  //knock off all stars
+  pince(-80);
+  delay(800);
+  pince(0);
+
+  lift(80);
+  delay(1100);
+  lift(0);
+
+  driveAuton(127, 127,-127,-127);
+  delay(2700);
+  stopDrive();
+
+  driveAuton(127,-127,127,-127);
+  delay(10000);
+  stopDrive();
+
 }

@@ -64,7 +64,7 @@
 	 * obtained from http://sourceforge.net/projects/freertos/files/ or on request.
 	 */
 
-	#include "main.h"
+#include "main.h"
 
 	/*
 	 * Runs the user operator control code. This function will be started in its own task with the
@@ -84,102 +84,12 @@
 	 * This task should never exit; it should end with some kind of infinite loop, even if empty.
 	 */
 
-	void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char frontRight, unsigned char backRight);
-	void joystickMap();
-	void joystickMapPartner();
-
 	void operatorControl() {
+		while(1){
 			joystickMap();
+      printf("opcontrol");
 			delay(20);
-	}
-
-	void driveMap(unsigned char frontLeft, unsigned char backLeft, unsigned char frontRight, unsigned char backRight) {
-    // Begin holo code
-		int thresh = 20;
-		int ch1 = joystickGetAnalog(1, 1);
-		int ch2 = joystickGetAnalog(1, 2);
-		int ch3 = joystickGetAnalog(1, 3);
-		int ch4 = joystickGetAnalog(1, 4);
-
-		if ((abs(ch3) > thresh) || (abs(ch4) > thresh) || (abs(ch2) > thresh) || (abs(ch1) > thresh)) {
-			if (abs(ch3) < thresh) {
-				ch3 = 0;
-			}
-			if (abs(ch4) < thresh) {
-				ch4 = 0;
-			}
-			if (abs(ch2) < thresh) {
-				ch2 = 0;
-			}
-			if (abs(ch1) < thresh) {
-				ch1 = 0;
-			}
-
-			if (abs(ch3) > abs(ch2)) {
-				ch2 = 0;
-			}
-			else {
-				ch3 = 0;
-			}
-
-			motorSet(backLeft, ch3 + ch2 + ch1 - ch4);
-			motorSet(frontLeft, ch3 + ch2 + ch4 + ch1);
-			motorSet(backRight, -(ch3 + ch2 - ch1 + ch4));
-			motorSet(frontRight, -(ch3 + ch2 - ch4 - ch1));
+			lcdLoop();
+			delay(20);
 		}
-		else if (joystickGetDigital(1, 7, JOY_LEFT)) {
-			motorSet(backLeft, 127);
-			motorSet(frontLeft, -127);
-			motorSet(backRight, -(-127));
-			motorSet(frontRight, -(127));
-		}
-		else if (joystickGetDigital(1, 7, JOY_RIGHT)) {
-			motorSet(backLeft, -127);
-			motorSet(frontLeft, 127);
-			motorSet(backRight, -127);
-			motorSet(frontRight, -(-127));
-		} else {
-			motorStop(backLeft);
-			motorStop(frontLeft);
-			motorStop(backRight);
-			motorStop(frontRight);
-		}
-    //end holo code
-	}
-
-	void joystickMap(){
-    //get drive input
-		if(joystickGetDigital(1,7,JOY_UP)){
-			motorSet(LF,127);
-			motorSet(LB,127);
-			motorSet(RF,127);
-			motorSet(RB,127);
-		}
-    //get pincer input
-		if(abs(joystickGetAnalog(2,4))>15){
-			motorSet(PL,joystickGetAnalog(2,4));
-		} else {
-			motorStop(PL);
-		}
-
-		if(abs(joystickGetAnalog(2,1))>15){
-			motorSet(PR,joystickGetAnalog(2,1));
-		} else {
-			motorStop(PR);
-		}
-
-    //get lift input
-		if(joystickGetDigital(2,6,JOY_UP)){
-			motorSet(AB,127);
-			motorSet(CD,-127);
-		} else if(joystickGetDigital(2,6,JOY_DOWN)) {
-			motorSet(AB,-127);
-			motorSet(CD,127);
-		} else {
-			motorSet(AB,0);
-			motorSet(CD,0);
-		}
-
-    //set drive
-		driveMap(LF,LB,RF,RB);
 	}

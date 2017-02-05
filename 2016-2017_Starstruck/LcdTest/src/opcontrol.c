@@ -17,7 +17,6 @@
 
 #include "main.h"
 
-
 /**
  * Runs the user operator control code.
  *
@@ -30,8 +29,5 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
-	while (true)
-	{
-		delay(25);
-	}
+	printf("opcontrol");
 }
