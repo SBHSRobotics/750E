@@ -38,6 +38,13 @@
  * ======== */
 
 void operatorControl() {
+	delay(2000);
+	FILE* ee = fopen("Test.txt","w");
+	fprintf(ee, "123456789potato");
+	fclose(ee);
+	printf("File written and closed. Pausing...\n");
+	delay(2000);
+
 	//Initialize 20 char string for read
 	char *a = malloc(sizeof(char) * 10);
 	char *b = malloc(sizeof(char) * 10);
@@ -45,15 +52,10 @@ void operatorControl() {
 	//Open Test file in read mode
 	FILE* f = fopen("Test.txt","r");
 	//Read file contents to str
-	fgets(a, 2048, f);
-	fgets(b, 2048, f);
-	fgets(c, 2048, f);
+	fgets(a, 4, f);
+	fgets(b, 4, f);
+	fgets(c, 4, f);
 	//Close file
 	fclose(f);
-
-	while (true)
-	{
-		delay(25);
-		printf("%s%s%s%s%s\n\r",a,"",b,"",c);
-	}
+	printf("%d, %d, %d\n\r",atoi(a),atoi(b),atoi(c));
 }
