@@ -161,9 +161,10 @@
     motorStop(RF);
   }
 
-  // LCD
+// LCD
   int count = 0; // keeps track of position in main LCD menu
   int manualCount = 0; // keeps track of position in manual test LCD submenu
+  bool auton = false;
 
   void pulseMotor(unsigned char x) {
      motorSet(x,127);
@@ -184,7 +185,7 @@
        lcdSetText(uart1,1,"Battery  Voltage");
        lcdSetText(uart1,2,"<    Select    >");
        if (lcdReadButtons(uart1)==LCD_BTN_LEFT) {
-         count--;
+         count=MEMES_MENU;
        }
        else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
          count++;
@@ -253,10 +254,19 @@
        }
        break;
  		case AUTON_VAL:
- 			lcdPrint(uart1, 1, " Running Auton  ");
- 			lcdPrint(uart1, 2, "Don't Touch!!!!!");
- 			autonomous();
- 			count=AUTON_MENU;
+      lcdPrint(uart1, 1, "  Are you sure? ");
+      lcdPrint(uart1, 2, " No         Yes ");
+      if(lcdReadButtons(uart1) == LCD_BTN_LEFT){
+        count = AUTON_MENU;
+      } else if(lcdReadButtons(uart1) == LCD_BTN_RIGHT) {
+        auton = true;
+      }
+      if(auton == true){
+   			lcdPrint(uart1, 1, " Running Auton  ");
+   			lcdPrint(uart1, 2, "Don't Touch!!!!!");
+   			autonomous();
+   			count=AUTON_MENU;
+      }
  			break;
      case SELF_VAL: // self test
        lcdClear(uart1);
@@ -390,6 +400,12 @@
        }
        break;
      case MEMES_VAL:
+       lcdClear(uart1);
+       lcdPrint(uart1, 1, "  Coming  Soon  ");
+       lcdPrint(uart1, 2, "<     Exit     >");
+       if(lcdReadButtons(uart1)==LCD_BTN_CENTER){
+         count=MEMES_MENU;
+       }
        break;
      default: count=0;
        break;
