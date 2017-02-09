@@ -29,12 +29,20 @@
  *
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
+#define LCD_TEST 0
+
 void operatorControl() {
-	MenuItem *root = lcdmInit(uart1);
-	lcdmAddDefaults(root);
-	printf("3: %p\n\r",root);
-	while (1) {
-		lcdmLoop(root);
-		delay(500);
-	}
+	
+
+
+	// LCD Test Code
+	#if LCD_TEST
+		MenuItem *root = lcdmInit(uart1);
+		lcdmAddDefaults(root);
+		printf("3: %p\n\r",root);
+		while (1) {
+			lcdmLoop(root);
+			delay(500);
+		}
+	#endif
 }

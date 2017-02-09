@@ -45,6 +45,7 @@
 
 #include <API.h>
 #include "LCD.h"
+#include "Holo.h"
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
