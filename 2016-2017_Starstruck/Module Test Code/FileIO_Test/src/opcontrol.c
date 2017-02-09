@@ -52,7 +52,7 @@ void operatorControl() {
 	//Open Test file in read mode
 	FILE* f = fopen("Test.txt","r");
 	//Read file contents to str
-	fgets(a, 4, f);
+	fgets(a, 4, f); //string, max chars + 1, file
 	fgets(b, 4, f);
 	fgets(c, 4, f);
 	//Close file
