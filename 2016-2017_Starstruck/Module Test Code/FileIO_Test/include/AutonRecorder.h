@@ -32,6 +32,8 @@
 
   void stopRecorder();
   /*
+   * Stops the Recorder task. Does not require a slot because only one Recorder
+   *   should run at a time.
    */
 
   Frame loadRecording(int slot);
