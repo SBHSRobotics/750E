@@ -100,29 +100,43 @@
   }
 
   char * frameToString(Frame frame){
-    char * string = ""; //possible issue for char* vs char[]
-    int i=0;
-    for(i=0;i<4;i++){
-      sprintf(string,"%d",frame.analog_main[i]+127);
-    }
-    for(i=0;i<12;i++){
-      if(frame.digital_main[i]){
-        sprintf(string,"%d",1);
-      } else {
-        sprintf(string,"%d",0);
-      }
-    }
-    for(i=0;i<4;i++){
-      sprintf(string,"%d",frame.analog_partner[i]+127);
-    }
-    for(i=0;i<12;i++){
-      if(frame.digital_partner[i]){
-        sprintf(string,"%d",1);
-      } else {
-        sprintf(string,"%d",0);
-      }
-    }
-    sprintf(string,"\n");
+    char * string = malloc(50);
+    sprintf(string,"%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d",
+      frame.analog_main[0]+127,
+      frame.analog_main[1]+127,
+      frame.analog_main[2]+127,
+      frame.analog_main[3]+127,
+      frame.digital_main[0],
+      frame.digital_main[1],
+      frame.digital_main[2],
+      frame.digital_main[3],
+      frame.digital_main[4],
+      frame.digital_main[5],
+      frame.digital_main[6],
+      frame.digital_main[7],
+      frame.digital_main[8],
+      frame.digital_main[9],
+      frame.digital_main[10],
+      frame.digital_main[11],
+      frame.analog_partner[0]+127,
+      frame.analog_partner[1]+127,
+      frame.analog_partner[2]+127,
+      frame.analog_partner[3]+127,
+      frame.digital_partner[0],
+      frame.digital_partner[1],
+      frame.digital_partner[2],
+      frame.digital_partner[3],
+      frame.digital_partner[4],
+      frame.digital_partner[5],
+      frame.digital_partner[6],
+      frame.digital_partner[7],
+      frame.digital_partner[8],
+      frame.digital_partner[9],
+      frame.digital_partner[10],
+      frame.digital_partner[11]
+    );
+    // TODO: code above is really ugly and inefficient lol
+    printf("%s\n",string);
     return string;
   }
 
@@ -137,15 +151,16 @@
 
     int x;
     for(x=0;x<4;x++){
-      frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3));
-      frame.analog_partner[x] = atoi(substring(analog_partner,(x*3)+1,3));
+      frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3))-127;
+      frame.analog_partner[x] = atoi(substring(analog_partner,(x*3)+1,3)-127);
     }
     for(x=0;x<12;x++){
       frame.digital_main[x] = atoi(substring(digital_main,x+1,1));
       frame.digital_partner[x] = atoi(substring(digital_partner,x+1,1));
     }
 
-     printf("%d\t%d\t%d\t%d\t",frame.analog_main[0],frame.analog_main[1],frame.analog_main[2],frame.analog_main[3]);
+     printf("%d\t%d\t%d\t%d\n",frame.analog_main[0],frame.analog_main[1],frame.analog_main[2],frame.analog_main[3]);
+     printf("%d",frame.digital_main[0]);
     // printf("%d\t%d\t%d\t%d\t",NULLFRAME.analog_main[0],NULLFRAME.analog_main[1],NULLFRAME.analog_main[2],NULLFRAME.analog_main[3]);
 
     return frame;

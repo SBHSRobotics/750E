@@ -61,6 +61,14 @@ void operatorControl() {
 
 	//startRecording(1);
 
-	stringToFrame("127127127127010101010101127127127127010101010101");
+	//stringToFrame("127127127127010101010101127127127127010101010101");
+	Frame frame = {
+		{127,127,127,127},
+		{false,false,false,false,false,false,false,false,false,false,false,false},
+		{127,127,127,127},
+		{false,false,false,false,false,false,false,false,false,false,false,false},
+		NULL,NULL
+	};
+	stringToFrame(frameToString(frame));
 
 }
