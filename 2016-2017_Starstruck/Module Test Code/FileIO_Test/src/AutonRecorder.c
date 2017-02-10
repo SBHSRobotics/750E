@@ -42,7 +42,7 @@
     char *frame = malloc(50);
     Frame rt = NULLFRAME;
     while(fgets(frame,50,f) != NULL){
-      if(rt.analog_main[0] == -1){
+      if(rt.analog_main[CH1] == -1){
         //rt =
       }
     }
@@ -68,7 +68,7 @@
   }
 
   void recordingLoop(){
-    if(root.analog_main[0] == -1){ //checks if it's equal to NULLFRAME
+    if(root.analog_main[CH1] == -1){ //checks if it's equal to NULLFRAME
       root = getCurrentFrame();
     } else {
       addFrame(getCurrentFrame());
@@ -97,43 +97,44 @@
       toAdd.previous = root.previous;
       toAdd.next = &root;
       root.previous = &toAdd;
+      (*(root.previous)).next = &toAdd;
   }
 
   char * frameToString(Frame frame){
     char * string = malloc(50);
     sprintf(string,"%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d",
-      frame.analog_main[0]+127,
-      frame.analog_main[1]+127,
-      frame.analog_main[2]+127,
-      frame.analog_main[3]+127,
-      frame.digital_main[0],
-      frame.digital_main[1],
-      frame.digital_main[2],
-      frame.digital_main[3],
-      frame.digital_main[4],
-      frame.digital_main[5],
-      frame.digital_main[6],
-      frame.digital_main[7],
-      frame.digital_main[8],
-      frame.digital_main[9],
-      frame.digital_main[10],
-      frame.digital_main[11],
-      frame.analog_partner[0]+127,
-      frame.analog_partner[1]+127,
-      frame.analog_partner[2]+127,
-      frame.analog_partner[3]+127,
-      frame.digital_partner[0],
-      frame.digital_partner[1],
-      frame.digital_partner[2],
-      frame.digital_partner[3],
-      frame.digital_partner[4],
-      frame.digital_partner[5],
-      frame.digital_partner[6],
-      frame.digital_partner[7],
-      frame.digital_partner[8],
-      frame.digital_partner[9],
-      frame.digital_partner[10],
-      frame.digital_partner[11]
+      frame.analog_main[CH1]+127,
+      frame.analog_main[CH2]+127,
+      frame.analog_main[CH3]+127,
+      frame.analog_main[CH4]+127,
+      frame.digital_main[BTN5U],
+      frame.digital_main[BTN5D],
+      frame.digital_main[BTN6U],
+      frame.digital_main[BTN6D],
+      frame.digital_main[BTN7U],
+      frame.digital_main[BTN7D],
+      frame.digital_main[BTN7L],
+      frame.digital_main[BTN7R],
+      frame.digital_main[BTN8U],
+      frame.digital_main[BTN8D],
+      frame.digital_main[BTN8L],
+      frame.digital_main[BTN8R],
+      frame.analog_partner[CH1]+127,
+      frame.analog_partner[CH2]+127,
+      frame.analog_partner[CH3]+127,
+      frame.analog_partner[CH4]+127,
+      frame.digital_partner[BTN5U],
+      frame.digital_partner[BTN5D],
+      frame.digital_partner[BTN6U],
+      frame.digital_partner[BTN6D],
+      frame.digital_partner[BTN7U],
+      frame.digital_partner[BTN7D],
+      frame.digital_partner[BTN7L],
+      frame.digital_partner[BTN7R],
+      frame.digital_partner[BTN8U],
+      frame.digital_partner[BTN8D],
+      frame.digital_partner[BTN8L],
+      frame.digital_partner[BTN8R]
     );
     // TODO: code above is really ugly and inefficient lol
     printf("%s\n",string);
@@ -147,21 +148,18 @@
     char* analog_partner = substring(string,25,12);
     char* digital_partner = substring(string,37,12);
 
-    // printf("%d\t%d\t%d\t%d\t",frame.analog_main[0],frame.analog_main[1],frame.analog_main[2],frame.analog_main[3]);
-
     int x;
     for(x=0;x<4;x++){
-      frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3))-127;
-      frame.analog_partner[x] = atoi(substring(analog_partner,(x*3)+1,3)-127);
+      frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3))-127; 
+      frame.analog_partner[x] = atoi(substring(analog_partner,(x*3)+1,3))-127;
     }
     for(x=0;x<12;x++){
       frame.digital_main[x] = atoi(substring(digital_main,x+1,1));
       frame.digital_partner[x] = atoi(substring(digital_partner,x+1,1));
     }
 
-     printf("%d\t%d\t%d\t%d\n",frame.analog_main[0],frame.analog_main[1],frame.analog_main[2],frame.analog_main[3]);
-     printf("%d",frame.digital_main[0]);
-    // printf("%d\t%d\t%d\t%d\t",NULLFRAME.analog_main[0],NULLFRAME.analog_main[1],NULLFRAME.analog_main[2],NULLFRAME.analog_main[3]);
+     printf("%d\t%d\t%d\t%d\n",frame.analog_main[CH1],frame.analog_main[CH2],frame.analog_main[CH3],frame.analog_main[CH4]);
+     printf("%d",frame.digital_main[CH1]);
 
     return frame;
 

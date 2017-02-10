@@ -38,30 +38,6 @@
  * ======== */
 
 void operatorControl() {
-	/*FILE* ee = fopen("Test.txt","w");
-	fprintf(ee, "123456789potato");
-	fclose(ee);
-	printf("File written and closed. Pausing...\n");
-	delay(2000);
-
-	//Initialize 20 char string for read
-	char *a = malloc(sizeof(char) * 10);
-	char *b = malloc(sizeof(char) * 10);
-	char *c = malloc(sizeof(char) * 10);
-	//Open Test file in read mode
-	FILE* f = fopen("Test.txt","r");
-	//Read file contents to str
-	fgets(a, 4, f); //string, max chars + 1, file
-	fgets(b, 4, f);
-	fgets(c, 4, f);
-	//Close file
-	fclose(f);
-	printf("%d, %d, %d\n\r",atoi(a),atoi(b),atoi(c));
-	*/
-
-	//startRecording(1);
-
-	//stringToFrame("127127127127010101010101127127127127010101010101");
 	Frame frame = {
 		{127,127,127,127},
 		{false,false,false,false,false,false,false,false,false,false,false,false},
@@ -69,6 +45,7 @@ void operatorControl() {
 		{false,false,false,false,false,false,false,false,false,false,false,false},
 		NULL,NULL
 	};
+	
 	stringToFrame(frameToString(frame));
 
 }

@@ -8,6 +8,8 @@
 #ifndef AUTONRECORDER_H_
 #define AUTONRECORDER_H_
 
+#include <stdlib.h>
+#include <string.h>
 /*
  * This is the library for 750E's Auton Recorder. It reads joystick values and writes them to
  *   a file in the cortex's memory, and is able to read the file again to replay it as an
@@ -15,6 +17,26 @@
  *
  * This file should be placed in include and included in main.h
  */
+
+//Frame array macros, makes getting info from Frames more intuitive
+
+  #define CH1 0
+  #define CH2 1
+  #define CH3 2
+  #define CH4 3
+  #define BTN5U 0
+  #define BTN5D 1
+  #define BTN6U 2
+  #define BTN6D 3
+  #define BTN7U 4
+  #define BTN7D 5
+  #define BTN7L 6
+  #define BTN7R 7
+  #define BTN8U 8
+  #define BTN8D 9
+  #define BTN8L 10
+  #define BTN8R 11
+
 
 
   typedef struct Frame {
@@ -28,11 +50,12 @@
 
 
   static const Frame NULLFRAME = {
-    {-1,-1,-1,-1},
-    {false,false,false,false,false,false,false,false,false,false,false,false},
-    {-1,-1,-1,-1},
-    {false,false,false,false,false,false,false,false,false,false,false,false},
-    (Frame*)0,(Frame*)0
+    .analog_main = {-1,-1,-1,-1},
+    .digital_main = {false,false,false,false,false,false,false,false,false,false,false,false},
+    .analog_partner = {-1,-1,-1,-1},
+    .digital_partner = {false,false,false,false,false,false,false,false,false,false,false,false},
+    .next = (Frame*)0,
+    .previous = (Frame*)0 //TODO: idr why i did that (Frame *)0 ? something about NULL being a problem bc neither next or previous are ints
   };
 
   void startRecording(int slot);
