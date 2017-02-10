@@ -99,7 +99,7 @@
       root.previous = &toAdd;
   }
 
-  char * formatFrame(Frame frame){
+  char * frameToString(Frame frame){
     char * string = ""; //possible issue for char* vs char[]
     int i=0;
     for(i=0;i<4;i++){
@@ -126,14 +126,29 @@
     return string;
   }
 
-  Frame formatString(char* string){
+  Frame stringToFrame(char* string){
     Frame frame = NULLFRAME;
     char* analog_main = substring(string,1,12);
     char* digital_main = substring(string,13,12);
     char* analog_partner = substring(string,25,12);
     char* digital_partner = substring(string,37,12);
 
-    printf("analog_main: %s\tdigital_main: %s\tanalog_partner: %s\tdigital_partner: %s\t",analog_main,digital_main,analog_partner,digital_partner);
+    printf("%d\t%d\t%d\t%d\t",frame.analog_main[0],frame.analog_main[1],frame.analog_main[2],frame.analog_main[3]);
+
+    int x;
+    for(x=0;x<4;x++){
+      frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3));
+      frame.analog_partner[x] = atoi(substring(analog_partner,(x*3)+1,3));
+    }
+    for(x=0;x<12;x++){
+      frame.digital_main[x] = atoi(substring(digital_main,x+1,1));
+      frame.digital_partner[x] = atoi(substring(digital_partner,x+1,1));
+    }
+
+    printf("%d\t%d\t%d\t%d\t",frame.analog_main[0],frame.analog_main[1],frame.analog_main[2],frame.analog_main[3]);
+    printf("%d\t%d\t%d\t%d\t",NULLFRAME.analog_main[0],NULLFRAME.analog_main[1],NULLFRAME.analog_main[2],NULLFRAME.analog_main[3]);
+
+    return frame;
 
   }
 

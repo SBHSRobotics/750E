@@ -69,14 +69,14 @@
    *   Frames are structured circularly
    */
 
-  char* formatFrame(Frame frame);
+  char* frameToString(Frame frame);
   /*
    * Converts frame values into a single string, analog values offset from (-127,127) to (0,254)
    */
 
-  Frame formatString(char* str);
+  Frame stringToFrame(char* str);
   /*
-   * Converts single string into a Frame
+   * Converts single string into a Frame with NULL next and previous
    */
 
   char* substring(char* str,int start,int length);
