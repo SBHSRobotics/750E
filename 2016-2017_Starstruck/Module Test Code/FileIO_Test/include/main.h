@@ -45,6 +45,8 @@
 
 #include <API.h>
 #include <AutonRecorder.h>
+#include <stdlib.h>
+#include <string.h>
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus

@@ -31,7 +31,7 @@
     sprintf(fileName,"Recording%d.txt",slot);
     FILE* recording = fopen(fileName,"w");
     while(currentFrame.next != NULL){
-      fprintf(recording,formatFrame(currentFrame));
+      fprintf(recording,frameToString(currentFrame));
     }
     fclose(recording);
   	printf("File %s written and closed.\n",fileName);
@@ -133,7 +133,7 @@
     char* analog_partner = substring(string,25,12);
     char* digital_partner = substring(string,37,12);
 
-    printf("%d\t%d\t%d\t%d\t",frame.analog_main[0],frame.analog_main[1],frame.analog_main[2],frame.analog_main[3]);
+    // printf("%d\t%d\t%d\t%d\t",frame.analog_main[0],frame.analog_main[1],frame.analog_main[2],frame.analog_main[3]);
 
     int x;
     for(x=0;x<4;x++){
@@ -145,14 +145,20 @@
       frame.digital_partner[x] = atoi(substring(digital_partner,x+1,1));
     }
 
-    printf("%d\t%d\t%d\t%d\t",frame.analog_main[0],frame.analog_main[1],frame.analog_main[2],frame.analog_main[3]);
-    printf("%d\t%d\t%d\t%d\t",NULLFRAME.analog_main[0],NULLFRAME.analog_main[1],NULLFRAME.analog_main[2],NULLFRAME.analog_main[3]);
+     printf("%d\t%d\t%d\t%d\t",frame.analog_main[0],frame.analog_main[1],frame.analog_main[2],frame.analog_main[3]);
+    // printf("%d\t%d\t%d\t%d\t",NULLFRAME.analog_main[0],NULLFRAME.analog_main[1],NULLFRAME.analog_main[2],NULLFRAME.analog_main[3]);
 
     return frame;
 
   }
 
   char* substring(char* str,int start,int length){
+    /*
+    *char *substring = malloc(length+1);
+    strncpy(substring, str+1, length);
+    return substring;
+    */ // Code from Mikel, returns 712 instead of 127
+
     char *substring = malloc(length+1);
     int subPos;
 
