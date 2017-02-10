@@ -38,8 +38,7 @@
  * ======== */
 
 void operatorControl() {
-	delay(2000);
-	FILE* ee = fopen("Test.txt","w");
+	/*FILE* ee = fopen("Test.txt","w");
 	fprintf(ee, "123456789potato");
 	fclose(ee);
 	printf("File written and closed. Pausing...\n");
@@ -58,4 +57,10 @@ void operatorControl() {
 	//Close file
 	fclose(f);
 	printf("%d, %d, %d\n\r",atoi(a),atoi(b),atoi(c));
+	*/
+
+	//startRecording(1);
+
+	formatString("127127127127010101010101127127127127010101010101");
+
 }
