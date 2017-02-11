@@ -30,13 +30,6 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 
-
-
-/* ========
- * This program will print the first 20 characters
- * of the Test.txt uploaded to the file system
- * ======== */
-
 void operatorControl() {
 	Frame frame = {
 		{127,127,127,127},
@@ -45,7 +38,7 @@ void operatorControl() {
 		{false,false,false,false,false,false,false,false,false,false,false,false},
 		NULL,NULL
 	};
-	
+
 	stringToFrame(frameToString(frame));
 
 }

@@ -96,8 +96,8 @@
   void addFrame(Frame toAdd){
       toAdd.previous = root.previous;
       toAdd.next = &root;
-      root.previous = &toAdd;
       (*(root.previous)).next = &toAdd;
+      root.previous = &toAdd;
   }
 
   char * frameToString(Frame frame){
@@ -150,7 +150,7 @@
 
     int x;
     for(x=0;x<4;x++){
-      frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3))-127; 
+      frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3))-127;
       frame.analog_partner[x] = atoi(substring(analog_partner,(x*3)+1,3))-127;
     }
     for(x=0;x<12;x++){
@@ -166,10 +166,11 @@
   }
 
   char* substring(char* str,int start,int length){
-    /*
-    *char *substring = malloc(length+1);
-    strncpy(substring, str+1, length);
+
+    /*char *substring;// = malloc(length+1);
+    strncpy(substring, str+start, length-start);
     return substring;
+
     */ // Code from Mikel, returns 712 instead of 127
 
     char *substring = malloc(length+1);
