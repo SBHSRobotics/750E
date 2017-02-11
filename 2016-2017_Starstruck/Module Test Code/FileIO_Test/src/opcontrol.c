@@ -31,25 +31,14 @@
  */
 
 void operatorControl() {
-	/*
-	Frame frame = {
-		{-120,-120,-127,-127},
-		{false,false,false,false,false,false,false,false,false,false,false,false},
-		{-127,-127,-127,-127},
-		{false,false,false,false,false,false,false,false,false,false,false,false},
-		NULL,NULL
-	};
-	*/
-
-	//stringToFrame(frameToString(frame));
 	printf("Starting recording 1...\n");
 	delay(200);
 	startRecording(1);
-	printf("Recording 1 started.\nStopping recording 1...\n");
+	printf("Recording 1 started.\n");
 	delay(200);
 	delay(2000);
 	stopRecording();
-	printf("Recording 1 stopped.\nLoading recording 1...\n");
+	printf("Recording 1 stopped.\n");
 	delay(200);
 	loadRecording(1);
 	printf("Recording 1 loaded.\n");

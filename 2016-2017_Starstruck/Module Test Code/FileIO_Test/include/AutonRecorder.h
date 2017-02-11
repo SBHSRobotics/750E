@@ -50,9 +50,9 @@
 
 
   static const Frame NULLFRAME = {
-    .analog_main = {-1,-1,-1,-1},
+    .analog_main = {255,255,255,255},
     .digital_main = {false,false,false,false,false,false,false,false,false,false,false,false},
-    .analog_partner = {-1,-1,-1,-1},
+    .analog_partner = {255,255,255,255},
     .digital_partner = {false,false,false,false,false,false,false,false,false,false,false,false},
     .next = NULL,
     .previous = NULL
@@ -86,7 +86,12 @@
    *   list of Frames in
    */
 
-  void printFrames(Frame *rootPtr);
+  void printFrame(Frame frame);
+  /*
+   * Prints the values of one frame to the terminal. For testing purposes.
+   */
+
+  void printAllFrames(Frame *rootPtr);
   /*
    * Takes in pointer to root so
    */

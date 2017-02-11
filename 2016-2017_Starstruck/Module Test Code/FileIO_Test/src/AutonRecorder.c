@@ -17,22 +17,28 @@
   TaskHandle recordTask;
   Frame root;
   char *fileName;
+  bool endTask;
 
   void startRecording(int s){
     slot = s;
-    //recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+    recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
     root = NULLFRAME;
     fileName = malloc(sizeof(char)*14);
-
+    endTask = false;
   }
 
   void stopRecording(){
-    printf("Deleting recordTask...\n");
+    printf("Stopping recording 1...\n");
     delay(200);
-    //taskDelete(recordTask);
-    //Frame currentFrame = root;
-    printf("recordTask deleted.\n");
-    delay(200);
+    endTask = true;
+    Frame currentFrame = {
+      .analog_main = {127,127,127,127},
+      .digital_main = {0,1,0,1,0,1,0,1,0,1,1,1},
+      .analog_partner = {127,127,127,127},
+      .digital_partner = {0,1,0,1,0,1,0,1,0,1,1,1},
+      .next = &NULLFRAME, //TODO extra frames are being printed?? it could be something with the previous's and nexts
+      .previous = NULL
+    };//root;
 
     printf("Titling file...\n");
     delay(200);
@@ -46,9 +52,16 @@
     printf("%s opened.\n",fileName);
     delay(200);
 
-    fprintf(recording,"127000127254000000000000127000127254000000000000");
-    fprintf(recording,"128127126125000000000000128127126125000000000000");
-    fprintf(recording,"000050100200000000000000000050100200000000000000");
+    while(currentFrame.next == &NULLFRAME){
+      printFrame(currentFrame);
+      char* frameVal = frameToString(currentFrame);
+      fprintf(recording,"currentFrame: %s",frameVal);
+      delay(100);
+      printf("currentFrame Vals: %s",frameVal);
+      delay(200);
+      printFrame(stringToFrame(frameVal));
+      currentFrame = *(currentFrame.next);
+    }
     fclose(recording);
 
     printf("File %s written and closed.\n",fileName);
@@ -62,12 +75,20 @@
     root = NULLFRAME;
     while(fgets(frame,51,f) != NULL){
       delay(200);
-      if(root.analog_main[CH1] == -1){
+      if(root.analog_main[CH1] == 255){
+        printf("Adding root...\n");
+        delay(200);
         root = stringToFrame(frame); // returned Frame from stringToFrame might only be in local scope
         root.previous = &root;
         root.next = &root;
+        printf("Root added.\n");
+        delay(200);
       } else {
+        printf("Adding frame %s...\n",frame);
+        delay(200);
         addFrame(stringToFrame(frame));
+        printf("Frame %s added.\n",frame);
+        delay(200);
       }
     }
 
@@ -77,34 +98,45 @@
   }
 
   void recordingLoop(){
-    if(root.analog_main[CH1] == -1){ //checks if it's equal to NULLFRAME
-      root = getCurrentFrame();
-    } else {
-      addFrame(getCurrentFrame());
+    while(!endTask){
+      if(root.analog_main[CH1] == 255){ //checks if it's equal to NULLFRAME
+        root = getCurrentFrame();
+      } else {
+        addFrame(getCurrentFrame());
+      }
+      delay(200);
+      if(endTask){
+        break;
+      }
     }
+    printf("Deleting recordTask...\n");
+    delay(200);
+    taskDelete(recordTask);
+    printf("recordTask deleted.\n");
     delay(200);
   }
 
   Frame getCurrentFrame(){
     Frame frame = {
-      {joystickGetAnalog(1,1),joystickGetAnalog(1,2),joystickGetAnalog(1,3),joystickGetAnalog(1,4)},
-      {joystickGetDigital(1,5,JOY_UP),joystickGetDigital(1,5,JOY_DOWN),joystickGetDigital(1,6,JOY_UP),joystickGetDigital(1,6,JOY_DOWN),
-       joystickGetDigital(1,7,JOY_UP),joystickGetDigital(1,7,JOY_DOWN),joystickGetDigital(1,7,JOY_LEFT),joystickGetDigital(1,7,JOY_RIGHT),
-       joystickGetDigital(1,8,JOY_UP),joystickGetDigital(1,8,JOY_DOWN),joystickGetDigital(1,8,JOY_LEFT),joystickGetDigital(1,8,JOY_RIGHT)},
-      {joystickGetAnalog(2,1),joystickGetAnalog(2,2),joystickGetAnalog(2,3),joystickGetAnalog(2,4)},
-      {joystickGetDigital(2,5,JOY_UP),joystickGetDigital(2,5,JOY_DOWN),joystickGetDigital(2,6,JOY_UP),joystickGetDigital(2,6,JOY_DOWN),
-       joystickGetDigital(42,7,JOY_UP),joystickGetDigital(2,7,JOY_DOWN),joystickGetDigital(2,7,JOY_LEFT),joystickGetDigital(2,7,JOY_RIGHT),
-       joystickGetDigital(2,8,JOY_UP),joystickGetDigital(2,8,JOY_DOWN),joystickGetDigital(2,8,JOY_LEFT),joystickGetDigital(2,8,JOY_RIGHT)},
-       NULL,NULL
+      .analog_main = {joystickGetAnalog(1,1),joystickGetAnalog(1,2),joystickGetAnalog(1,3),joystickGetAnalog(1,4)},
+      .digital_main = {joystickGetDigital(1,5,JOY_UP),joystickGetDigital(1,5,JOY_DOWN),joystickGetDigital(1,6,JOY_UP),joystickGetDigital(1,6,JOY_DOWN),
+                       joystickGetDigital(1,7,JOY_UP),joystickGetDigital(1,7,JOY_DOWN),joystickGetDigital(1,7,JOY_LEFT),joystickGetDigital(1,7,JOY_RIGHT),
+                       joystickGetDigital(1,8,JOY_UP),joystickGetDigital(1,8,JOY_DOWN),joystickGetDigital(1,8,JOY_LEFT),joystickGetDigital(1,8,JOY_RIGHT)},
+      .analog_main = {joystickGetAnalog(2,1),joystickGetAnalog(2,2),joystickGetAnalog(2,3),joystickGetAnalog(2,4)},
+      .digital_main = {joystickGetDigital(2,5,JOY_UP),joystickGetDigital(2,5,JOY_DOWN),joystickGetDigital(2,6,JOY_UP),joystickGetDigital(2,6,JOY_DOWN),
+                       joystickGetDigital(2,7,JOY_UP),joystickGetDigital(2,7,JOY_DOWN),joystickGetDigital(2,7,JOY_LEFT),joystickGetDigital(2,7,JOY_RIGHT),
+                       joystickGetDigital(2,8,JOY_UP),joystickGetDigital(2,8,JOY_DOWN),joystickGetDigital(2,8,JOY_LEFT),joystickGetDigital(2,8,JOY_RIGHT)},
+       .next = NULL,
+       .previous = NULL
     };
     frame.next=&frame;
     frame.previous=&frame;
     return frame;
   }
 
-  void printFrames(Frame *rootPtr){
+  void printAllFrames(Frame *rootPtr){
     Frame currentFrame = *rootPtr;
-    printf("printFrames: currentFrame initialized");
+    printf("printAllFrames: currentFrame initialized");
   	delay(200);
     printf("%s",frameToString(currentFrame));
   	delay(200);
@@ -120,43 +152,41 @@
 
   char * frameToString(Frame frame){
     char * string = malloc(50);
-    sprintf(string,"%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d",
-      frame.analog_main[CH1]+127,
-      frame.analog_main[CH2]+127,
-      frame.analog_main[CH3]+127,
-      frame.analog_main[CH4]+127,
-      frame.digital_main[BTN5U],
-      frame.digital_main[BTN5D],
-      frame.digital_main[BTN6U],
-      frame.digital_main[BTN6D],
-      frame.digital_main[BTN7U],
-      frame.digital_main[BTN7D],
-      frame.digital_main[BTN7L],
-      frame.digital_main[BTN7R],
-      frame.digital_main[BTN8U],
-      frame.digital_main[BTN8D],
-      frame.digital_main[BTN8L],
-      frame.digital_main[BTN8R],
-      frame.analog_partner[CH1]+127,
-      frame.analog_partner[CH2]+127,
-      frame.analog_partner[CH3]+127,
-      frame.analog_partner[CH4]+127,
-      frame.digital_partner[BTN5U],
-      frame.digital_partner[BTN5D],
-      frame.digital_partner[BTN6U],
-      frame.digital_partner[BTN6D],
-      frame.digital_partner[BTN7U],
-      frame.digital_partner[BTN7D],
-      frame.digital_partner[BTN7L],
-      frame.digital_partner[BTN7R],
-      frame.digital_partner[BTN8U],
-      frame.digital_partner[BTN8D],
-      frame.digital_partner[BTN8L],
-      frame.digital_partner[BTN8R]
+    sprintf(string,"%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d\n",
+      (frame.analog_main[CH1]+127 < 0 || frame.analog_main[CH1]+127 > 255) ? 0 : frame.analog_main[CH1]+127,
+      (frame.analog_main[CH2]+127 < 0 || frame.analog_main[CH2]+127 > 255) ? 0 : frame.analog_main[CH2]+127,
+      (frame.analog_main[CH3]+127 < 0 || frame.analog_main[CH3]+127 > 255) ? 0 : frame.analog_main[CH3]+127,
+      (frame.analog_main[CH4]+127 < 0 || frame.analog_main[CH4]+127 > 255) ? 0 : frame.analog_main[CH4]+127,
+      (frame.digital_main[BTN5U] == 0 || frame.digital_main[BTN5U] == 1) ? frame.digital_main[BTN5U] : 0,
+      (frame.digital_main[BTN5D] == 0 || frame.digital_main[BTN5D] == 1) ? frame.digital_main[BTN5D] : 0,
+      (frame.digital_main[BTN6U] == 0 || frame.digital_main[BTN6U] == 1) ? frame.digital_main[BTN6U] : 0,
+      (frame.digital_main[BTN6D] == 0 || frame.digital_main[BTN6D] == 1) ? frame.digital_main[BTN6D] : 0,
+      (frame.digital_main[BTN7U] == 0 || frame.digital_main[BTN7U] == 1) ? frame.digital_main[BTN7U] : 0,
+      (frame.digital_main[BTN7D] == 0 || frame.digital_main[BTN7D] == 1) ? frame.digital_main[BTN7D] : 0,
+      (frame.digital_main[BTN7L] == 0 || frame.digital_main[BTN7L] == 1) ? frame.digital_main[BTN7L] : 0,
+      (frame.digital_main[BTN7R] == 0 || frame.digital_main[BTN7R] == 1) ? frame.digital_main[BTN7R] : 0,
+      (frame.digital_main[BTN8U] == 0 || frame.digital_main[BTN8U] == 1) ? frame.digital_main[BTN8U] : 0,
+      (frame.digital_main[BTN8D] == 0 || frame.digital_main[BTN8D] == 1) ? frame.digital_main[BTN8D] : 0,
+      (frame.digital_main[BTN8L] == 0 || frame.digital_main[BTN8L] == 1) ? frame.digital_main[BTN8L] : 0,
+      (frame.digital_main[BTN8R] == 0 || frame.digital_main[BTN8R] == 1) ? frame.digital_main[BTN8R] : 0,
+      (frame.analog_partner[CH1]+127 < 0 || frame.analog_partner[CH1]+127 > 255) ? 0 : frame.analog_partner[CH1]+127,
+      (frame.analog_partner[CH2]+127 < 0 || frame.analog_partner[CH2]+127 > 255) ? 0 : frame.analog_partner[CH2]+127,
+      (frame.analog_partner[CH3]+127 < 0 || frame.analog_partner[CH3]+127 > 255) ? 0 : frame.analog_partner[CH3]+127,
+      (frame.analog_partner[CH4]+127 < 0 || frame.analog_partner[CH4]+127 > 255) ? 0 : frame.analog_partner[CH4]+127,
+      (frame.digital_partner[BTN5U] == 0 || frame.digital_partner[BTN5U] == 1) ? frame.digital_partner[BTN5U] : 0,
+      (frame.digital_partner[BTN5D] == 0 || frame.digital_partner[BTN5D] == 1) ? frame.digital_partner[BTN5D] : 0,
+      (frame.digital_partner[BTN6U] == 0 || frame.digital_partner[BTN6U] == 1) ? frame.digital_partner[BTN6U] : 0,
+      (frame.digital_partner[BTN6D] == 0 || frame.digital_partner[BTN6D] == 1) ? frame.digital_partner[BTN6D] : 0,
+      (frame.digital_partner[BTN7U] == 0 || frame.digital_partner[BTN7U] == 1) ? frame.digital_partner[BTN7U] : 0,
+      (frame.digital_partner[BTN7D] == 0 || frame.digital_partner[BTN7D] == 1) ? frame.digital_partner[BTN7D] : 0,
+      (frame.digital_partner[BTN7L] == 0 || frame.digital_partner[BTN7L] == 1) ? frame.digital_partner[BTN7L] : 0,
+      (frame.digital_partner[BTN7R] == 0 || frame.digital_partner[BTN7R] == 1) ? frame.digital_partner[BTN7R] : 0,
+      (frame.digital_partner[BTN8U] == 0 || frame.digital_partner[BTN8U] == 1) ? frame.digital_partner[BTN8U] : 0,
+      (frame.digital_partner[BTN8D] == 0 || frame.digital_partner[BTN8D] == 1) ? frame.digital_partner[BTN8D] : 0,
+      (frame.digital_partner[BTN8L] == 0 || frame.digital_partner[BTN8L] == 1) ? frame.digital_partner[BTN8L] : 0,
+      (frame.digital_partner[BTN8R] == 0 || frame.digital_partner[BTN8R] == 1) ? frame.digital_partner[BTN8R] : 0
     );
     // TODO: code above is really ugly and inefficient lol
-    printf("%s\n",string);
-  	delay(200);
     return string;
   }
 
@@ -170,13 +200,13 @@
     char* digital_partner = substring(string,37,12);
 
     int x;
-    printf("analog_main: %s",analog_main);
-    delay(200);
+    // printf("analog_main: %s\n",analog_main);
+    // delay(200);
     for(x=0;x<4;x++){
-      printf("Analog Main %d: %s\n",x,substring(substring(string,1,12),(x*3)+1,3));
-      delay(200);
-      printf("Analog Partner %d: %s\n",x,substring(analog_partner,(x*3)+1,3));
-      delay(200);
+      // printf("Analog Main %d: %s\n",x,substring(substring(string,1,12),(x*3)+1,3));
+      // delay(200);
+      // printf("Analog Partner %d: %s\n",x,substring(analog_partner,(x*3)+1,3));
+      // delay(200);
       frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3))-127;
       frame.analog_partner[x] = atoi(substring(analog_partner,(x*3)+1,3))-127;
     }
@@ -219,4 +249,27 @@
     *(substring+subPos) = '\0';
 
     return substring;
+  }
+
+  void printFrame(Frame frame){
+    printf("Analog Main: %d\t%d\t%d\t%d\t\n",frame.analog_main[CH1],frame.analog_main[CH2],frame.analog_main[CH3],frame.analog_main[CH4]);
+    delay(200);
+
+    printf("Digital Main\t: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t\n",
+      frame.digital_main[BTN5U],frame.digital_main[BTN5D],frame.digital_main[BTN6U],frame.digital_main[BTN6D],
+      frame.digital_main[BTN7U],frame.digital_main[BTN7D],frame.digital_main[BTN7L],frame.digital_main[BTN7R],
+      frame.digital_main[BTN8U],frame.digital_main[BTN8D],frame.digital_main[BTN8L],frame.digital_main[BTN8R]
+    );
+    delay(200);
+
+    printf("Analog Partner: %d\t%d\t%d\t%d\t\n",frame.analog_partner[CH1],frame.analog_partner[CH2],frame.analog_partner[CH3],frame.analog_partner[CH4]);
+    delay(200);
+
+    printf("Digital Partner\t: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t\n",
+      frame.digital_partner[BTN5U],frame.digital_partner[BTN5D],frame.digital_partner[BTN6U],frame.digital_partner[BTN6D],
+      frame.digital_partner[BTN7U],frame.digital_partner[BTN7D],frame.digital_partner[BTN7L],frame.digital_partner[BTN7R],
+      frame.digital_partner[BTN8U],frame.digital_partner[BTN8D],frame.digital_partner[BTN8L],frame.digital_partner[BTN8R]
+    );
+    delay(200);
+
   }
