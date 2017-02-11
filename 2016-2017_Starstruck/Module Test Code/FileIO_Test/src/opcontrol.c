@@ -31,14 +31,46 @@
  */
 
 void operatorControl() {
+	/*
 	Frame frame = {
-		{127,127,127,127},
+		{-120,-120,-127,-127},
 		{false,false,false,false,false,false,false,false,false,false,false,false},
-		{127,127,127,127},
+		{-127,-127,-127,-127},
 		{false,false,false,false,false,false,false,false,false,false,false,false},
 		NULL,NULL
 	};
+	*/
 
-	stringToFrame(frameToString(frame));
+	//stringToFrame(frameToString(frame));
+	printf("Starting recording 1...\n");
+	delay(200);
+	startRecording(1);
+	printf("Recording 1 started.\nStopping recording 1...\n");
+	delay(200);
+	delay(2000);
+	stopRecording();
+	printf("Recording 1 stopped.\nLoading recording 1...\n");
+	delay(200);
+	loadRecording(1);
+	printf("Recording 1 loaded.\n");
+	delay(200);
+
+	/*
+	//TEST CODE FOR READING A FILE
+
+	//Initialize 20 char string for read
+	char *a = malloc(sizeof(char) * 10);
+	char *b = malloc(sizeof(char) * 10);
+	char *c = malloc(sizeof(char) * 10);
+	//Open Test file in read mode
+	f = fopen("Test.txt","r");
+	//Read file contents to str
+	fgets(a, 4, f); //string, max chars + 1, file
+	fgets(b, 4, f);
+	fgets(c, 4, f);
+	//Close file
+	fclose(f);
+	printf("%d, %d, %d\n\r",atoi(a),atoi(b),atoi(c));
+	*/
 
 }

@@ -20,51 +20,60 @@
 
   void startRecording(int s){
     slot = s;
-    recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+    //recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
     root = NULLFRAME;
-    fileName = "";
+    fileName = malloc(sizeof(char)*14);
+
   }
 
   void stopRecording(){
-    taskDelete(recordTask);
-    Frame currentFrame = root;
+    printf("Deleting recordTask...\n");
+    delay(200);
+    //taskDelete(recordTask);
+    //Frame currentFrame = root;
+    printf("recordTask deleted.\n");
+    delay(200);
+
+    printf("Titling file...\n");
+    delay(200);
     sprintf(fileName,"Recording%d.txt",slot);
+    printf("File titled: %s\n",fileName);
+    delay(200);
+
+    printf("Opening %s...\n",fileName);
+    delay(200);
     FILE* recording = fopen(fileName,"w");
-    while(currentFrame.next != NULL){
-      fprintf(recording,frameToString(currentFrame));
-    }
+    printf("%s opened.\n",fileName);
+    delay(200);
+
+    fprintf(recording,"127000127254000000000000127000127254000000000000");
+    fprintf(recording,"128127126125000000000000128127126125000000000000");
+    fprintf(recording,"001252069042010100100101127252069042010100100101");
     fclose(recording);
-  	printf("File %s written and closed.\n",fileName);
+
+    printf("File %s written and closed.\n",fileName);
+  	delay(200);
   }
 
   Frame loadRecording(int s){
+    sprintf(fileName,"Recording%d.txt",s);
     FILE* f = fopen(fileName,"r");
-    char *frame = malloc(50);
-    Frame rt = NULLFRAME;
-    while(fgets(frame,50,f) != NULL){
-      if(rt.analog_main[CH1] == -1){
-        //rt =
+    char *frame = malloc(50); //TODO memory leaks
+    root = NULLFRAME;
+    while(fgets(frame,51,f) != NULL){
+      delay(200);
+      if(root.analog_main[CH1] == -1){
+        root = stringToFrame(frame); // returned Frame from stringToFrame might only be in local scope
+        root.previous = &root;
+        root.next = &root;
+      } else {
+        addFrame(stringToFrame(frame));
       }
     }
-    /*
-    //TEST CODE FOR READING A FILE
 
-    //Initialize 20 char string for read
-    char *a = malloc(sizeof(char) * 10);
-    char *b = malloc(sizeof(char) * 10);
-    char *c = malloc(sizeof(char) * 10);
-    //Open Test file in read mode
-    f = fopen("Test.txt","r");
-    //Read file contents to str
-    fgets(a, 4, f); //string, max chars + 1, file
-    fgets(b, 4, f);
-    fgets(c, 4, f);
-    //Close file
+    free(frame);
     fclose(f);
-    printf("%d, %d, %d\n\r",atoi(a),atoi(b),atoi(c));
-    */
-
-    return root; //TODO: placeholder
+    return root;
   }
 
   void recordingLoop(){
@@ -84,7 +93,7 @@
        joystickGetDigital(1,8,JOY_UP),joystickGetDigital(1,8,JOY_DOWN),joystickGetDigital(1,8,JOY_LEFT),joystickGetDigital(1,8,JOY_RIGHT)},
       {joystickGetAnalog(2,1),joystickGetAnalog(2,2),joystickGetAnalog(2,3),joystickGetAnalog(2,4)},
       {joystickGetDigital(2,5,JOY_UP),joystickGetDigital(2,5,JOY_DOWN),joystickGetDigital(2,6,JOY_UP),joystickGetDigital(2,6,JOY_DOWN),
-       joystickGetDigital(2,7,JOY_UP),joystickGetDigital(2,7,JOY_DOWN),joystickGetDigital(2,7,JOY_LEFT),joystickGetDigital(2,7,JOY_RIGHT),
+       joystickGetDigital(42,7,JOY_UP),joystickGetDigital(2,7,JOY_DOWN),joystickGetDigital(2,7,JOY_LEFT),joystickGetDigital(2,7,JOY_RIGHT),
        joystickGetDigital(2,8,JOY_UP),joystickGetDigital(2,8,JOY_DOWN),joystickGetDigital(2,8,JOY_LEFT),joystickGetDigital(2,8,JOY_RIGHT)},
        NULL,NULL
     };
@@ -93,16 +102,25 @@
     return frame;
   }
 
+  void printFrames(Frame *rootPtr){
+    Frame currentFrame = *rootPtr;
+    printf("printFrames: currentFrame initialized");
+  	delay(200);
+    printf("%s",frameToString(currentFrame));
+  	delay(200);
+    currentFrame = *(currentFrame.next);
+  }
+
   void addFrame(Frame toAdd){
-      toAdd.previous = root.previous;
-      toAdd.next = &root;
-      (*(root.previous)).next = &toAdd;
-      root.previous = &toAdd;
+    toAdd.previous = root.previous;
+    toAdd.next = &root;
+    (*(root.previous)).next = &toAdd;
+    root.previous = &toAdd;
   }
 
   char * frameToString(Frame frame){
     char * string = malloc(50);
-    sprintf(string,"%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d",
+    sprintf(string,"%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d",
       frame.analog_main[CH1]+127,
       frame.analog_main[CH2]+127,
       frame.analog_main[CH3]+127,
@@ -138,10 +156,13 @@
     );
     // TODO: code above is really ugly and inefficient lol
     printf("%s\n",string);
+  	delay(200);
     return string;
   }
 
   Frame stringToFrame(char* string){
+    printf("original string: %s",(string));
+    delay(200);
     Frame frame = NULLFRAME;
     char* analog_main = substring(string,1,12);
     char* digital_main = substring(string,13,12);
@@ -149,7 +170,13 @@
     char* digital_partner = substring(string,37,12);
 
     int x;
+    printf("analog_main: %s",analog_main);
+    delay(200);
     for(x=0;x<4;x++){
+      printf("Analog Main %d: %s\n",x,substring(substring(string,1,12),(x*3)+1,3));
+      delay(200);
+      printf("Analog Partner %d: %s\n",x,substring(analog_partner,(x*3)+1,3));
+      delay(200);
       frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3))-127;
       frame.analog_partner[x] = atoi(substring(analog_partner,(x*3)+1,3))-127;
     }
@@ -158,8 +185,10 @@
       frame.digital_partner[x] = atoi(substring(digital_partner,x+1,1));
     }
 
-     printf("%d\t%d\t%d\t%d\n",frame.analog_main[CH1],frame.analog_main[CH2],frame.analog_main[CH3],frame.analog_main[CH4]);
-     printf("%d",frame.digital_main[CH1]);
+    printf("%d\t%d\t%d\t%d\n",frame.analog_main[CH1],frame.analog_main[CH2],frame.analog_main[CH3],frame.analog_main[CH4]);
+   	delay(200);
+    printf("%d\t%d\t%d\t%d\n",frame.analog_partner[CH1],frame.analog_partner[CH2],frame.analog_partner[CH3],frame.analog_partner[CH4]);
+   	delay(200);
 
     return frame;
 
@@ -177,8 +206,9 @@
     int subPos;
 
     if(substring == NULL){
-       printf("str in substring method is NULL.\n");
-       exit(1);
+      printf("str in substring method is NULL.\n");
+     	delay(200);
+      exit(1);
     }
 
     for(subPos = 0 ; subPos < length ; subPos++){

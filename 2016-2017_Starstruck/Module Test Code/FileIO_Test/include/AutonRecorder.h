@@ -54,8 +54,8 @@
     .digital_main = {false,false,false,false,false,false,false,false,false,false,false,false},
     .analog_partner = {-1,-1,-1,-1},
     .digital_partner = {false,false,false,false,false,false,false,false,false,false,false,false},
-    .next = (Frame*)0,
-    .previous = (Frame*)0 //TODO: idr why i did that (Frame *)0 ? something about NULL being a problem bc neither next or previous are ints
+    .next = NULL,
+    .previous = NULL
   };
 
   void startRecording(int slot);
@@ -84,6 +84,11 @@
    * When recording files, this reads the joysticks and puts their values in a Frame structure.
    *   The returned Frame's next and previous values are NULL, and should be set in the circular
    *   list of Frames in
+   */
+
+  void printFrames(Frame *rootPtr);
+  /*
+   * Takes in pointer to root so
    */
 
   void addFrame(Frame toAdd);
