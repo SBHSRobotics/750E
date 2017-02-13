@@ -33,16 +33,16 @@
     endTask = true;
     Frame currentFrame = {
       .analog_main = {127,127,127,127},
-      .digital_main = {0,1,0,1,0,1,0,1,0,1,1,1},
+      .digital_main = {0,0,0,0,0,0,0,0,0,0,0,0},
       .analog_partner = {127,127,127,127},
-      .digital_partner = {0,1,0,1,0,1,0,1,0,1,1,1},
+      .digital_partner = {0,0,0,0,0,0,0,0,0,0,0,0},
       .next = &NULLFRAME, //TODO extra frames are being printed?? it could be something with the previous's and nexts
       .previous = NULL
     };//root;
 
     printf("Titling file...\n");
     delay(200);
-    sprintf(fileName,"Recording%d.txt",slot);
+    sprintf(fileName,"Record%d.txt",slot);
     printf("File titled: %s\n",fileName);
     delay(200);
 
@@ -52,16 +52,16 @@
     printf("%s opened.\n",fileName);
     delay(200);
 
-    while(currentFrame.next == &NULLFRAME){
+    do{
       printFrame(currentFrame);
       char* frameVal = frameToString(currentFrame);
-      fprintf(recording,"currentFrame: %s",frameVal);
+      fprintf(recording,"%s",frameVal);
       delay(100);
       printf("currentFrame Vals: %s",frameVal);
       delay(200);
       printFrame(stringToFrame(frameVal));
       currentFrame = *(currentFrame.next);
-    }
+    } while (currentFrame.next = NULL);
     fclose(recording);
 
     printf("File %s written and closed.\n",fileName);
@@ -69,7 +69,9 @@
   }
 
   Frame loadRecording(int s){
-    sprintf(fileName,"Recording%d.txt",s);
+    printf("Loading recording %d...\n",s);
+    delay(200);
+    sprintf(fileName,"Record%d.txt",s);
     FILE* f = fopen(fileName,"r");
     char *frame = malloc(50); //TODO memory leaks
     root = NULLFRAME;
@@ -105,7 +107,7 @@
         addFrame(getCurrentFrame());
       }
       delay(200);
-      if(endTask){
+      if(endTask){ //TODO when this works, make one unused button on joystick end the task
         break;
       }
     }
@@ -200,13 +202,7 @@
     char* digital_partner = substring(string,37,12);
 
     int x;
-    // printf("analog_main: %s\n",analog_main);
-    // delay(200);
     for(x=0;x<4;x++){
-      // printf("Analog Main %d: %s\n",x,substring(substring(string,1,12),(x*3)+1,3));
-      // delay(200);
-      // printf("Analog Partner %d: %s\n",x,substring(analog_partner,(x*3)+1,3));
-      // delay(200);
       frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3))-127;
       frame.analog_partner[x] = atoi(substring(analog_partner,(x*3)+1,3))-127;
     }
@@ -214,8 +210,9 @@
       frame.digital_main[x] = atoi(substring(digital_main,x+1,1));
       frame.digital_partner[x] = atoi(substring(digital_partner,x+1,1));
     }
-
-    printf("%d\t%d\t%d\t%d\n",frame.analog_main[CH1],frame.analog_main[CH2],frame.analog_main[CH3],frame.analog_main[CH4]);
+    printf("stringToFrame: \n");
+    delay(200);
+    printf("\n%d\t%d\t%d\t%d\n",frame.analog_main[CH1],frame.analog_main[CH2],frame.analog_main[CH3],frame.analog_main[CH4]);
    	delay(200);
     printf("%d\t%d\t%d\t%d\n",frame.analog_partner[CH1],frame.analog_partner[CH2],frame.analog_partner[CH3],frame.analog_partner[CH4]);
    	delay(200);
