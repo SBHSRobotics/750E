@@ -31,18 +31,12 @@
  */
 
 void operatorControl() {
-	printf("Starting recording 1...\n");
-	delay(200);
+
 	startRecording(1);
-	printf("Recording 1 started.\n");
-	delay(200);
 	delay(2000);
-	stopRecording();
-	printf("Recording 1 stopped.\n");
-	delay(200);
-	loadRecording(1);
-	printf("Recording 1 loaded.\n");
-	delay(200);
+	//stopRecording();
+
+	//loadRecording(1);
 
 	/*
 	//TEST CODE FOR READING A FILE

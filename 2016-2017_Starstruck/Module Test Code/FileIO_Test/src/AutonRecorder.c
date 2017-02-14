@@ -20,29 +20,34 @@
   bool endTask;
 
   void startRecording(int s){
+    printf("Starting recording %d...\n",s);
+    delay(200);
+
     slot = s;
     recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
     root = NULLFRAME;
     fileName = malloc(sizeof(char)*14);
     endTask = false;
+
+    printf("Recording %d started.\n",s);
+    delay(200);
   }
 
   void stopRecording(){
-    printf("Stopping recording 1...\n");
+    printf("Stopping recording %d...\n",slot);
     delay(200);
-    endTask = true;
     Frame currentFrame = {
       .analog_main = {127,127,127,127},
       .digital_main = {0,0,0,0,0,0,0,0,0,0,0,0},
       .analog_partner = {127,127,127,127},
       .digital_partner = {0,0,0,0,0,0,0,0,0,0,0,0},
-      .next = &NULLFRAME, //TODO extra frames are being printed?? it could be something with the previous's and nexts
+      .next = NULL,
       .previous = NULL
-    };//root;
+    };
 
     printf("Titling file...\n");
     delay(200);
-    sprintf(fileName,"Record%d.txt",slot);
+    sprintf(fileName,"Auton%d.txt",slot);
     printf("File titled: %s\n",fileName);
     delay(200);
 
@@ -53,25 +58,23 @@
     delay(200);
 
     do{
-      printFrame(currentFrame);
       char* frameVal = frameToString(currentFrame);
       fprintf(recording,"%s",frameVal);
       delay(100);
-      printf("currentFrame Vals: %s",frameVal);
-      delay(200);
-      printFrame(stringToFrame(frameVal));
+      printFrame(currentFrame);
       currentFrame = *(currentFrame.next);
-    } while (currentFrame.next = NULL);
+    } while (currentFrame.next == NULL);
     fclose(recording);
 
-    printf("File %s written and closed.\n",fileName);
+    printf("File %s written and closed.\nRecording %d stopped.\n",fileName,slot);
   	delay(200);
+
   }
 
   Frame loadRecording(int s){
     printf("Loading recording %d...\n",s);
     delay(200);
-    sprintf(fileName,"Record%d.txt",s);
+    sprintf(fileName,"Auton%d.txt",s);
     FILE* f = fopen(fileName,"r");
     char *frame = malloc(50); //TODO memory leaks
     root = NULLFRAME;
@@ -96,15 +99,27 @@
 
     free(frame);
     fclose(f);
+
+    printf("Recording %d loaded.\n",s);
+    delay(200);
     return root;
   }
 
   void recordingLoop(){
     while(!endTask){
+      printf("Running recordingLoop...\n");
+      delay(200);
       if(root.analog_main[CH1] == 255){ //checks if it's equal to NULLFRAME
         root = getCurrentFrame();
       } else {
-        addFrame(getCurrentFrame());
+        Frame currentFrame = getCurrentFrame();
+        addFrame(currentFrame);
+        printFrame(currentFrame);
+        if(currentFrame.digital_main[BTN5D] == true){
+          endTask=true;
+          printf("5 down pressed.\n");
+          delay(200);
+        }
       }
       delay(200);
       if(endTask){ //TODO when this works, make one unused button on joystick end the task
@@ -113,7 +128,9 @@
     }
     printf("Deleting recordTask...\n");
     delay(200);
-    taskDelete(recordTask);
+    taskSuspend(recordTask);
+    delay(200);
+    //endTask = false;
     printf("recordTask deleted.\n");
     delay(200);
   }
@@ -133,6 +150,9 @@
     };
     frame.next=&frame;
     frame.previous=&frame;
+    printf("getCurrentFrame: \n");
+    delay(200);
+    printFrame(frame);
     return frame;
   }
 
@@ -154,7 +174,7 @@
 
   char * frameToString(Frame frame){
     char * string = malloc(50);
-    sprintf(string,"%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d\n",
+    sprintf(string,"%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d",
       (frame.analog_main[CH1]+127 < 0 || frame.analog_main[CH1]+127 > 255) ? 0 : frame.analog_main[CH1]+127,
       (frame.analog_main[CH2]+127 < 0 || frame.analog_main[CH2]+127 > 255) ? 0 : frame.analog_main[CH2]+127,
       (frame.analog_main[CH3]+127 < 0 || frame.analog_main[CH3]+127 > 255) ? 0 : frame.analog_main[CH3]+127,
@@ -193,8 +213,6 @@
   }
 
   Frame stringToFrame(char* string){
-    printf("original string: %s",(string));
-    delay(200);
     Frame frame = NULLFRAME;
     char* analog_main = substring(string,1,12);
     char* digital_main = substring(string,13,12);
@@ -210,15 +228,8 @@
       frame.digital_main[x] = atoi(substring(digital_main,x+1,1));
       frame.digital_partner[x] = atoi(substring(digital_partner,x+1,1));
     }
-    printf("stringToFrame: \n");
-    delay(200);
-    printf("\n%d\t%d\t%d\t%d\n",frame.analog_main[CH1],frame.analog_main[CH2],frame.analog_main[CH3],frame.analog_main[CH4]);
-   	delay(200);
-    printf("%d\t%d\t%d\t%d\n",frame.analog_partner[CH1],frame.analog_partner[CH2],frame.analog_partner[CH3],frame.analog_partner[CH4]);
-   	delay(200);
 
     return frame;
-
   }
 
   char* substring(char* str,int start,int length){
@@ -249,6 +260,8 @@
   }
 
   void printFrame(Frame frame){
+    printf("printFrame:\n");
+    delay(100);
     printf("Analog Main: %d\t%d\t%d\t%d\t\n",frame.analog_main[CH1],frame.analog_main[CH2],frame.analog_main[CH3],frame.analog_main[CH4]);
     delay(200);
 

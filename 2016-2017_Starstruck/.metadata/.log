@@ -1632,3 +1632,16 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.ui 4 4 2017-02-13 16:40:40.274
 !MESSAGE Conflicting handlers for edu.purdue.sigbots.ros.eclipse.wizard.commands.updateCommand: {edu.purdue.sigbots.ros.eclipse.wizard.commands.UpgradeProjectCommand} vs {edu.purdue.sigbots.ros.eclipse.wizard.commands.UpgradeProjectCommand}
+!SESSION 2017-02-14 16:26:25.671 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_92
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product edu.purdue.sigbots.ros.eclipse.branding.prosproduct
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product edu.purdue.sigbots.ros.eclipse.branding.prosproduct
+
+!ENTRY org.eclipse.ui 4 4 2017-02-14 16:26:38.198
+!MESSAGE Conflicting handlers for edu.purdue.sigbots.ros.eclipse.wizard.commands.updateCommand: {edu.purdue.sigbots.ros.eclipse.wizard.commands.UpgradeProjectCommand} vs {edu.purdue.sigbots.ros.eclipse.wizard.commands.UpgradeProjectCommand}
+
+!ENTRY org.eclipse.ui 4 4 2017-02-14 16:26:46.566
+!MESSAGE Conflicting handlers for edu.purdue.sigbots.ros.eclipse.wizard.commands.updateCommand: {edu.purdue.sigbots.ros.eclipse.wizard.commands.UpgradeProjectCommand} vs {edu.purdue.sigbots.ros.eclipse.wizard.commands.UpgradeProjectCommand}
