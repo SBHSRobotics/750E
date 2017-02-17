@@ -33,7 +33,12 @@
 void operatorControl() {
 
 	startRecording(1);
-	delay(2000);
+	while(true) {
+		if(joystickGetDigital(1,5,JOY_DOWN)) {
+			stopRecording();
+		}
+		delay(200);
+	}
 	//stopRecording();
 
 	//loadRecording(1);
