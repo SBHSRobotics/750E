@@ -77,15 +77,15 @@
 
 // Robot functions
   void lift(int speed){
-    motorSet(AB,speed);
-    motorSet(CD,-speed);
-    motorSet(E,speed);
-    motorSet(F,-speed);
+    motorSet(AB,-speed);
+    motorSet(CD,speed);
+    motorSet(E,-speed);
+    motorSet(F,speed);
   }
 
   void pince(int speed){
     motorSet(PL,speed);
-    motorSet(PR,-speed);
+    motorSet(PR,speed);
   }
 
   void driveAuton(int frontLeftSpeed, int backLeftSpeed, int frontRightSpeed, int backRightSpeed){
@@ -105,7 +105,7 @@
 
     printf("ch1: %d\t ch2: %d\t ch3: %d\t ch4: %d\n",ch1,ch2,ch3,ch4);
 
-    if ((abs(ch3) > thresh) || (abs(ch4) > thresh) || (abs(ch2) > thresh) || (abs(ch1) > thresh)) {
+    // if ((abs(ch3) > thresh) || (abs(ch4) > thresh) || (abs(ch2) > thresh) || (abs(ch1) > thresh)) {
       if (abs(ch3) < thresh) {
         ch3 = 0;
       }
@@ -125,31 +125,16 @@
         ch3 = 0;
       }
 
-      motorSet(LB, ch3 + ch2 + ch1 - ch4);
+      motorSet(LB, -ch3 + ch2 - ch1 + ch4);
       motorSet(LF, ch3 + ch2 + ch4 + ch1);
       motorSet(RB, -(ch3 + ch2 - ch1 + ch4));
       motorSet(RF, -(ch3 + ch2 - ch4 - ch1));
-    }
-    else if (joystickGetDigital(1, 7, JOY_UP)) {
-      motorSet(LB, 127);
-      motorSet(LF, 127);
-      motorSet(RB, 127);
-      motorSet(RF, 127);
-    }
-    else if (joystickGetDigital(1, 7, JOY_LEFT)) {
-      motorSet(LB, 127);
-      motorSet(LF, -127);
-      motorSet(RB, 127);
-      motorSet(RF, -127);
-    }
-    else if (joystickGetDigital(1, 7, JOY_RIGHT)) {
-      motorSet(LB, -127);
-      motorSet(LF, 127);
-      motorSet(RB, -127);
-      motorSet(RF, 127);
-    } else {
-      stopDrive();
-    }
+      motorSet(CL, (ch3 + ch2 + ch1));
+      motorSet(CR, (ch3 + ch2 + ch1));
+
+    // } else {
+    //   stopDrive();
+    // }
     printf("LF: %d\t LB: %d\t RF: %d\t RB: %d\n",motorGet(LF),motorGet(LB),motorGet(RF),motorGet(RB));
     // End holo code
   }
@@ -159,6 +144,8 @@
     motorStop(LF);
     motorStop(RB);
     motorStop(RF);
+    motorStop(CL);
+    motorStop(CR);
   }
 
 // LCD

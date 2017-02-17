@@ -32,8 +32,8 @@
 #define LCD_TEST 0
 
 void operatorControl() {
-	
 
+holoInitX6();
 
 	// LCD Test Code
 	#if LCD_TEST
