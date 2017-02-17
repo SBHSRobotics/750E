@@ -51,10 +51,10 @@
     delay(200);
 
     do{
-      char* frameVal = frameToString(*currentFrame);
+      char* frameVal = frameToString(&currentFrame);
       fprintf(recording,"%s",frameVal);
       delay(100);
-      printFrame(*currentFrame);
+      printFrame(&currentFrame);
       currentFrame = *(currentFrame.next);
     } while (currentFrame.next == NULL);
     fclose(recording);
@@ -108,11 +108,11 @@
       delay(200);
       if(root.analog_main[CH1] == 255){ //checks if it's equal to NULLFRAME
         root = getCurrentFrame();
-        addFrame(*root);
+        addFrame(&root);
       } else {
         printf("reached\n");
         Frame currentFrame = getCurrentFrame();
-        addFrame(*currentFrame);
+        addFrame(&currentFrame);
         //printFrame(currentFrame);
         if(currentFrame.digital_main[BTN5D] == true){
           endTask=true;
@@ -161,7 +161,7 @@
     };
     frame.next=&frame;
     frame.previous=&frame;
-    printFrame(frame);
+    printFrame(&frame);
     return frame;
   }
 
@@ -170,7 +170,7 @@
     delay(200);
     Frame currentFrame = *rootPtr;
     while(currentFrame.next != rootPtr){
-      printf("%s\n",frameToString(currentFrame));
+      printf("%s\n",frameToString(&currentFrame));
     	delay(200);
       currentFrame = *(currentFrame.next);
     }
@@ -179,8 +179,8 @@
   }
 
   void addFrame(Frame *toAdd){
-    toAdd.previous = root.previous;
-    toAdd.next = &root;
+    (*toAdd).previous = root.previous;
+    (*toAdd).next = &root;
     (*(root.previous)).next = toAdd;
     root.previous = toAdd;
     printf("%s added.\n",frameToString(toAdd));
@@ -189,41 +189,41 @@
     delay(100);
   }
 
-  char * frameToString(Frame frame){
+  char * frameToString(Frame *frame){
     char * string = malloc(50);
     sprintf(string,"%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d",
-      (frame.analog_main[CH1]+127 < 0 || frame.analog_main[CH1]+127 > 255) ? 0 : frame.analog_main[CH1]+127,
-      (frame.analog_main[CH2]+127 < 0 || frame.analog_main[CH2]+127 > 255) ? 0 : frame.analog_main[CH2]+127,
-      (frame.analog_main[CH3]+127 < 0 || frame.analog_main[CH3]+127 > 255) ? 0 : frame.analog_main[CH3]+127,
-      (frame.analog_main[CH4]+127 < 0 || frame.analog_main[CH4]+127 > 255) ? 0 : frame.analog_main[CH4]+127,
-      (frame.digital_main[BTN5U] == 0 || frame.digital_main[BTN5U] == 1) ? frame.digital_main[BTN5U] : 0,
-      (frame.digital_main[BTN5D] == 0 || frame.digital_main[BTN5D] == 1) ? frame.digital_main[BTN5D] : 0,
-      (frame.digital_main[BTN6U] == 0 || frame.digital_main[BTN6U] == 1) ? frame.digital_main[BTN6U] : 0,
-      (frame.digital_main[BTN6D] == 0 || frame.digital_main[BTN6D] == 1) ? frame.digital_main[BTN6D] : 0,
-      (frame.digital_main[BTN7U] == 0 || frame.digital_main[BTN7U] == 1) ? frame.digital_main[BTN7U] : 0,
-      (frame.digital_main[BTN7D] == 0 || frame.digital_main[BTN7D] == 1) ? frame.digital_main[BTN7D] : 0,
-      (frame.digital_main[BTN7L] == 0 || frame.digital_main[BTN7L] == 1) ? frame.digital_main[BTN7L] : 0,
-      (frame.digital_main[BTN7R] == 0 || frame.digital_main[BTN7R] == 1) ? frame.digital_main[BTN7R] : 0,
-      (frame.digital_main[BTN8U] == 0 || frame.digital_main[BTN8U] == 1) ? frame.digital_main[BTN8U] : 0,
-      (frame.digital_main[BTN8D] == 0 || frame.digital_main[BTN8D] == 1) ? frame.digital_main[BTN8D] : 0,
-      (frame.digital_main[BTN8L] == 0 || frame.digital_main[BTN8L] == 1) ? frame.digital_main[BTN8L] : 0,
-      (frame.digital_main[BTN8R] == 0 || frame.digital_main[BTN8R] == 1) ? frame.digital_main[BTN8R] : 0,
-      (frame.analog_partner[CH1]+127 < 0 || frame.analog_partner[CH1]+127 > 255) ? 0 : frame.analog_partner[CH1]+127,
-      (frame.analog_partner[CH2]+127 < 0 || frame.analog_partner[CH2]+127 > 255) ? 0 : frame.analog_partner[CH2]+127,
-      (frame.analog_partner[CH3]+127 < 0 || frame.analog_partner[CH3]+127 > 255) ? 0 : frame.analog_partner[CH3]+127,
-      (frame.analog_partner[CH4]+127 < 0 || frame.analog_partner[CH4]+127 > 255) ? 0 : frame.analog_partner[CH4]+127,
-      (frame.digital_partner[BTN5U] == 0 || frame.digital_partner[BTN5U] == 1) ? frame.digital_partner[BTN5U] : 0,
-      (frame.digital_partner[BTN5D] == 0 || frame.digital_partner[BTN5D] == 1) ? frame.digital_partner[BTN5D] : 0,
-      (frame.digital_partner[BTN6U] == 0 || frame.digital_partner[BTN6U] == 1) ? frame.digital_partner[BTN6U] : 0,
-      (frame.digital_partner[BTN6D] == 0 || frame.digital_partner[BTN6D] == 1) ? frame.digital_partner[BTN6D] : 0,
-      (frame.digital_partner[BTN7U] == 0 || frame.digital_partner[BTN7U] == 1) ? frame.digital_partner[BTN7U] : 0,
-      (frame.digital_partner[BTN7D] == 0 || frame.digital_partner[BTN7D] == 1) ? frame.digital_partner[BTN7D] : 0,
-      (frame.digital_partner[BTN7L] == 0 || frame.digital_partner[BTN7L] == 1) ? frame.digital_partner[BTN7L] : 0,
-      (frame.digital_partner[BTN7R] == 0 || frame.digital_partner[BTN7R] == 1) ? frame.digital_partner[BTN7R] : 0,
-      (frame.digital_partner[BTN8U] == 0 || frame.digital_partner[BTN8U] == 1) ? frame.digital_partner[BTN8U] : 0,
-      (frame.digital_partner[BTN8D] == 0 || frame.digital_partner[BTN8D] == 1) ? frame.digital_partner[BTN8D] : 0,
-      (frame.digital_partner[BTN8L] == 0 || frame.digital_partner[BTN8L] == 1) ? frame.digital_partner[BTN8L] : 0,
-      (frame.digital_partner[BTN8R] == 0 || frame.digital_partner[BTN8R] == 1) ? frame.digital_partner[BTN8R] : 0
+      ((*frame).analog_main[CH1]+127 < 0 || (*frame).analog_main[CH1]+127 > 255) ? 0 : (*frame).analog_main[CH1]+127,
+      ((*frame).analog_main[CH2]+127 < 0 || (*frame).analog_main[CH2]+127 > 255) ? 0 : (*frame).analog_main[CH2]+127,
+      ((*frame).analog_main[CH3]+127 < 0 || (*frame).analog_main[CH3]+127 > 255) ? 0 : (*frame).analog_main[CH3]+127,
+      ((*frame).analog_main[CH4]+127 < 0 || (*frame).analog_main[CH4]+127 > 255) ? 0 : (*frame).analog_main[CH4]+127,
+      ((*frame).digital_main[BTN5U] == 0 || (*frame).digital_main[BTN5U] == 1) ? (*frame).digital_main[BTN5U] : 0,
+      ((*frame).digital_main[BTN5D] == 0 || (*frame).digital_main[BTN5D] == 1) ? (*frame).digital_main[BTN5D] : 0,
+      ((*frame).digital_main[BTN6U] == 0 || (*frame).digital_main[BTN6U] == 1) ? (*frame).digital_main[BTN6U] : 0,
+      ((*frame).digital_main[BTN6D] == 0 || (*frame).digital_main[BTN6D] == 1) ? (*frame).digital_main[BTN6D] : 0,
+      ((*frame).digital_main[BTN7U] == 0 || (*frame).digital_main[BTN7U] == 1) ? (*frame).digital_main[BTN7U] : 0,
+      ((*frame).digital_main[BTN7D] == 0 || (*frame).digital_main[BTN7D] == 1) ? (*frame).digital_main[BTN7D] : 0,
+      ((*frame).digital_main[BTN7L] == 0 || (*frame).digital_main[BTN7L] == 1) ? (*frame).digital_main[BTN7L] : 0,
+      ((*frame).digital_main[BTN7R] == 0 || (*frame).digital_main[BTN7R] == 1) ? (*frame).digital_main[BTN7R] : 0,
+      ((*frame).digital_main[BTN8U] == 0 || (*frame).digital_main[BTN8U] == 1) ? (*frame).digital_main[BTN8U] : 0,
+      ((*frame).digital_main[BTN8D] == 0 || (*frame).digital_main[BTN8D] == 1) ? (*frame).digital_main[BTN8D] : 0,
+      ((*frame).digital_main[BTN8L] == 0 || (*frame).digital_main[BTN8L] == 1) ? (*frame).digital_main[BTN8L] : 0,
+      ((*frame).digital_main[BTN8R] == 0 || (*frame).digital_main[BTN8R] == 1) ? (*frame).digital_main[BTN8R] : 0,
+      ((*frame).analog_partner[CH1]+127 < 0 || (*frame).analog_partner[CH1]+127 > 255) ? 0 : (*frame).analog_partner[CH1]+127,
+      ((*frame).analog_partner[CH2]+127 < 0 || (*frame).analog_partner[CH2]+127 > 255) ? 0 : (*frame).analog_partner[CH2]+127,
+      ((*frame).analog_partner[CH3]+127 < 0 || (*frame).analog_partner[CH3]+127 > 255) ? 0 : (*frame).analog_partner[CH3]+127,
+      ((*frame).analog_partner[CH4]+127 < 0 || (*frame).analog_partner[CH4]+127 > 255) ? 0 : (*frame).analog_partner[CH4]+127,
+      ((*frame).digital_partner[BTN5U] == 0 || (*frame).digital_partner[BTN5U] == 1) ? (*frame).digital_partner[BTN5U] : 0,
+      ((*frame).digital_partner[BTN5D] == 0 || (*frame).digital_partner[BTN5D] == 1) ? (*frame).digital_partner[BTN5D] : 0,
+      ((*frame).digital_partner[BTN6U] == 0 || (*frame).digital_partner[BTN6U] == 1) ? (*frame).digital_partner[BTN6U] : 0,
+      ((*frame).digital_partner[BTN6D] == 0 || (*frame).digital_partner[BTN6D] == 1) ? (*frame).digital_partner[BTN6D] : 0,
+      ((*frame).digital_partner[BTN7U] == 0 || (*frame).digital_partner[BTN7U] == 1) ? (*frame).digital_partner[BTN7U] : 0,
+      ((*frame).digital_partner[BTN7D] == 0 || (*frame).digital_partner[BTN7D] == 1) ? (*frame).digital_partner[BTN7D] : 0,
+      ((*frame).digital_partner[BTN7L] == 0 || (*frame).digital_partner[BTN7L] == 1) ? (*frame).digital_partner[BTN7L] : 0,
+      ((*frame).digital_partner[BTN7R] == 0 || (*frame).digital_partner[BTN7R] == 1) ? (*frame).digital_partner[BTN7R] : 0,
+      ((*frame).digital_partner[BTN8U] == 0 || (*frame).digital_partner[BTN8U] == 1) ? (*frame).digital_partner[BTN8U] : 0,
+      ((*frame).digital_partner[BTN8D] == 0 || (*frame).digital_partner[BTN8D] == 1) ? (*frame).digital_partner[BTN8D] : 0,
+      ((*frame).digital_partner[BTN8L] == 0 || (*frame).digital_partner[BTN8L] == 1) ? (*frame).digital_partner[BTN8L] : 0,
+      ((*frame).digital_partner[BTN8R] == 0 || (*frame).digital_partner[BTN8R] == 1) ? (*frame).digital_partner[BTN8R] : 0
     );
     // TODO: code above is really ugly and inefficient lol
     return string;
