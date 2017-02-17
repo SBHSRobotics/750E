@@ -46,11 +46,6 @@
       } else {
         Frame *currentFrame = getCurrentFrame();
         addFrame(currentFrame);
-        if(currentFrame->digital_main[BTN5D] == true){
-          endTask=true;
-          printf("5 down pressed.\n");
-          delay(200);
-        }
       }
       if(endTask){ //TODO when this works, make one unused button on joystick end the task
         break;
@@ -60,12 +55,12 @@
     printf("Suspending recordTask...\n");
     delay(200);
     printAllFrames(&root);
-    stopRecording();
+    saveRecording();
     delay(200);
     taskSuspend(recordTask);
   }
 
-  void stopRecording(){
+  void saveRecording(){
     printf("Stopping recording %d...\n\n",slot);
     delay(200);
     Frame *currentFrame = &root;
@@ -95,7 +90,10 @@
   	delay(200);
 
     loadRecording(slot);
+  }
 
+  void stopRecording(){
+    endTask = true;
   }
 
   Frame* loadRecording(int s){

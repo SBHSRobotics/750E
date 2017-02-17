@@ -17,7 +17,7 @@ TaskHandle replayTask;
 Frame *currentFrame;
 int recordingSlot = 0;
 
- void replayerLoop();
+void replayerLoop();
 
 void playAuton(int slot) {
   recordingSlot = slot;

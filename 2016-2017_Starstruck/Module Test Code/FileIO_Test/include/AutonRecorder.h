@@ -56,15 +56,22 @@
     .previous = NULL
   };
 
+  // TODO fix all of the descriptions lol
+
   void startRecording(int slot);
   /*
    * Starts the task that runs the Auton Recorder for the file Recorder[slot].txt
    */
 
-  void stopRecording();
+  void saveRecording();
   /*
    * Stops the Recorder task and uses the root Frame to write to the file. Does not require a slot
    *   because only one Auton Recorder should run at a time.
+   */
+
+  void stopRecording();
+  /*
+   *
    */
 
   Frame* loadRecording(int slot);
