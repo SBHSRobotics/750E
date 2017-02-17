@@ -10,7 +10,6 @@
 
 void playAuton(int slot);
 
-
 void stopAuton();
 
 int inputGetAnalog(unsigned char joystick, unsigned char axis);
@@ -19,6 +18,5 @@ bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
   unsigned char button);
 
 #define AUTON_REPLAYER_H_
-
 
 #endif /* AUTONREPLAYER_H_ */

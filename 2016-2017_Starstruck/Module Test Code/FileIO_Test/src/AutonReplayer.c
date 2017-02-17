@@ -2,7 +2,7 @@
  *  AutonReplayer.c
  *
  *  Created on: Feb 17, 2017
- *      Author: Mikel Matticoli
+ *      Author: Mikel Matticoli and Kirsten Meidlinger
  */
 
  #include <main.h>
@@ -40,22 +40,93 @@ int inputGetAnalog(unsigned char joystick, unsigned char axis) {
     } else if (joystick == 2) {
       return currentFrame->analog_partner[axis - 1];
     }
-  } else {
-    return joystickGetAnalog(joystick, axis);
   }
+  return joystickGetAnalog(joystick, axis);
 }
 
 bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
     unsigned char button) {
   if(isAutonomous()) {
-    if(joystick == 1) {
-      // main
+    if(joystick == 1) { //main
+      switch(buttonGroup){
+        case 5:
+          if(button==JOY_UP){
+            return currentFrame->digital_main[BTN5U];
+          } else if(button==JOY_DOWN){
+            return currentFrame->digital_main[BTN5D];
+          }
+          break;
+        case 6:
+          if(button==JOY_UP){
+            return currentFrame->digital_main[BTN6U];
+          } else if(button==JOY_DOWN){
+            return currentFrame->digital_main[BTN6D];
+          }
+          break;
+        case 7:
+          if(button==JOY_UP){
+            return currentFrame->digital_main[BTN7U];
+          } else if(button==JOY_DOWN){
+            return currentFrame->digital_main[BTN7D];
+          } else if(button==JOY_LEFT){
+            return currentFrame->digital_main[BTN7L];
+          } else if(button==JOY_RIGHT){
+            return currentFrame->digital_main[BTN7R];
+          }
+          break;
+        case 8:
+          if(button==JOY_UP){
+            return currentFrame->digital_main[BTN8U];
+          } else if(button==JOY_DOWN){
+            return currentFrame->digital_main[BTN8D];
+          } else if(button==JOY_LEFT){
+            return currentFrame->digital_main[BTN8L];
+          } else if(button==JOY_RIGHT){
+            return currentFrame->digital_main[BTN8R];
+          }
+          break;
+      }
     } else if (joystick == 2) {
-      // partner
+      switch(buttonGroup){
+        case 5:
+          if(button==JOY_UP){
+            return currentFrame->digital_partner[BTN5U];
+          } else if(button==JOY_DOWN){
+            return currentFrame->digital_partner[BTN5D];
+          }
+          break;
+        case 6:
+          if(button==JOY_UP){
+            return currentFrame->digital_partner[BTN6U];
+          } else if(button==JOY_DOWN){
+            return currentFrame->digital_partner[BTN6D];
+          }
+          break;
+        case 7:
+          if(button==JOY_UP){
+            return currentFrame->digital_partner[BTN7U];
+          } else if(button==JOY_DOWN){
+            return currentFrame->digital_partner[BTN7D];
+          } else if(button==JOY_LEFT){
+            return currentFrame->digital_partner[BTN7L];
+          } else if(button==JOY_RIGHT){
+            return currentFrame->digital_partner[BTN7R];
+          }
+          break;
+        case 8:
+          if(button==JOY_UP){
+            return currentFrame->digital_partner[BTN8U];
+          } else if(button==JOY_DOWN){
+            return currentFrame->digital_partner[BTN8D];
+          } else if(button==JOY_LEFT){
+            return currentFrame->digital_partner[BTN8L];
+          } else if(button==JOY_RIGHT){
+            return currentFrame->digital_partner[BTN8R];
+          }
+          break;
+        }
     }
-  } else {
-    return joystickGetDigital(joystick, buttonGroup, button);
   }
-}
+  return joystickGetDigital(joystick, buttonGroup, button);
 
-#define AUTON_REPLAYER_H_
+}
