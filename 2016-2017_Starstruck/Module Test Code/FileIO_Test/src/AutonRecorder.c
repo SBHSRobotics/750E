@@ -184,7 +184,7 @@
     (*toAdd).next = &root;
     (*(root.previous)).next = toAdd;
     root.previous = toAdd;
-    printf("Frame added.\n\n",frameToString(toAdd));
+    printf("Frame added.\n\n");
     delay(200);
   }
 
