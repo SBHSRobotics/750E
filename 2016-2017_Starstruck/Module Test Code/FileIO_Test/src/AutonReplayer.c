@@ -14,11 +14,12 @@
  */
 
 TaskHandle recordTask;
-Frame *currentFrame = NULLFRAME;
+Frame *currentFrame;
 
  void replayerLoop();
 
 void replayAuton(int slot) {
+  currentFrame = malloc(sizeof(Frame *));
   recordTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 }
 
@@ -29,7 +30,7 @@ void stopAuton() {
 }
 
 void replayerLoop() {
-
+  
 }
 
 int inputGetAnalog(unsigned char joystick, unsigned char axis) {
