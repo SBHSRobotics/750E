@@ -20,15 +20,19 @@ int recordingSlot = 0;
 void replayerLoop();
 
 void playAuton(int slot) {
+  printf("Replaying auton %d...\n",slot);
+  delay(200);
   recordingSlot = slot;
   currentFrame = malloc(sizeof(Frame *));
   replayTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 }
 
 void stopAuton() {
+  printf("Stopping auton...\n");
   taskSuspend(replayTask);
   taskDelete(replayTask);
   motorStopAll();
+  printf("Auton stopped.\n\n");
 }
 
 void replayerLoop() {

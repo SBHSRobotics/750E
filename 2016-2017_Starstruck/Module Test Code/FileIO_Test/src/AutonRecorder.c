@@ -88,8 +88,6 @@
 
     printf("File %s written and closed.\nrecordTask suspended.\nRecording %d stopped.\n\n",fileName,slot);
   	delay(200);
-
-    loadRecording(slot);
   }
 
   void stopRecording(){

@@ -29,8 +29,8 @@
 void autonomous() {
   playAuton(1);
   while(true) {
-    printf("LY: %d3\tRX: %d3\t8L: %d1\r",inputGetAnalog(1, 3),
+    printf("LY: %d3\tRX: %d3\t8L: %d1\n",inputGetAnalog(1, 3),
     inputGetAnalog(1,1), inputGetDigital(1, 8, JOY_LEFT));
-    delay(100);
+    delay(200);
   }
 }

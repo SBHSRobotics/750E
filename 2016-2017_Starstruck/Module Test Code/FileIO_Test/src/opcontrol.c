@@ -31,7 +31,6 @@
  */
 
 void operatorControl() {
-
 	startRecording(1);
 	while(true) { //recording while loop
 		if(joystickGetDigital(1,5,JOY_DOWN)) {
