@@ -111,10 +111,10 @@
         addFrame(&root);
       } else {
         printf("reached\n");
-        Frame currentFrame = *(getCurrentFrame());
-        addFrame(&currentFrame);
+        Frame *currentFrame = getCurrentFrame();
+        addFrame(currentFrame);
         //printFrame(currentFrame);
-        if(currentFrame.digital_main[BTN5D] == true){
+        if(currentFrame->digital_main[BTN5D] == true){
           endTask=true;
           printf("5 down pressed.\n");
           delay(200);
@@ -173,11 +173,12 @@
     printf("Printing all frames...\n");
     delay(200);
     Frame *currentFrame = rootPtr;
-    while(currentFrame->next != rootPtr){
+    do{
       printf("currentFrame: %p\tnext frame: %p\tprevious frame: %p\n",currentFrame,currentFrame->next,currentFrame->previous);
     	delay(200);
-      *currentFrame = *(currentFrame->next);
-    }
+      currentFrame = currentFrame->next;
+    }while(currentFrame != rootPtr);
+
     printf("All frames printed.\n");
     delay(200);
   }
@@ -188,9 +189,9 @@
     (*(root.previous)).next = toAdd;
     root.previous = toAdd;
     printf("%s added.\n",frameToString(toAdd));
-    delay(100);
-    printf("root previous: %p\n",*root.previous);
-    delay(100);
+    delay(200);
+    printf("%p\n",toAdd);
+    delay(200);
   }
 
   char * frameToString(Frame *frame){
