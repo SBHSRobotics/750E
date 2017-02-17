@@ -29,38 +29,67 @@
     fileName = malloc(sizeof(char)*14);
     endTask = false;
 
-    printf("Recording %d started.\n",s);
+    printf("Recording %d started.\n\n",s);
     delay(200);
   }
 
+  void recordingLoop(){
+    while(!endTask){
+      if(root.analog_main[CH1] == 255){ //checks if it's equal to NULLFRAME
+        root = *(getCurrentFrame());
+        addFrame(&root);
+      } else {
+        Frame *currentFrame = getCurrentFrame();
+        addFrame(currentFrame);
+        if(currentFrame->digital_main[BTN5D] == true){
+          endTask=true;
+          printf("5 down pressed.\n");
+          delay(200);
+        }
+      }
+      if(endTask){ //TODO when this works, make one unused button on joystick end the task
+        break;
+      }
+      delay(400);
+    }
+    printf("Suspending recordTask...\n");
+    delay(200);
+    printAllFrames(&root);
+    stopRecording();
+    delay(200);
+    taskSuspend(recordTask);
+  }
+
   void stopRecording(){
-    printf("Stopping recording %d...\n",slot);
+    printf("Stopping recording %d...\n\n",slot);
     delay(200);
     Frame *currentFrame = &root;
 
     printf("Titling file...\n");
     delay(200);
     sprintf(fileName,"Rec%d.txt",slot);
-    printf("File titled: %s\n",fileName);
+    printf("File titled: %s\n\n",fileName);
     delay(200);
 
     printf("Opening %s...\n",fileName);
     delay(200);
     FILE* recording = fopen(fileName,"w");
-    printf("%s opened.\n",fileName);
+    printf("%s opened.\n\n",fileName);
     delay(200);
 
     do{
       char* frameVal = frameToString(currentFrame);
+      printf("%s\n",frameVal);
       fprintf(recording,"%s",frameVal);
       delay(100);
-      printFrame(currentFrame);
       currentFrame = currentFrame->next;
     } while (currentFrame != &root);
     fclose(recording);
 
-    printf("File %s written and closed.\nrecordTask suspended.\nRecording %d stopped.\n",fileName,slot);
+    printf("File %s written and closed.\nrecordTask suspended.\nRecording %d stopped.\n\n",fileName,slot);
   	delay(200);
+
+    loadRecording(slot);
 
   }
 
@@ -74,63 +103,28 @@
     while(fgets(frameString,51,f) != NULL){
       delay(200);
       if(root.analog_main[CH1] == 255){
-        printf("Adding root...\n");
+        printf("Adding root %s...\n",substring(frameString,1,48));
         delay(200);
-        //root = malloc(sizeof(Frame)); // TODO something wrong with root initalization, worry about it later
         root = stringToFrame(frameString);
-        //root = *f; // returned Frame from stringToFrame might only be in local scope
         root.previous = &root;
         root.next = &root;
-        printf("Root added.\n");
+        printf("Root added.\n\n");
         delay(200);
       } else {
-        printf("Adding frame %s...\n",frameString);
-        delay(200);
         Frame *f = malloc(sizeof(Frame *));
         *f = stringToFrame(frameString);
         addFrame(f);
-        printf("Frame %s added.\n",frameString);
-        delay(200);
       }
     }
+
+    printAllFrames(&root);
 
     free(frameString);
     fclose(f);
 
-    printf("Recording %d loaded.\n",s);
+    printf("Recording %d loaded.\n\n",s);
     delay(200);
     return &root;
-  }
-
-  void recordingLoop(){
-    while(!endTask){
-      printf("Running recordingLoop...\n");
-      delay(200);
-      if(root.analog_main[CH1] == 255){ //checks if it's equal to NULLFRAME
-        root = *(getCurrentFrame());
-        addFrame(&root);
-      } else {
-        printf("reached\n");
-        Frame *currentFrame = getCurrentFrame();
-        addFrame(currentFrame);
-        //printFrame(currentFrame);
-        if(currentFrame->digital_main[BTN5D] == true){
-          endTask=true;
-          printf("5 down pressed.\n");
-          delay(200);
-        }
-      }
-      delay(200);
-      if(endTask){ //TODO when this works, make one unused button on joystick end the task
-        break;
-      }
-    }
-    printf("Suspending recordTask...\n");
-    delay(200);
-    printAllFrames(&root);
-    stopRecording();
-    delay(200);
-    taskSuspend(recordTask);
   }
 
   Frame* getCurrentFrame(){
@@ -174,23 +168,23 @@
     delay(200);
     Frame *currentFrame = rootPtr;
     do{
-      printf("currentFrame: %p\tnext frame: %p\tprevious frame: %p\n",currentFrame,currentFrame->next,currentFrame->previous);
+      printf("%s\t\n",frameToString(currentFrame));
     	delay(200);
       currentFrame = currentFrame->next;
     }while(currentFrame != rootPtr);
 
-    printf("All frames printed.\n");
+    printf("All frames printed.\n\n");
     delay(200);
   }
 
   void addFrame(Frame *toAdd){
+    printf("Adding frame %s...\n",frameToString(toAdd));
+    delay(200);
     (*toAdd).previous = root.previous;
     (*toAdd).next = &root;
     (*(root.previous)).next = toAdd;
     root.previous = toAdd;
-    printf("%s added.\n",frameToString(toAdd));
-    delay(200);
-    printf("%p\n",toAdd);
+    printf("Frame added.\n\n",frameToString(toAdd));
     delay(200);
   }
 
@@ -282,8 +276,6 @@
   }
 
   void printFrame(Frame *frame){
-    printf("printFrame:\n");
-    delay(100);
     printf("Analog Main: %d\t%d\t%d\t%d\t\n",(*frame).analog_main[CH1],(*frame).analog_main[CH2],(*frame).analog_main[CH3],(*frame).analog_main[CH4]);
     delay(200);
 

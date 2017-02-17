@@ -37,8 +37,6 @@
   #define BTN8L 10
   #define BTN8R 11
 
-
-
   typedef struct Frame {
       int analog_main[4]; //ch1, ch2, ch3, ch4
       bool digital_main[12]; //5U, 5D, 6U, 6D, 7U, 7D, 7L, 7R, 8U, 8D, 8L, 8R
