@@ -72,11 +72,6 @@
    * Gets file for recording at slot #, returns the root Frame of the recording
    */
 
-  void recordingLoop();
-  /*
-   * Manages the linked list of Frames
-   */
-
   Frame* getCurrentFrame();
   /*
    * When recording files, this reads the joysticks and puts their values in a Frame structure.
