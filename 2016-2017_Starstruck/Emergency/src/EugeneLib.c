@@ -93,8 +93,8 @@
       motorSet(LF, ch3 + ch2 + ch4 + ch1);
       motorSet(RB, -(ch3 + ch2 - ch1 + ch4));
       motorSet(RF, -(ch3 + ch2 - ch4 - ch1));
-      motorSet(CL, (ch3 + ch2 + ch1));
-      motorSet(CR, (ch3 + ch2 + ch1));
+      motorSet(CL, (-ch3 + ch2 + ch1));
+      motorSet(CR, (-ch3 + ch2 + ch1));
 
     // } else {
     //   stopDrive();
