@@ -51,10 +51,10 @@
     delay(200);
 
     do{
-      char* frameVal = frameToString(currentFrame);
+      char* frameVal = frameToString(*currentFrame);
       fprintf(recording,"%s",frameVal);
       delay(100);
-      printFrame(currentFrame);
+      printFrame(*currentFrame);
       currentFrame = *(currentFrame.next);
     } while (currentFrame.next == NULL);
     fclose(recording);
@@ -69,28 +69,32 @@
     delay(200);
     sprintf(fileName,"Auton%d.txt",s);
     FILE* f = fopen(fileName,"r");
-    char *frame = malloc(50); //TODO memory leaks
+    char *frameString = malloc(50); //TODO memory leaks
     root = NULLFRAME;
-    while(fgets(frame,51,f) != NULL){
+    while(fgets(frameString,51,f) != NULL){
       delay(200);
       if(root.analog_main[CH1] == 255){
         printf("Adding root...\n");
         delay(200);
-        root = stringToFrame(frame); // returned Frame from stringToFrame might only be in local scope
+        Frame *f = malloc(sizeof(Frame *));
+        *f = stringToFrame(frameString);
+        root = *f; // returned Frame from stringToFrame might only be in local scope
         root.previous = &root;
         root.next = &root;
         printf("Root added.\n");
         delay(200);
       } else {
-        printf("Adding frame %s...\n",frame);
+        printf("Adding frame %s...\n",frameString);
         delay(200);
-        addFrame(stringToFrame(frame));
-        printf("Frame %s added.\n",frame);
+        Frame *f = malloc(sizeof(Frame *));
+        *f = stringToFrame(frameString);
+        addFrame(f);
+        printf("Frame %s added.\n",frameString);
         delay(200);
       }
     }
 
-    free(frame);
+    free(frameString);
     fclose(f);
 
     printf("Recording %d loaded.\n",s);
@@ -104,11 +108,11 @@
       delay(200);
       if(root.analog_main[CH1] == 255){ //checks if it's equal to NULLFRAME
         root = getCurrentFrame();
-        addFrame(root);
+        addFrame(*root);
       } else {
         printf("reached\n");
         Frame currentFrame = getCurrentFrame();
-        addFrame(currentFrame);
+        addFrame(*currentFrame);
         //printFrame(currentFrame);
         if(currentFrame.digital_main[BTN5D] == true){
           endTask=true;
@@ -164,20 +168,20 @@
   }
 
   void printAllFrames(Frame *rootPtr){
-    Frame currentFrame = *rootPtr;
+    Frame *currentFrame = *rootPtr;
     printf("%s",frameToString(currentFrame));
   	delay(200);
     currentFrame = *(currentFrame.next);
   }
 
-  void addFrame(Frame toAdd){
+  void addFrame(Frame *toAdd){
     toAdd.previous = root.previous;
     toAdd.next = &root;
-    (*(root.previous)).next = *toAdd;
-    root.previous = *toAdd;
+    (*(root.previous)).next = toAdd;
+    root.previous = toAdd;
     printf("%s added.\n",frameToString(toAdd));
     delay(100);
-    printf("Root previous: %d",*root.previous);
+    printf("root previous: %d\n",*root.previous);
     delay(100);
   }
 
@@ -268,26 +272,26 @@
     return substring;
   }
 
-  void printFrame(Frame frame){
+  void printFrame(Frame *frame){
     printf("printFrame:\n");
     delay(100);
-    printf("Analog Main: %d\t%d\t%d\t%d\t\n",frame.analog_main[CH1],frame.analog_main[CH2],frame.analog_main[CH3],frame.analog_main[CH4]);
+    printf("Analog Main: %d\t%d\t%d\t%d\t\n",(*frame).analog_main[CH1],(*frame).analog_main[CH2],(*frame).analog_main[CH3],(*frame).analog_main[CH4]);
     delay(200);
 
     printf("Digital Main\t: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t\n",
-      frame.digital_main[BTN5U],frame.digital_main[BTN5D],frame.digital_main[BTN6U],frame.digital_main[BTN6D],
-      frame.digital_main[BTN7U],frame.digital_main[BTN7D],frame.digital_main[BTN7L],frame.digital_main[BTN7R],
-      frame.digital_main[BTN8U],frame.digital_main[BTN8D],frame.digital_main[BTN8L],frame.digital_main[BTN8R]
+      (*frame).digital_main[BTN5U],(*frame).digital_main[BTN5D],(*frame).digital_main[BTN6U],(*frame).digital_main[BTN6D],
+      (*frame).digital_main[BTN7U],(*frame).digital_main[BTN7D],(*frame).digital_main[BTN7L],(*frame).digital_main[BTN7R],
+      (*frame).digital_main[BTN8U],(*frame).digital_main[BTN8D],(*frame).digital_main[BTN8L],(*frame).digital_main[BTN8R]
     );
     delay(200);
 
-    printf("Analog Partner: %d\t%d\t%d\t%d\t\n",frame.analog_partner[CH1],frame.analog_partner[CH2],frame.analog_partner[CH3],frame.analog_partner[CH4]);
+    printf("Analog Partner: %d\t%d\t%d\t%d\t\n",(*frame).analog_partner[CH1],(*frame).analog_partner[CH2],(*frame).analog_partner[CH3],(*frame).analog_partner[CH4]);
     delay(200);
 
     printf("Digital Partner\t: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t\n",
-      frame.digital_partner[BTN5U],frame.digital_partner[BTN5D],frame.digital_partner[BTN6U],frame.digital_partner[BTN6D],
-      frame.digital_partner[BTN7U],frame.digital_partner[BTN7D],frame.digital_partner[BTN7L],frame.digital_partner[BTN7R],
-      frame.digital_partner[BTN8U],frame.digital_partner[BTN8D],frame.digital_partner[BTN8L],frame.digital_partner[BTN8R]
+      (*frame).digital_partner[BTN5U],(*frame).digital_partner[BTN5D],(*frame).digital_partner[BTN6U],(*frame).digital_partner[BTN6D],
+      (*frame).digital_partner[BTN7U],(*frame).digital_partner[BTN7D],(*frame).digital_partner[BTN7L],(*frame).digital_partner[BTN7R],
+      (*frame).digital_partner[BTN8U],(*frame).digital_partner[BTN8D],(*frame).digital_partner[BTN8L],(*frame).digital_partner[BTN8R]
     );
     delay(200);
 

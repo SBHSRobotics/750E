@@ -86,7 +86,7 @@
    *   list of Frames in
    */
 
-  void printFrame(Frame frame);
+  void printFrame(Frame *frame);
   /*
    * Prints the values of one frame to the terminal. For testing purposes.
    */
@@ -96,13 +96,13 @@
    * Takes in pointer to root so
    */
 
-  void addFrame(Frame toAdd);
+  void addFrame(Frame *toAdd);
   /*
    * Adds toAdd to the end of the linked list of Frames
    *   Frames are structured circularly
    */
 
-  char* frameToString(Frame frame);
+  char* frameToString(Frame *frame);
   /*
    * Converts frame values into a single string, analog values offset from (-127,127) to (0,254)
    */
