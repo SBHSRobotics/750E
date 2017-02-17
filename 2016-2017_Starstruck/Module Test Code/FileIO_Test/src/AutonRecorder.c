@@ -19,6 +19,11 @@
   char *fileName;
   bool endTask;
 
+  void recordingLoop();
+  /*
+   * Manages the linked list of Frames
+   */
+
   void startRecording(int s){
     printf("Starting recording %d...\n",s);
     delay(200);
