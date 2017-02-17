@@ -172,11 +172,11 @@
   void printAllFrames(Frame *rootPtr){
     printf("Printing all frames...\n");
     delay(200);
-    Frame currentFrame = *rootPtr;
-    while(currentFrame.next != rootPtr){
-      printf("%s\n",frameToString(&currentFrame));
+    Frame *currentFrame = rootPtr;
+    while(currentFrame->next != rootPtr){
+      printf("currentFrame: %p\tnext frame: %p\tprevious frame: %p\n",currentFrame,currentFrame->next,currentFrame->previous);
     	delay(200);
-      currentFrame = *(currentFrame.next);
+      *currentFrame = *(currentFrame->next);
     }
     printf("All frames printed.\n");
     delay(200);
@@ -189,7 +189,7 @@
     root.previous = toAdd;
     printf("%s added.\n",frameToString(toAdd));
     delay(100);
-    printf("root previous: %d\n",*root.previous);
+    printf("root previous: %p\n",*root.previous);
     delay(100);
   }
 
