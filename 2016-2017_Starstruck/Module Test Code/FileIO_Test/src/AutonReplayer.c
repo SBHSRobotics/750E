@@ -15,10 +15,12 @@
 
 TaskHandle recordTask;
 Frame *currentFrame;
+int recordingSlot = 0;
 
  void replayerLoop();
 
 void replayAuton(int slot) {
+  recordingSlot = slot;
   currentFrame = malloc(sizeof(Frame *));
   recordTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 }
@@ -30,6 +32,15 @@ void stopAuton() {
 }
 
 void replayerLoop() {
+  if (recordingSlot == 0) {
+    return;
+  }
+  Frame *root = loadRecording(recordingSlot);
+  currentFrame = root;
+  while(currentFrame->next != root) {
+    currentFrame = currentFrame->next;
+    delay(200);
+  }
 
 }
 
