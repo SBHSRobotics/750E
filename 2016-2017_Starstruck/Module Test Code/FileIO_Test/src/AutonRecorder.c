@@ -76,9 +76,9 @@
       if(root.analog_main[CH1] == 255){
         printf("Adding root...\n");
         delay(200);
-        Frame *f = malloc(sizeof(Frame *));
-        *f = stringToFrame(frameString);
-        root = *f; // returned Frame from stringToFrame might only be in local scope
+        root = (Frame)malloc(sizeof(Frame));
+        root = stringToFrame(frameString);
+        //root = *f; // returned Frame from stringToFrame might only be in local scope
         root.previous = &root;
         root.next = &root;
         printf("Root added.\n");
