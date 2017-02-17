@@ -13,21 +13,21 @@
  *   compile without AutonRecorder.h properly included in main.h.
  */
 
-TaskHandle recordTask;
+TaskHandle replayTask;
 Frame *currentFrame;
 int recordingSlot = 0;
 
  void replayerLoop();
 
-void replayAuton(int slot) {
+void playAuton(int slot) {
   recordingSlot = slot;
   currentFrame = malloc(sizeof(Frame *));
-  recordTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+  replayTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 }
 
 void stopAuton() {
-  taskSuspend(recordTask);
-  taskDelete(recordTask);
+  taskSuspend(replayTask);
+  taskDelete(replayTask);
   motorStopAll();
 }
 

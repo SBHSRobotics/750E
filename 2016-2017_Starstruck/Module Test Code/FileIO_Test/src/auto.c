@@ -27,4 +27,10 @@
 * The autonomous task may exit, unlike operatorControl() which should never exit. If it does so, the robot will await a switch to another mode or disable/enable cycle.
 */
 void autonomous() {
+  playAuton(1);
+  while(true) {
+    printf("LY: %d3\tRX: %d3\t8L: %d1\r",inputGetAnalog(1, 3),
+    inputGetAnalog(1,1), inputGetDigital(1, 8, JOY_LEFT));
+    delay(100);
+  }
 }

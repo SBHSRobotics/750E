@@ -45,6 +45,7 @@
 
 #include <API.h>
 #include <AutonRecorder.h>
+#include <AutonReplayer.h>
 
 // Allow usage of this file in C++ programs
 #ifdef __cplusplus
