@@ -64,7 +64,7 @@
 
   }
 
-  Frame loadRecording(int s){
+  Frame* loadRecording(int s){
     printf("Loading recording %d...\n",s);
     delay(200);
     sprintf(fileName,"Auton%d.txt",s);
@@ -76,7 +76,7 @@
       if(root.analog_main[CH1] == 255){
         printf("Adding root...\n");
         delay(200);
-        root = (Frame)malloc(sizeof(Frame));
+        //root = malloc(sizeof(Frame)); // TODO something wrong with root initalization, worry about it later
         root = stringToFrame(frameString);
         //root = *f; // returned Frame from stringToFrame might only be in local scope
         root.previous = &root;
@@ -99,7 +99,7 @@
 
     printf("Recording %d loaded.\n",s);
     delay(200);
-    return root;
+    return &root;
   }
 
   void recordingLoop(){
@@ -107,11 +107,11 @@
       printf("Running recordingLoop...\n");
       delay(200);
       if(root.analog_main[CH1] == 255){ //checks if it's equal to NULLFRAME
-        root = getCurrentFrame();
+        root = *(getCurrentFrame());
         addFrame(&root);
       } else {
         printf("reached\n");
-        Frame currentFrame = getCurrentFrame();
+        Frame currentFrame = *(getCurrentFrame());
         addFrame(&currentFrame);
         //printFrame(currentFrame);
         if(currentFrame.digital_main[BTN5D] == true){
@@ -133,7 +133,7 @@
     taskSuspend(recordTask);
   }
 
-  Frame getCurrentFrame(){
+  Frame* getCurrentFrame(){
     int analog_main[4] = {joystickGetAnalog(1,1),joystickGetAnalog(1,2),joystickGetAnalog(1,3),joystickGetAnalog(1,4)};
     int digital_main[12] = {joystickGetDigital(1,5,JOY_UP),joystickGetDigital(1,5,JOY_DOWN),joystickGetDigital(1,6,JOY_UP),joystickGetDigital(1,6,JOY_DOWN),
                             joystickGetDigital(1,7,JOY_UP),joystickGetDigital(1,7,JOY_DOWN),joystickGetDigital(1,7,JOY_LEFT),joystickGetDigital(1,7,JOY_RIGHT),
@@ -159,10 +159,14 @@
       .next = NULL,
       .previous = NULL
     };
-    frame.next=&frame;
-    frame.previous=&frame;
-    printFrame(&frame);
-    return frame;
+
+    Frame *clone = malloc(sizeof(Frame *));
+
+    *clone = frame;
+    clone->next=clone;
+    clone->previous=clone;
+    printFrame(clone);
+    return clone;
   }
 
   void printAllFrames(Frame *rootPtr){
