@@ -59,7 +59,7 @@
     } while (currentFrame.next == NULL);
     fclose(recording);
 
-    printf("File %s written and closed.\nRecording %d stopped.\n",fileName,slot);
+    printf("File %s written and closed.\nrecordTask suspended.\nRecording %d stopped.\n",fileName,slot);
   	delay(200);
 
   }
@@ -121,14 +121,12 @@
         break;
       }
     }
-    printf("Deleting recordTask...\n");
-    delay(200);
-    taskSuspend(recordTask);
+    printf("Suspending recordTask...\n");
     delay(200);
     printAllFrames(&root);
     stopRecording();
-    printf("recordTask deleted.\n");
     delay(200);
+    taskSuspend(recordTask);
   }
 
   Frame getCurrentFrame(){
@@ -164,17 +162,23 @@
   }
 
   void printAllFrames(Frame *rootPtr){
+    printf("Printing all frames...\n");
+    delay(200);
     Frame currentFrame = *rootPtr;
-    printf("%s",frameToString(currentFrame));
-  	delay(200);
-    currentFrame = *(currentFrame.next);
+    while(currentFrame.next != rootPtr){
+      printf("%s\n",frameToString(currentFrame));
+    	delay(200);
+      currentFrame = *(currentFrame.next);
+    }
+    printf("All frames printed.\n");
+    delay(200);
   }
 
   void addFrame(Frame toAdd){
     toAdd.previous = root.previous;
     toAdd.next = &root;
-    (*(root.previous)).next = *toAdd;
-    root.previous = *toAdd;
+    (*(root.previous)).next = &toAdd;
+    root.previous = &toAdd;
     printf("%s added.\n",frameToString(toAdd));
     delay(100);
     printf("Root previous: %d",*root.previous);
