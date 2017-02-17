@@ -36,15 +36,7 @@
   void stopRecording(){
     printf("Stopping recording %d...\n",slot);
     delay(200);
-    Frame currentFrame = {
-      .analog_main = {127,127,127,127},
-      .digital_main = {0,0,0,0,0,0,0,0,0,0,0,0},
-      .analog_partner = {127,127,127,127},
-      .digital_partner = {0,0,0,0,0,0,0,0,0,0,0,0},
-      .next = NULL,
-      .previous = NULL
-    };
-    printf("stopRecording: %d",currentFrame.analog_main[0]);
+    Frame currentFrame = root;
 
     printf("Titling file...\n");
     delay(200);
@@ -112,6 +104,7 @@
       delay(200);
       if(root.analog_main[CH1] == 255){ //checks if it's equal to NULLFRAME
         root = getCurrentFrame();
+        addFrame(root);
       } else {
         printf("reached\n");
         Frame currentFrame = getCurrentFrame();
@@ -132,36 +125,46 @@
     delay(200);
     taskSuspend(recordTask);
     delay(200);
-    //endTask = false;
+    printAllFrames(&root);
+    stopRecording();
     printf("recordTask deleted.\n");
     delay(200);
   }
 
   Frame getCurrentFrame(){
     int analog_main[4] = {joystickGetAnalog(1,1),joystickGetAnalog(1,2),joystickGetAnalog(1,3),joystickGetAnalog(1,4)};
+    int digital_main[12] = {joystickGetDigital(1,5,JOY_UP),joystickGetDigital(1,5,JOY_DOWN),joystickGetDigital(1,6,JOY_UP),joystickGetDigital(1,6,JOY_DOWN),
+                            joystickGetDigital(1,7,JOY_UP),joystickGetDigital(1,7,JOY_DOWN),joystickGetDigital(1,7,JOY_LEFT),joystickGetDigital(1,7,JOY_RIGHT),
+                            joystickGetDigital(1,8,JOY_UP),joystickGetDigital(1,8,JOY_DOWN),joystickGetDigital(1,8,JOY_LEFT),joystickGetDigital(1,8,JOY_RIGHT),
+                          };
+    int analog_partner[4] = {joystickGetAnalog(2,1),joystickGetAnalog(2,2),joystickGetAnalog(2,3),joystickGetAnalog(2,4)};
+    int digital_partner[12] = {joystickGetDigital(2,5,JOY_UP),joystickGetDigital(2,5,JOY_DOWN),joystickGetDigital(2,6,JOY_UP),joystickGetDigital(2,6,JOY_DOWN),
+                            joystickGetDigital(2,7,JOY_UP),joystickGetDigital(2,7,JOY_DOWN),joystickGetDigital(2,7,JOY_LEFT),joystickGetDigital(2,7,JOY_RIGHT),
+                            joystickGetDigital(2,8,JOY_UP),joystickGetDigital(2,8,JOY_DOWN),joystickGetDigital(2,8,JOY_LEFT),joystickGetDigital(2,8,JOY_RIGHT),
+                          };
 
     Frame frame = {
       .analog_main = {analog_main[CH1],analog_main[CH2],analog_main[CH3],analog_main[CH4]},
-      .digital_main = NULL,
-      .analog_partner = NULL,
-      .digital_partner = NULL,
+      .digital_main = {digital_main[BTN5U],digital_main[BTN5D],digital_main[BTN6U],digital_main[BTN6D],
+                       digital_main[BTN7U],digital_main[BTN7D],digital_main[BTN7L],digital_main[BTN7R],
+                       digital_main[BTN8U],digital_main[BTN8D],digital_main[BTN8L],digital_main[BTN8R]
+                      },
+      .analog_partner = {analog_partner[CH1],analog_partner[CH2],analog_partner[CH3],analog_partner[CH4]},
+      .digital_partner = {digital_partner[BTN5U],digital_partner[BTN5D],digital_partner[BTN6U],digital_partner[BTN6D],
+                          digital_partner[BTN7U],digital_partner[BTN7D],digital_partner[BTN7L],digital_partner[BTN7R],
+                          digital_partner[BTN8U],digital_partner[BTN8D],digital_partner[BTN8L],digital_partner[BTN8R]
+                      },
       .next = NULL,
       .previous = NULL
     };
     frame.next=&frame;
     frame.previous=&frame;
-    printf("joystickGetAnalog(): %d\n",joystickGetAnalog(1,1));
-    delay(200);
-    printf("analog_main: %d\n",frame.analog_main[CH1]);
-    delay(200);
-    //printFrame(frame);
+    printFrame(frame);
     return frame;
   }
 
   void printAllFrames(Frame *rootPtr){
     Frame currentFrame = *rootPtr;
-    printf("printAllFrames: currentFrame initialized");
-  	delay(200);
     printf("%s",frameToString(currentFrame));
   	delay(200);
     currentFrame = *(currentFrame.next);
@@ -170,8 +173,12 @@
   void addFrame(Frame toAdd){
     toAdd.previous = root.previous;
     toAdd.next = &root;
-    (*(root.previous)).next = &toAdd;
-    root.previous = &toAdd;
+    (*(root.previous)).next = *toAdd;
+    root.previous = *toAdd;
+    printf("%s added.\n",frameToString(toAdd));
+    delay(100);
+    printf("Root previous: %d",*root.previous);
+    delay(100);
   }
 
   char * frameToString(Frame frame){
