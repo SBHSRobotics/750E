@@ -33,14 +33,21 @@
 void operatorControl() {
 
 	startRecording(1);
-	while(true) {
+	while(true) { //recording while loop
 		if(joystickGetDigital(1,5,JOY_DOWN)) {
 			stopRecording();
 			printf("5 down pressed.\n");
 			delay(200);
+			break;
 		}
 		delay(200);
 	}
+
+	while(true){
+
+	}
+
+
 	//stopRecording();
 
 	//loadRecording(1);
