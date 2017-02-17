@@ -44,6 +44,7 @@
       .next = NULL,
       .previous = NULL
     };
+    printf("stopRecording: %d",currentFrame.analog_main[0]);
 
     printf("Titling file...\n");
     delay(200);
@@ -112,9 +113,10 @@
       if(root.analog_main[CH1] == 255){ //checks if it's equal to NULLFRAME
         root = getCurrentFrame();
       } else {
+        printf("reached\n");
         Frame currentFrame = getCurrentFrame();
         addFrame(currentFrame);
-        printFrame(currentFrame);
+        //printFrame(currentFrame);
         if(currentFrame.digital_main[BTN5D] == true){
           endTask=true;
           printf("5 down pressed.\n");
@@ -136,23 +138,23 @@
   }
 
   Frame getCurrentFrame(){
+    int analog_main[4] = {joystickGetAnalog(1,1),joystickGetAnalog(1,2),joystickGetAnalog(1,3),joystickGetAnalog(1,4)};
+
     Frame frame = {
-      .analog_main = {joystickGetAnalog(1,1),joystickGetAnalog(1,2),joystickGetAnalog(1,3),joystickGetAnalog(1,4)},
-      .digital_main = {joystickGetDigital(1,5,JOY_UP),joystickGetDigital(1,5,JOY_DOWN),joystickGetDigital(1,6,JOY_UP),joystickGetDigital(1,6,JOY_DOWN),
-                       joystickGetDigital(1,7,JOY_UP),joystickGetDigital(1,7,JOY_DOWN),joystickGetDigital(1,7,JOY_LEFT),joystickGetDigital(1,7,JOY_RIGHT),
-                       joystickGetDigital(1,8,JOY_UP),joystickGetDigital(1,8,JOY_DOWN),joystickGetDigital(1,8,JOY_LEFT),joystickGetDigital(1,8,JOY_RIGHT)},
-      .analog_main = {joystickGetAnalog(2,1),joystickGetAnalog(2,2),joystickGetAnalog(2,3),joystickGetAnalog(2,4)},
-      .digital_main = {joystickGetDigital(2,5,JOY_UP),joystickGetDigital(2,5,JOY_DOWN),joystickGetDigital(2,6,JOY_UP),joystickGetDigital(2,6,JOY_DOWN),
-                       joystickGetDigital(2,7,JOY_UP),joystickGetDigital(2,7,JOY_DOWN),joystickGetDigital(2,7,JOY_LEFT),joystickGetDigital(2,7,JOY_RIGHT),
-                       joystickGetDigital(2,8,JOY_UP),joystickGetDigital(2,8,JOY_DOWN),joystickGetDigital(2,8,JOY_LEFT),joystickGetDigital(2,8,JOY_RIGHT)},
-       .next = NULL,
-       .previous = NULL
+      .analog_main = {analog_main[CH1],analog_main[CH2],analog_main[CH3],analog_main[CH4]},
+      .digital_main = NULL,
+      .analog_partner = NULL,
+      .digital_partner = NULL,
+      .next = NULL,
+      .previous = NULL
     };
     frame.next=&frame;
     frame.previous=&frame;
-    printf("getCurrentFrame: \n");
+    printf("joystickGetAnalog(): %d\n",joystickGetAnalog(1,1));
     delay(200);
-    printFrame(frame);
+    printf("analog_main: %d\n",frame.analog_main[CH1]);
+    delay(200);
+    //printFrame(frame);
     return frame;
   }
 
