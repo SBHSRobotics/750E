@@ -36,11 +36,11 @@
   void stopRecording(){
     printf("Stopping recording %d...\n",slot);
     delay(200);
-    Frame currentFrame = root;
+    Frame *currentFrame = &root;
 
     printf("Titling file...\n");
     delay(200);
-    sprintf(fileName,"Auton%d.txt",slot);
+    sprintf(fileName,"Rec%d.txt",slot);
     printf("File titled: %s\n",fileName);
     delay(200);
 
@@ -51,12 +51,12 @@
     delay(200);
 
     do{
-      char* frameVal = frameToString(&currentFrame);
+      char* frameVal = frameToString(currentFrame);
       fprintf(recording,"%s",frameVal);
       delay(100);
-      printFrame(&currentFrame);
-      currentFrame = *(currentFrame.next);
-    } while (currentFrame.next == NULL);
+      printFrame(currentFrame);
+      currentFrame = currentFrame->next;
+    } while (currentFrame != &root);
     fclose(recording);
 
     printf("File %s written and closed.\nrecordTask suspended.\nRecording %d stopped.\n",fileName,slot);
@@ -67,7 +67,7 @@
   Frame* loadRecording(int s){
     printf("Loading recording %d...\n",s);
     delay(200);
-    sprintf(fileName,"Auton%d.txt",s);
+    sprintf(fileName,"Rec%d.txt",s);
     FILE* f = fopen(fileName,"r");
     char *frameString = malloc(50); //TODO memory leaks
     root = NULLFRAME;
