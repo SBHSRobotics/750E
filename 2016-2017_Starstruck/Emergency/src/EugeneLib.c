@@ -20,72 +20,36 @@
 		driveOp();
 
     // Get pincer input
-    if(joystickGetDigital(2,5,JOY_UP)){
-      // If 5U is held on the partner joystick, the pincers can be individually moved to sync them
-      // TODO: mechanically sync pincers
-		  if(abs(joystickGetAnalog(2,4))>15){
-  			motorSet(PL,joystickGetAnalog(2,4));
-  		} else {
-  			motorStop(PL);
-  		}
-  		if(abs(joystickGetAnalog(2,1))>15){
-  			motorSet(PR,joystickGetAnalog(2,1));
-  		} else {
-  			motorStop(PR);
-  		}
+    // If 5U is held on the partner joystick, the pincers can be individually moved to sync them
+    // TODO: mechanically sync pincers
+
+    // Moves pincers normally
+    if(joystickGetDigital(1,5,JOY_UP)){
+  		pince(127);
+    } else if (joystickGetDigital(1,5,JOY_DOWN)){
+      pince(-127);
     } else {
-      // Moves pincers normally
-      if(abs(joystickGetAnalog(2,1))>15){
-    		pince(joystickGetAnalog(2,1));
-      } else {
-        pince(0);
-      }
+      pince(0);
     }
 
-    // Get lift input
-    if(abs(joystickGetAnalog(2,3))>15){
-  		lift(joystickGetAnalog(2,3));
+    if(joystickGetDigital(1,6,JOY_UP)){
+  		lift(127);
+    } else if (joystickGetDigital(1,6,JOY_DOWN)){
+      lift(-127);
     } else {
       lift(0);
     }
-    if(joystickGetDigital(2,7,JOY_UP)){
-      motorSet(CD,127);//-
-    }
-    if(joystickGetDigital(2,7,JOY_LEFT)){
-      motorSet(AB,127);//?
-    }
-    if(joystickGetDigital(2,7,JOY_RIGHT)){
-      motorSet(E,127);
-    }
-    if(joystickGetDigital(2,7,JOY_DOWN)){
-      motorSet(F,127);//-?
-    }
 
-    if(joystickGetDigital(2,8,JOY_UP)){
-      motorSet(CD,-127);
-    }
-    if(joystickGetDigital(2,8,JOY_LEFT)){
-      motorSet(AB,-127);
-    }
-    if(joystickGetDigital(2,8,JOY_RIGHT)){
-      motorSet(E,-127);
-    }
-    if(joystickGetDigital(2,8,JOY_DOWN)){
-      motorSet(F,-127);
-    }
 	}
 
 // Robot functions
   void lift(int speed){
     motorSet(AB,-speed);
     motorSet(CD,speed);
-    motorSet(E,-speed);
-    motorSet(F,speed);
   }
 
   void pince(int speed){
-    motorSet(PL,speed);
-    motorSet(PR,speed);
+    motorSet(PINCE,speed);
   }
 
   void driveAuton(int frontLeftSpeed, int backLeftSpeed, int frontRightSpeed, int backRightSpeed){

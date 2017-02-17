@@ -29,8 +29,7 @@
     static const unsigned char F = 0; // Right-side lift, middle motor
 
   //Pincers
-    static const unsigned char PL = 6; // Left pincer
-    static const unsigned char PR = 0; // Right pincer TODO 10
+    static const unsigned char PINCE = 6;
 
 // LCD Constants
   #define BATTERY_MENU 0
