@@ -30,14 +30,14 @@ void stopAuton() {
 }
 
 void replayerLoop() {
-  
+
 }
 
 int inputGetAnalog(unsigned char joystick, unsigned char axis) {
   if(isAutonomous()) {
     if(joystick == 1) {
       return currentFrame->analog_main[axis - 1];
-    } else {
+    } else if (joystick == 2) {
       return currentFrame->analog_partner[axis - 1];
     }
   } else {
@@ -48,7 +48,11 @@ int inputGetAnalog(unsigned char joystick, unsigned char axis) {
 bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
     unsigned char button) {
   if(isAutonomous()) {
-
+    if(joystick == 1) {
+      // main
+    } else if (joystick == 2) {
+      // partner
+    }
   } else {
     return joystickGetDigital(joystick, buttonGroup, button);
   }
