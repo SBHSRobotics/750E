@@ -19,14 +19,12 @@
     static const unsigned char LB = 3;	// Back left drive wheel
     static const unsigned char RF = 8;	// Front Right drive wheel
     static const unsigned char RB = 9;	// Back right drive wheel
-    static const unsigned char CL = 10;	// Center left drive wheel
-    static const unsigned char CR = 7;  // Center right drive wheel
 
   // Lift
-    static const unsigned char AB = 4; // Right-side lift, Motors A and B together
-    static const unsigned char CD = 5; // Left-side lift, Motors C and D together
-    static const unsigned char E = 0; // Left-side lift, middle motor
-    static const unsigned char F = 0; // Right-side lift, middle motor
+    static const unsigned char AB = 4; // Top of lift, Motors A and B together
+    static const unsigned char CD = 5; // Bottom of lift, Motors C and D together
+    static const unsigned char E = 7; // Left-side lift, middle motor
+    static const unsigned char F = 10; // Right-side lift, middle motor
 
   //Pincers
     static const unsigned char PINCE = 6;

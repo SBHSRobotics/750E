@@ -46,6 +46,8 @@
   void lift(int speed){
     motorSet(AB,-speed);
     motorSet(CD,speed);
+    motorSet(E,-speed);
+    motorSet(F,speed);
   }
 
   void pince(int speed){
@@ -93,8 +95,6 @@
       motorSet(LF, ch3 + ch2 + ch4 + ch1);
       motorSet(RB, -(ch3 + ch2 - ch1 + ch4));
       motorSet(RF, -(ch3 + ch2 - ch4 - ch1));
-      motorSet(CL, (-ch3 + ch2 + ch1));
-      motorSet(CR, (-ch3 + ch2 + ch1));
 
     // } else {
     //   stopDrive();
@@ -108,8 +108,6 @@
     motorStop(LF);
     motorStop(RB);
     motorStop(RF);
-    motorStop(CL);
-    motorStop(CR);
   }
 
 // LCD
