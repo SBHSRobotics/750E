@@ -154,20 +154,45 @@
                             joystickGetDigital(2,8,JOY_UP),joystickGetDigital(2,8,JOY_DOWN),joystickGetDigital(2,8,JOY_LEFT),joystickGetDigital(2,8,JOY_RIGHT),
                           };
 
-    Frame frame = {
-      .analog_main = {analog_main[CH1],analog_main[CH2],analog_main[CH3],analog_main[CH4]},
-      .digital_main = {digital_main[BTN5U],digital_main[BTN5D],digital_main[BTN6U],digital_main[BTN6D],
-                       digital_main[BTN7U],digital_main[BTN7D],digital_main[BTN7L],digital_main[BTN7R],
-                       digital_main[BTN8U],digital_main[BTN8D],digital_main[BTN8L],digital_main[BTN8R]
-                      },
-      .analog_partner = {analog_partner[CH1],analog_partner[CH2],analog_partner[CH3],analog_partner[CH4]},
-      .digital_partner = {digital_partner[BTN5U],digital_partner[BTN5D],digital_partner[BTN6U],digital_partner[BTN6D],
-                          digital_partner[BTN7U],digital_partner[BTN7D],digital_partner[BTN7L],digital_partner[BTN7R],
-                          digital_partner[BTN8U],digital_partner[BTN8D],digital_partner[BTN8L],digital_partner[BTN8R]
-                      },
-      .next = NULL,
-      .previous = NULL
-    };
+    Frame frame = {.analog_main = malloc(sizeof(int)*4),
+                   .digital_main = malloc(sizeof(bool)*12),
+                   .analog_partner = malloc(sizeof(int)*4),
+                   .digital_partner = malloc(sizeof(bool)*12),
+                   .next = malloc(sizeof(Frame *)),
+                   .previous = malloc(sizeof(Frame *))
+                 };
+
+      frame.analog_main[CH1] = analog_main[CH1];
+      frame.analog_main[CH2] = analog_main[CH2];
+      frame.analog_main[CH3] = analog_main[CH3];
+      frame.analog_main[CH4] = analog_main[CH4];
+      frame.digital_main[BTN5U] = digital_main[BTN5U];
+      frame.digital_main[BTN5D] = digital_main[BTN5D];
+      frame.digital_main[BTN6U] = digital_main[BTN6U];
+      frame.digital_main[BTN7U] = digital_main[BTN7U];
+      frame.digital_main[BTN7D] = digital_main[BTN7D];
+      frame.digital_main[BTN7L] = digital_main[BTN7L];
+      frame.digital_main[BTN7R] = digital_main[BTN7R];
+      frame.digital_main[BTN8U] = digital_main[BTN8U];
+      frame.digital_main[BTN8D] = digital_main[BTN8D];
+      frame.digital_main[BTN8L] = digital_main[BTN8L];
+      frame.digital_main[BTN8R] = digital_main[BTN8R];
+
+      frame.analog_partner[CH1] = analog_partner[CH1];
+      frame.analog_partner[CH2] = analog_partner[CH2];
+      frame.analog_partner[CH3] = analog_partner[CH3];
+      frame.analog_partner[CH4] = analog_partner[CH4];
+      frame.digital_partner[BTN5U] = digital_partner[BTN5U];
+      frame.digital_partner[BTN5D] = digital_partner[BTN5D];
+      frame.digital_partner[BTN6U] = digital_partner[BTN6U];
+      frame.digital_partner[BTN7U] = digital_partner[BTN7U];
+      frame.digital_partner[BTN7D] = digital_partner[BTN7D];
+      frame.digital_partner[BTN7L] = digital_partner[BTN7L];
+      frame.digital_partner[BTN7R] = digital_partner[BTN7R];
+      frame.digital_partner[BTN8U] = digital_partner[BTN8U];
+      frame.digital_partner[BTN8D] = digital_partner[BTN8D];
+      frame.digital_partner[BTN8L] = digital_partner[BTN8L];
+      frame.digital_partner[BTN8R] = digital_partner[BTN8R];
 
     printf("In getCurrentFrame() :\n");
     printFrame(&frame);
