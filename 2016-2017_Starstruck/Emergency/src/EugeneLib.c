@@ -46,8 +46,8 @@
   void lift(int speed){
     motorSet(AB,-speed);
     motorSet(CD,speed);
-    motorSet(E,-speed);
-    motorSet(F,speed);
+    motorSet(E,speed);
+    motorSet(F,-speed);
   }
 
   void pince(int speed){
