@@ -50,13 +50,15 @@
         addFrame(&root);
       } else {
         Frame *currentFrame = malloc(sizeof(Frame *));
-        Frame frame = getCurrentFrame();
+        Frame frame =  getCurrentFrame();
+
         printf("Direct return:\n");
         printFrame(&frame);
         *currentFrame = frame;
         // currentFrame->next = currentFrame;
         // currentFrame->previous = currentFrame;
         // *currentFrame = *(getCurrentFrame());
+
         printf("Current Frame: %s\nAfter clone:\n",frameToString(currentFrame));
         printFrame(currentFrame);
         addFrame(currentFrame);
@@ -154,13 +156,14 @@
                             joystickGetDigital(2,8,JOY_UP),joystickGetDigital(2,8,JOY_DOWN),joystickGetDigital(2,8,JOY_LEFT),joystickGetDigital(2,8,JOY_RIGHT),
                           };
 
-    Frame frame = {.analog_main = malloc(sizeof(int)*4),
-                   .digital_main = malloc(sizeof(bool)*12),
-                   .analog_partner = malloc(sizeof(int)*4),
-                   .digital_partner = malloc(sizeof(bool)*12),
-                   .next = malloc(sizeof(Frame *)),
-                   .previous = malloc(sizeof(Frame *))
-                 };
+    Frame frame = {
+      .analog_main = malloc(sizeof(int)*4),
+      .digital_main = malloc(sizeof(bool)*12),
+      .analog_partner = malloc(sizeof(int)*4),
+      .digital_partner = malloc(sizeof(bool)*12),
+      .next = malloc(sizeof(Frame *)),
+      .previous = malloc(sizeof(Frame *))
+    };
 
       frame.analog_main[CH1] = analog_main[CH1];
       frame.analog_main[CH2] = analog_main[CH2];
@@ -169,6 +172,7 @@
       frame.digital_main[BTN5U] = digital_main[BTN5U];
       frame.digital_main[BTN5D] = digital_main[BTN5D];
       frame.digital_main[BTN6U] = digital_main[BTN6U];
+      frame.digital_main[BTN6D] = digital_main[BTN6D];
       frame.digital_main[BTN7U] = digital_main[BTN7U];
       frame.digital_main[BTN7D] = digital_main[BTN7D];
       frame.digital_main[BTN7L] = digital_main[BTN7L];
@@ -185,6 +189,7 @@
       frame.digital_partner[BTN5U] = digital_partner[BTN5U];
       frame.digital_partner[BTN5D] = digital_partner[BTN5D];
       frame.digital_partner[BTN6U] = digital_partner[BTN6U];
+      frame.digital_partner[BTN6D] = digital_partner[BTN6D];
       frame.digital_partner[BTN7U] = digital_partner[BTN7U];
       frame.digital_partner[BTN7D] = digital_partner[BTN7D];
       frame.digital_partner[BTN7L] = digital_partner[BTN7L];
