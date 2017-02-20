@@ -56,15 +56,22 @@
     .previous = NULL
   };
 
+  // TODO fix all of the descriptions lol
+
   void startRecording(int slot);
   /*
    * Starts the task that runs the Auton Recorder for the file Recorder[slot].txt
    */
 
-  void stopRecording();
+  void saveRecording();
   /*
    * Stops the Recorder task and uses the root Frame to write to the file. Does not require a slot
    *   because only one Auton Recorder should run at a time.
+   */
+
+  void stopRecording();
+  /*
+   *
    */
 
   Frame* loadRecording(int slot);
@@ -72,12 +79,7 @@
    * Gets file for recording at slot #, returns the root Frame of the recording
    */
 
-  void recordingLoop();
-  /*
-   * Manages the linked list of Frames
-   */
-
-  Frame* getCurrentFrame();
+  Frame getCurrentFrame();
   /*
    * When recording files, this reads the joysticks and puts their values in a Frame structure.
    *   The returned Frame's next and previous values are NULL, and should be set in the circular
