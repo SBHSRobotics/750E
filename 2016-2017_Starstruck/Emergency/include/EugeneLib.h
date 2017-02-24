@@ -29,6 +29,17 @@
   //Pincers
     static const unsigned char PINCE = 6;
 
+//Sensors
+  static const unsigned char LIFT_POT = 0;
+  static const unsigned char PINCE_POT = 0;
+  static const unsigned char AUTON_SEL = 0;
+
+//Sensor Thresholds
+  static const int LIFT_TOP_THRESH = 0;
+  static const int LIFT_BOTTOM_THRESH = 0;
+  static const int PINCE_TOP_THRESH = 0;
+  static const int PINCE_BOTTOM_THRESH = 0;
+
 // LCD Constants
   #define BATTERY_MENU 0
   #define AUTON_MENU 1

@@ -44,14 +44,27 @@
 
 // Robot functions
   void lift(int speed){
-    motorSet(AB,-speed);
-    motorSet(CD,speed);
-    motorSet(E,speed);
-    motorSet(F,-speed);
+    int potVal = analogRead(LIFT_POT);
+    if(potVal > LIFT_BOTTOM_THRESH && potVal < LIFT_TOP_THRESH){
+      motorSet(AB,-speed);
+      motorSet(CD,speed);
+      motorSet(E,speed);
+      motorSet(F,-speed);
+    } else {
+      motorStop(AB);
+      motorStop(CD);
+      motorStop(E);
+      motorStop(F);
+    }
   }
 
   void pince(int speed){
-    motorSet(PINCE,speed);
+    int potVal = analogRead(PINCE_POT);
+    if(potVal > PINCE_BOTTOM_THRESH && potVal < PINCE_TOP_THRESH){
+      motorSet(PINCE,speed);
+    } else {
+      motorStop(PINCE);
+    }
   }
 
   void driveAuton(int frontLeftSpeed, int backLeftSpeed, int frontRightSpeed, int backRightSpeed){
