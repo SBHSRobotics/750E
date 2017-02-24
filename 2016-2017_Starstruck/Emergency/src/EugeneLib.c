@@ -24,21 +24,23 @@
     // TODO: mechanically sync pincers
 
     // Moves pincers normally
-    if(joystickGetDigital(1,5,JOY_UP)){
-  		pince(127);
-    } else if (joystickGetDigital(1,5,JOY_DOWN)){
-      pince(-127);
-    } else {
-      pince(0);
-    }
+    // if(joystickGetDigital(1,5,JOY_UP)){
+  		// pince(127);
+    // } else if (joystickGetDigital(1,5,JOY_DOWN)){
+    //   pince(-127);
+    // } else {
+    //   pince(0);
+    // }
 
-    if(joystickGetDigital(1,6,JOY_UP)){
-  		lift(127);
-    } else if (joystickGetDigital(1,6,JOY_DOWN)){
-      lift(-127);
-    } else {
-      lift(0);
-    }
+    // if(joystickGetDigital(1,6,JOY_UP)){
+  		// lift(127);
+    // } else if (joystickGetDigital(1,6,JOY_DOWN)){
+    //   lift(-127);
+    // } else {
+    //   lift(0);
+    // }
+    lift(joystickGetAnalog(2,3));
+    pince(joystickGetAnalog(2,1));
 
 	}
 
