@@ -36,11 +36,13 @@ void operatorControl() {
 		if(joystickGetDigital(1,5,JOY_DOWN)) {
 			stopRecording();
 			printf("5 down pressed.\n");
-			delay(200);
+			delay(1000);
 			break;
 		}
 		delay(200);
 	}
+
+	autonomous();
 
 	while(true){
 

@@ -42,8 +42,6 @@
       bool digital_main[12]; //5U, 5D, 6U, 6D, 7U, 7D, 7L, 7R, 8U, 8D, 8L, 8R
       int analog_partner[4];
       bool digital_partner[12];
-      struct Frame *next;
-      struct Frame *previous;
     }Frame;
 
 
@@ -52,8 +50,6 @@
     .digital_main = {false,false,false,false,false,false,false,false,false,false,false,false},
     .analog_partner = {255,255,255,255},
     .digital_partner = {false,false,false,false,false,false,false,false,false,false,false,false},
-    .next = NULL,
-    .previous = NULL
   };
 
   // TODO fix all of the descriptions lol
@@ -63,20 +59,9 @@
    * Starts the task that runs the Auton Recorder for the file Recorder[slot].txt
    */
 
-  void saveRecording();
-  /*
-   * Stops the Recorder task and uses the root Frame to write to the file. Does not require a slot
-   *   because only one Auton Recorder should run at a time.
-   */
-
   void stopRecording();
   /*
    *
-   */
-
-  Frame* loadRecording(int slot);
-  /*
-   * Gets file for recording at slot #, returns the root Frame of the recording
    */
 
   Frame* getCurrentFrame();
@@ -86,14 +71,9 @@
    *   list of Frames in
    */
 
-  void printFrame(Frame *frame);
+  void printAllFrames();
   /*
-   * Prints the values of one frame to the terminal. For testing purposes.
-   */
-
-  void printAllFrames(Frame *rootPtr);
-  /*
-   * Takes in pointer to root so
+   * Reads from file and prints all frames
    */
 
   void addFrame(Frame *toAdd);

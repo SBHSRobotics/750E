@@ -15,15 +15,18 @@
 
 TaskHandle replayTask;
 Frame *currentFrame;
-int recordingSlot = 0;
+int slot = 0;
+char* fileName;
 
 void replayerLoop();
 
-void playAuton(int slot) {
+void startAuton(int s) {
   printf("Replaying auton %d...\n",slot);
   delay(200);
-  recordingSlot = slot;
+  slot = s;
   currentFrame = malloc(sizeof(Frame *));
+  fileName = malloc(sizeof(char)*14);
+  sprintf(fileName,"Rec%d.txt",slot);
   replayTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 }
 
@@ -36,16 +39,19 @@ void stopAuton() {
 }
 
 void replayerLoop() {
-  if (recordingSlot == 0) {
+  if (slot == 0) {
     return;
   }
-  Frame *root = loadRecording(recordingSlot);
-  currentFrame = root;
-  while(currentFrame->next != root) {
-    currentFrame = currentFrame->next;
+  FILE* recording = fopen(fileName,"w");
+  char* frameString = "";
+  while(isAutonomous() && fgets(frameString,51,recording) != NULL){
+    joystickMap();
+    printf("%s",frameString);
     delay(200);
   }
+  printf("Closing file.\n");
 
+  fclose(recording);
 }
 
 int inputGetAnalog(unsigned char joystick, unsigned char axis) {
@@ -143,5 +149,72 @@ bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
     }
   }
   return joystickGetDigital(joystick, buttonGroup, button);
+}
 
+void joystickMap(){
+  int thresh = 20;
+  int ch1 = inputGetAnalog(1, 1);
+  int ch2 = inputGetAnalog(1, 2);
+  int ch3 = inputGetAnalog(1, 3);
+  int ch4 = inputGetAnalog(1, 4);
+
+  if ((abs(ch3) > thresh) || (abs(ch4) > thresh) || (abs(ch2) > thresh) || (abs(ch1) > thresh)) {
+    if (abs(ch3) < thresh) {
+      ch3 = 0;
+    }
+    if (abs(ch4) < thresh) {
+      ch4 = 0;
+    }
+    if (abs(ch2) < thresh) {
+      ch2 = 0;
+    }
+    if (abs(ch1) < thresh) {
+      ch1 = 0;
+    }
+    if (abs(ch3) > abs(ch2)) {
+      ch2 = 0;
+    }
+    else {
+      ch3 = 0;
+    }
+
+    motorSet(LB, ch3 + ch2 + ch1 - ch4);
+    motorSet(LF, ch3 + ch2 + ch4 + ch1);
+    motorSet(RB, -(ch3 + ch2 - ch1 + ch4));
+    motorSet(RF, -(ch3 + ch2 - ch4 - ch1));
+  }
+
+  if(joystickGetDigital(1,5,JOY_UP)){
+		pince(127);
+  } else if (joystickGetDigital(1,5,JOY_DOWN)){
+    pince(-127);
+  } else {
+    pince(0);
+  }
+
+  if(joystickGetDigital(1,6,JOY_UP)){
+		lift(127);
+  } else if (joystickGetDigital(1,6,JOY_DOWN)){
+    lift(-127);
+  } else {
+    lift(0);
+  }
+
+  // Get lift input
+  if(abs(inputGetAnalog(2,3))>15){
+    lift(inputGetAnalog(2,3));
+  } else {
+    lift(0);
+  }
+}
+
+void lift(int speed){
+  motorSet(AB,speed);
+  motorSet(CD,-speed);
+  motorSet(E,speed);
+  motorSet(F,-speed);
+}
+
+void pince(int speed){
+  motorSet(PINCE, speed);
 }

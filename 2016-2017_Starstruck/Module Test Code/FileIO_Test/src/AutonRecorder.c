@@ -16,13 +16,10 @@
   int slot;
   TaskHandle recordTask;
   Frame root;
-  char *fileName;
+  char* fileName;
   bool endTask;
 
   void recordingLoop();
-  /*
-   * Manages the linked list of Frames
-   */
 
   void startRecording(int s){
     printf("Starting recording %d...\n",s);
@@ -39,32 +36,6 @@
   }
 
   void recordingLoop(){
-    while(!endTask){
-      if(root.analog_main[CH1] == 255){ //checks if it's equal to NULLFRAME
-        root = *(getCurrentFrame());
-        addFrame(&root);
-      } else {
-        Frame *currentFrame = getCurrentFrame();
-        addFrame(currentFrame);
-      }
-      if(endTask){ //TODO when this works, make one unused button on joystick end the task
-        break;
-      }
-      delay(400);
-    }
-    printf("Suspending recordTask...\n");
-    delay(200);
-    printAllFrames(&root);
-    stopRecording();
-    delay(200);
-    taskSuspend(recordTask);
-  }
-
-  void saveRecording(){
-    printf("Stopping recording %d...\n\n",slot);
-    delay(200);
-    Frame *currentFrame = &root;
-
     printf("Titling file...\n");
     delay(200);
     sprintf(fileName,"Rec%d.txt",slot);
@@ -77,55 +48,31 @@
     printf("%s opened.\n\n",fileName);
     delay(200);
 
-    do{
-      char* frameVal = frameToString(currentFrame);
-      printf("%s\n",frameVal);
+    Frame *currentFrame = malloc(sizeof(Frame *));
+    char* frameVal = malloc(sizeof(char)*51);
+    delay(100);
+    while(!endTask){
+      currentFrame = getCurrentFrame();
+      frameVal = frameToString(currentFrame);
+      printf("frame: %s",frameVal);
+      delay(200);
       fprintf(recording,"%s",frameVal);
       delay(100);
-      currentFrame = currentFrame->next;
-    } while (currentFrame != &root);
+      if(endTask){ //TODO when this works, make one unused button on joystick end the task
+        break;
+      }
+      delay(400);
+    }
     fclose(recording);
+    delay(200);
 
-    printf("File %s written and closed.\nrecordTask suspended.\nRecording %d stopped.\n\n",fileName,slot);
-  	delay(200);
+    printf("Suspending recordTask...\n");
+    delay(200);
+    taskSuspend(recordTask);
   }
 
   void stopRecording(){
     endTask = true;
-  }
-
-  Frame* loadRecording(int s){
-    printf("Loading recording %d...\n",s);
-    delay(200);
-    sprintf(fileName,"Rec%d.txt",s);
-    FILE* f = fopen(fileName,"r");
-    char *frameString = malloc(50); //TODO memory leaks
-    root = NULLFRAME;
-    while(fgets(frameString,51,f) != NULL){
-      delay(200);
-      if(root.analog_main[CH1] == 255){
-        printf("Adding root %s...\n",substring(frameString,1,48));
-        delay(200);
-        root = stringToFrame(frameString);
-        root.previous = &root;
-        root.next = &root;
-        printf("Root added.\n\n");
-        delay(200);
-      } else {
-        Frame *f = malloc(sizeof(Frame *));
-        *f = stringToFrame(frameString);
-        addFrame(f);
-      }
-    }
-
-    printAllFrames(&root);
-
-    free(frameString);
-    fclose(f);
-
-    printf("Recording %d loaded.\n\n",s);
-    delay(200);
-    return &root;
   }
 
   Frame* getCurrentFrame(){
@@ -133,99 +80,71 @@
     int digital_main[12] = {joystickGetDigital(1,5,JOY_UP),joystickGetDigital(1,5,JOY_DOWN),joystickGetDigital(1,6,JOY_UP),joystickGetDigital(1,6,JOY_DOWN),
                             joystickGetDigital(1,7,JOY_UP),joystickGetDigital(1,7,JOY_DOWN),joystickGetDigital(1,7,JOY_LEFT),joystickGetDigital(1,7,JOY_RIGHT),
                             joystickGetDigital(1,8,JOY_UP),joystickGetDigital(1,8,JOY_DOWN),joystickGetDigital(1,8,JOY_LEFT),joystickGetDigital(1,8,JOY_RIGHT),
-                          };
+                           };
     int analog_partner[4] = {joystickGetAnalog(2,1),joystickGetAnalog(2,2),joystickGetAnalog(2,3),joystickGetAnalog(2,4)};
     int digital_partner[12] = {joystickGetDigital(2,5,JOY_UP),joystickGetDigital(2,5,JOY_DOWN),joystickGetDigital(2,6,JOY_UP),joystickGetDigital(2,6,JOY_DOWN),
-                            joystickGetDigital(2,7,JOY_UP),joystickGetDigital(2,7,JOY_DOWN),joystickGetDigital(2,7,JOY_LEFT),joystickGetDigital(2,7,JOY_RIGHT),
-                            joystickGetDigital(2,8,JOY_UP),joystickGetDigital(2,8,JOY_DOWN),joystickGetDigital(2,8,JOY_LEFT),joystickGetDigital(2,8,JOY_RIGHT),
-                          };
+                               joystickGetDigital(2,7,JOY_UP),joystickGetDigital(2,7,JOY_DOWN),joystickGetDigital(2,7,JOY_LEFT),joystickGetDigital(2,7,JOY_RIGHT),
+                               joystickGetDigital(2,8,JOY_UP),joystickGetDigital(2,8,JOY_DOWN),joystickGetDigital(2,8,JOY_LEFT),joystickGetDigital(2,8,JOY_RIGHT),
+                              };
 
     Frame frame = {
-      .analog_main = {analog_main[CH1],analog_main[CH2],analog_main[CH3],analog_main[CH4]},
+      .analog_main = {joystickGetAnalog(1,1)+127,joystickGetAnalog(1,2)+127,joystickGetAnalog(1,3)+127,joystickGetAnalog(1,4)+127},
       .digital_main = {digital_main[BTN5U],digital_main[BTN5D],digital_main[BTN6U],digital_main[BTN6D],
                        digital_main[BTN7U],digital_main[BTN7D],digital_main[BTN7L],digital_main[BTN7R],
                        digital_main[BTN8U],digital_main[BTN8D],digital_main[BTN8L],digital_main[BTN8R]
                       },
-      .analog_partner = {analog_partner[CH1],analog_partner[CH2],analog_partner[CH3],analog_partner[CH4]},
+      .analog_partner = {analog_partner[CH1]+127,analog_partner[CH2]+127,analog_partner[CH3]+127,analog_partner[CH4]+127},
       .digital_partner = {digital_partner[BTN5U],digital_partner[BTN5D],digital_partner[BTN6U],digital_partner[BTN6D],
                           digital_partner[BTN7U],digital_partner[BTN7D],digital_partner[BTN7L],digital_partner[BTN7R],
                           digital_partner[BTN8U],digital_partner[BTN8D],digital_partner[BTN8L],digital_partner[BTN8R]
                       },
-      .next = NULL,
-      .previous = NULL
     };
 
     Frame *clone = malloc(sizeof(Frame *));
-
     *clone = frame;
-    clone->next=clone;
-    clone->previous=clone;
-    printFrame(clone);
     return clone;
   }
 
-  void printAllFrames(Frame *rootPtr){
-    printf("Printing all frames...\n");
-    delay(200);
-    Frame *currentFrame = rootPtr;
-    do{
-      printf("%s\t\n",frameToString(currentFrame));
-    	delay(200);
-      currentFrame = currentFrame->next;
-    }while(currentFrame != rootPtr);
-
-    printf("All frames printed.\n\n");
-    delay(200);
-  }
-
-  void addFrame(Frame *toAdd){
-    printf("Adding frame %s...\n",frameToString(toAdd));
-    delay(200);
-    (*toAdd).previous = root.previous;
-    (*toAdd).next = &root;
-    (*(root.previous)).next = toAdd;
-    root.previous = toAdd;
-    printf("Frame added.\n\n");
-    delay(200);
-  }
-
   char * frameToString(Frame *frame){
+    int ch3 = frame->analog_main[CH3];
+    int ch4 = frame->analog_main[CH4];
+
     char * string = malloc(50);
-    sprintf(string,"%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d",
-      ((*frame).analog_main[CH1]+127 < 0 || (*frame).analog_main[CH1]+127 > 255) ? 0 : (*frame).analog_main[CH1]+127,
-      ((*frame).analog_main[CH2]+127 < 0 || (*frame).analog_main[CH2]+127 > 255) ? 0 : (*frame).analog_main[CH2]+127,
-      ((*frame).analog_main[CH3]+127 < 0 || (*frame).analog_main[CH3]+127 > 255) ? 0 : (*frame).analog_main[CH3]+127,
-      ((*frame).analog_main[CH4]+127 < 0 || (*frame).analog_main[CH4]+127 > 255) ? 0 : (*frame).analog_main[CH4]+127,
-      ((*frame).digital_main[BTN5U] == false)  ? 0 : 1,
-      ((*frame).digital_main[BTN5D] == false)  ? 0 : 1,
-      ((*frame).digital_main[BTN6U] == false)  ? 0 : 1,
-      ((*frame).digital_main[BTN6D] == false)  ? 0 : 1,
-      ((*frame).digital_main[BTN7U] == false)  ? 0 : 1,
-      ((*frame).digital_main[BTN7D] == false)  ? 0 : 1,
-      ((*frame).digital_main[BTN7L] == false)  ? 0 : 1,
-      ((*frame).digital_main[BTN7R] == false)  ? 0 : 1,
-      ((*frame).digital_main[BTN8U] == false)  ? 0 : 1,
-      ((*frame).digital_main[BTN8D] == false)  ? 0 : 1,
-      ((*frame).digital_main[BTN8L] == false)  ? 0 : 1,
-      ((*frame).digital_main[BTN8R] == false)  ? 0 : 1,
-      ((*frame).analog_partner[CH1]+127 < 0 || (*frame).analog_partner[CH1]+127 > 255) ? 0 : (*frame).analog_partner[CH1]+127,
-      ((*frame).analog_partner[CH2]+127 < 0 || (*frame).analog_partner[CH2]+127 > 255) ? 0 : (*frame).analog_partner[CH2]+127,
-      ((*frame).analog_partner[CH3]+127 < 0 || (*frame).analog_partner[CH3]+127 > 255) ? 0 : (*frame).analog_partner[CH3]+127,
-      ((*frame).analog_partner[CH4]+127 < 0 || (*frame).analog_partner[CH4]+127 > 255) ? 0 : (*frame).analog_partner[CH4]+127,
-      ((*frame).digital_partner[BTN5U] == false)  ? 0 : 1,
-      ((*frame).digital_partner[BTN5D] == false)  ? 0 : 1,
-      ((*frame).digital_partner[BTN6U] == false)  ? 0 : 1,
-      ((*frame).digital_partner[BTN6D] == false)  ? 0 : 1,
-      ((*frame).digital_partner[BTN7U] == false)  ? 0 : 1,
-      ((*frame).digital_partner[BTN7D] == false)  ? 0 : 1,
-      ((*frame).digital_partner[BTN7L] == false)  ? 0 : 1,
-      ((*frame).digital_partner[BTN7R] == false)  ? 0 : 1,
-      ((*frame).digital_partner[BTN8U] == false)  ? 0 : 1,
-      ((*frame).digital_partner[BTN8D] == false)  ? 0 : 1,
-      ((*frame).digital_partner[BTN8L] == false)  ? 0 : 1,
-      ((*frame).digital_partner[BTN8R] == false)  ? 0 : 1
+    sprintf(string,"%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d\n",
+      ((frame->analog_main[CH1] < 0 || frame->analog_main[CH1] > 255) ? 0 : frame->analog_main[CH1]),
+      ((frame->analog_main[CH2] < 0 || frame->analog_main[CH2] > 255) ? 0 : frame->analog_main[CH2]),
+      ((ch3 < 0 || ch3 > 255) ? 0 : ch3),
+      ((ch4 < 0 || ch4 > 255) ? 0 : ch4),
+      ((frame->digital_main[BTN5U] == false) ? 0 : 1),
+      ((frame->digital_main[BTN5D] == false) ? 0 : 1),
+      ((frame->digital_main[BTN6U] == false) ? 0 : 1),
+      ((frame->digital_main[BTN6D] == false) ? 0 : 1),
+      ((frame->digital_main[BTN7U] == false) ? 0 : 1),
+      ((frame->digital_main[BTN7D] == false) ? 0 : 1),
+      ((frame->digital_main[BTN7L] == false) ? 0 : 1),
+      ((frame->digital_main[BTN7R] == false) ? 0 : 1),
+      ((frame->digital_main[BTN8U] == false) ? 0 : 1),
+      ((frame->digital_main[BTN8D] == false) ? 0 : 1),
+      ((frame->digital_main[BTN8L] == false) ? 0 : 1),
+      ((frame->digital_main[BTN8R] == false) ? 0 : 1),
+      ((frame->analog_partner[CH1] < 0 || frame->analog_partner[CH1] > 255) ? 0 : frame->analog_partner[CH1]),
+      ((frame->analog_partner[CH2] < 0 || frame->analog_partner[CH2] > 255) ? 0 : frame->analog_partner[CH2]),
+      ((frame->analog_partner[CH3] < 0 || frame->analog_partner[CH3] > 255) ? 0 : frame->analog_partner[CH3]),
+      ((frame->analog_partner[CH4] < 0 || frame->analog_partner[CH4] > 255) ? 0 : frame->analog_partner[CH4]),
+      ((frame->digital_partner[BTN5U] == false) ? 0 : 1),
+      ((frame->digital_partner[BTN5D] == false) ? 0 : 1),
+      ((frame->digital_partner[BTN6U] == false) ? 0 : 1),
+      ((frame->digital_partner[BTN6D] == false) ? 0 : 1),
+      ((frame->digital_partner[BTN7U] == false) ? 0 : 1),
+      ((frame->digital_partner[BTN7D] == false) ? 0 : 1),
+      ((frame->digital_partner[BTN7L] == false) ? 0 : 1),
+      ((frame->digital_partner[BTN7R] == false) ? 0 : 1),
+      ((frame->digital_partner[BTN8U] == false) ? 0 : 1),
+      ((frame->digital_partner[BTN8D] == false) ? 0 : 1),
+      ((frame->digital_partner[BTN8L] == false) ? 0 : 1),
+      ((frame->digital_partner[BTN8R] == false) ? 0 : 1)
     );
-    // TODO: code above is really ugly and inefficient lol
+
     return string;
   }
 
@@ -276,25 +195,16 @@
     return substring;
   }
 
-  void printFrame(Frame *frame){
-    printf("Analog Main: %d\t%d\t%d\t%d\t\n",(*frame).analog_main[CH1],(*frame).analog_main[CH2],(*frame).analog_main[CH3],(*frame).analog_main[CH4]);
+  void printAllFrames(){
+    printf("Printing all frames...\n");
     delay(200);
-
-    printf("Digital Main\t: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t\n",
-      (*frame).digital_main[BTN5U],(*frame).digital_main[BTN5D],(*frame).digital_main[BTN6U],(*frame).digital_main[BTN6D],
-      (*frame).digital_main[BTN7U],(*frame).digital_main[BTN7D],(*frame).digital_main[BTN7L],(*frame).digital_main[BTN7R],
-      (*frame).digital_main[BTN8U],(*frame).digital_main[BTN8D],(*frame).digital_main[BTN8L],(*frame).digital_main[BTN8R]
-    );
+    char* frame = malloc(sizeof(char)*51);
+    FILE* recording = fopen(fileName,"r");
+    while(fgets(frame,51,recording) != NULL){
+      printf("%s",frame);
+      delay(200);
+    }
+    fclose(recording);
+    printf("All frames printed.\n\n");
     delay(200);
-
-    printf("Analog Partner: %d\t%d\t%d\t%d\t\n",(*frame).analog_partner[CH1],(*frame).analog_partner[CH2],(*frame).analog_partner[CH3],(*frame).analog_partner[CH4]);
-    delay(200);
-
-    printf("Digital Partner\t: %d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t\n",
-      (*frame).digital_partner[BTN5U],(*frame).digital_partner[BTN5D],(*frame).digital_partner[BTN6U],(*frame).digital_partner[BTN6D],
-      (*frame).digital_partner[BTN7U],(*frame).digital_partner[BTN7D],(*frame).digital_partner[BTN7L],(*frame).digital_partner[BTN7R],
-      (*frame).digital_partner[BTN8U],(*frame).digital_partner[BTN8D],(*frame).digital_partner[BTN8L],(*frame).digital_partner[BTN8R]
-    );
-    delay(200);
-
   }

@@ -7,16 +7,34 @@
 
 #ifndef AUTONREPLAYER_H_
 
+// Port definitions
+  static const unsigned char LF = 2;
+  static const unsigned char LB = 3;
+  static const unsigned char RF = 8;
+  static const unsigned char RB = 9;
 
-void playAuton(int slot);
+  static const unsigned char AB = 4;
+  static const unsigned char CD = 5;
+  static const unsigned char E = 7;
+  static const unsigned char F = 10;
 
-void stopAuton();
+  static const unsigned char PINCE = 6;
 
-int inputGetAnalog(unsigned char joystick, unsigned char axis);
+  void startAuton(int slot);
 
-bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
-  unsigned char button);
+  void stopAuton();
 
-#define AUTON_REPLAYER_H_
+  int inputGetAnalog(unsigned char joystick, unsigned char axis);
+
+  bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
+    unsigned char button);
+
+  void joystickMap();
+
+  void pince(int speed);
+
+  void lift(int speed);
+
+  #define AUTON_REPLAYER_H_
 
 #endif /* AUTONREPLAYER_H_ */
