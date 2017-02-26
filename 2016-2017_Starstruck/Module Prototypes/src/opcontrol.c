@@ -36,6 +36,7 @@ void operatorControl() {
 	MenuItem *root = lcdmInit(uart1);
 	lcdmAddDefaults(root);
 	printf("3: %p\n\r",root);
+	holoInitX4(FL, BL, FR, BR);
 	while (1) {
 		lcdmLoop(root);
 		delay(500);
