@@ -32,17 +32,12 @@
 #define LCD_TEST 0
 
 void operatorControl() {
-	
-
-
-	// LCD Test Code
-	#if LCD_TEST
-		MenuItem *root = lcdmInit(uart1);
-		lcdmAddDefaults(root);
-		printf("3: %p\n\r",root);
-		while (1) {
-			lcdmLoop(root);
-			delay(500);
-		}
-	#endif
+	speakerInit();
+	MenuItem *root = lcdmInit(uart1);
+	lcdmAddDefaults(root);
+	printf("3: %p\n\r",root);
+	while (1) {
+		lcdmLoop(root);
+		delay(500);
+	}
 }
