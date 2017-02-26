@@ -45,7 +45,7 @@ void replayerLoop() {
   FILE* recording = fopen(fileName,"r");
   char* frameString = malloc(sizeof(char)*50);
   while(/*isAutonomous() && */fgets(frameString,50,recording) != NULL){
-    joystickMap();
+    *currentFrame = stringToFrame(frameString);
     printf("%s",frameString);
     delay(200);
   }
