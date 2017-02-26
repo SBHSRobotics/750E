@@ -49,20 +49,21 @@
     delay(200);
 
     Frame *currentFrame = malloc(sizeof(Frame *));
-    char* frameVal = malloc(sizeof(char)*51);
+    char* frameVal = malloc(sizeof(char)*50);
     delay(100);
     while(!endTask){
       currentFrame = getCurrentFrame();
       frameVal = frameToString(currentFrame);
-      printf("frame: %s",frameVal);
+      printf("%s",frameVal);
       delay(200);
-      fprintf(recording,"%s",frameVal);
+      fprintf(recording,frameVal);
       delay(100);
       if(endTask){ //TODO when this works, make one unused button on joystick end the task
         break;
       }
-      delay(400);
+      delay(500);
     }
+
     fclose(recording);
     delay(200);
 
@@ -76,28 +77,17 @@
   }
 
   Frame* getCurrentFrame(){
-    int analog_main[4] = {joystickGetAnalog(1,1),joystickGetAnalog(1,2),joystickGetAnalog(1,3),joystickGetAnalog(1,4)};
-    int digital_main[12] = {joystickGetDigital(1,5,JOY_UP),joystickGetDigital(1,5,JOY_DOWN),joystickGetDigital(1,6,JOY_UP),joystickGetDigital(1,6,JOY_DOWN),
-                            joystickGetDigital(1,7,JOY_UP),joystickGetDigital(1,7,JOY_DOWN),joystickGetDigital(1,7,JOY_LEFT),joystickGetDigital(1,7,JOY_RIGHT),
-                            joystickGetDigital(1,8,JOY_UP),joystickGetDigital(1,8,JOY_DOWN),joystickGetDigital(1,8,JOY_LEFT),joystickGetDigital(1,8,JOY_RIGHT),
-                           };
-    int analog_partner[4] = {joystickGetAnalog(2,1),joystickGetAnalog(2,2),joystickGetAnalog(2,3),joystickGetAnalog(2,4)};
-    int digital_partner[12] = {joystickGetDigital(2,5,JOY_UP),joystickGetDigital(2,5,JOY_DOWN),joystickGetDigital(2,6,JOY_UP),joystickGetDigital(2,6,JOY_DOWN),
-                               joystickGetDigital(2,7,JOY_UP),joystickGetDigital(2,7,JOY_DOWN),joystickGetDigital(2,7,JOY_LEFT),joystickGetDigital(2,7,JOY_RIGHT),
-                               joystickGetDigital(2,8,JOY_UP),joystickGetDigital(2,8,JOY_DOWN),joystickGetDigital(2,8,JOY_LEFT),joystickGetDigital(2,8,JOY_RIGHT),
-                              };
-
     Frame frame = {
       .analog_main = {joystickGetAnalog(1,1)+127,joystickGetAnalog(1,2)+127,joystickGetAnalog(1,3)+127,joystickGetAnalog(1,4)+127},
-      .digital_main = {digital_main[BTN5U],digital_main[BTN5D],digital_main[BTN6U],digital_main[BTN6D],
-                       digital_main[BTN7U],digital_main[BTN7D],digital_main[BTN7L],digital_main[BTN7R],
-                       digital_main[BTN8U],digital_main[BTN8D],digital_main[BTN8L],digital_main[BTN8R]
+      .digital_main = {joystickGetDigital(1,5,JOY_UP),joystickGetDigital(1,5,JOY_DOWN),joystickGetDigital(1,6,JOY_UP),joystickGetDigital(1,6,JOY_DOWN),
+                        joystickGetDigital(1,7,JOY_UP),joystickGetDigital(1,7,JOY_DOWN),joystickGetDigital(1,7,JOY_LEFT),joystickGetDigital(1,7,JOY_RIGHT),
+                        joystickGetDigital(1,8,JOY_UP),joystickGetDigital(1,8,JOY_DOWN),joystickGetDigital(1,8,JOY_LEFT),joystickGetDigital(1,8,JOY_RIGHT),
                       },
-      .analog_partner = {analog_partner[CH1]+127,analog_partner[CH2]+127,analog_partner[CH3]+127,analog_partner[CH4]+127},
-      .digital_partner = {digital_partner[BTN5U],digital_partner[BTN5D],digital_partner[BTN6U],digital_partner[BTN6D],
-                          digital_partner[BTN7U],digital_partner[BTN7D],digital_partner[BTN7L],digital_partner[BTN7R],
-                          digital_partner[BTN8U],digital_partner[BTN8D],digital_partner[BTN8L],digital_partner[BTN8R]
-                      },
+      .analog_partner = {joystickGetAnalog(2,1)+127,joystickGetAnalog(2,2)+127,joystickGetAnalog(2,3)+127,joystickGetAnalog(2,4)+127},
+      .digital_partner = {joystickGetDigital(2,5,JOY_UP),joystickGetDigital(2,5,JOY_DOWN),joystickGetDigital(2,6,JOY_UP),joystickGetDigital(2,6,JOY_DOWN),
+                           joystickGetDigital(2,7,JOY_UP),joystickGetDigital(2,7,JOY_DOWN),joystickGetDigital(2,7,JOY_LEFT),joystickGetDigital(2,7,JOY_RIGHT),
+                           joystickGetDigital(2,8,JOY_UP),joystickGetDigital(2,8,JOY_DOWN),joystickGetDigital(2,8,JOY_LEFT),joystickGetDigital(2,8,JOY_RIGHT),
+                          }
     };
 
     Frame *clone = malloc(sizeof(Frame *));

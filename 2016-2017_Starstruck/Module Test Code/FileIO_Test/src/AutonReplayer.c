@@ -25,7 +25,7 @@ void startAuton(int s) {
   delay(200);
   slot = s;
   currentFrame = malloc(sizeof(Frame *));
-  fileName = malloc(sizeof(char)*14);
+  fileName = malloc(sizeof(char)*7);
   sprintf(fileName,"Rec%d.txt",slot);
   replayTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 }
@@ -42,14 +42,15 @@ void replayerLoop() {
   if (slot == 0) {
     return;
   }
-  FILE* recording = fopen(fileName,"w");
-  char* frameString = "";
-  while(isAutonomous() && fgets(frameString,51,recording) != NULL){
+  FILE* recording = fopen(fileName,"r");
+  char* frameString = malloc(sizeof(char)*50);
+  while(/*isAutonomous() && */fgets(frameString,50,recording) != NULL){
     joystickMap();
     printf("%s",frameString);
     delay(200);
   }
   printf("Closing file.\n");
+  delay(100);
 
   fclose(recording);
 }
