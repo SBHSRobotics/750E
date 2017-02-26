@@ -30,7 +30,12 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
+	speakerInit();
+	MenuItem *root = lcdmInit(uart1);
+	lcdmAddDefaults(root);
+	printf("3: %p\n\r",root);
 	while (1) {
-		delay(20);
+		lcdmLoop(root);
+		delay(500);
 	}
 }

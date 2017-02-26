@@ -1,16 +1,18 @@
 #ifndef LCD_H_
-
 #define LCD_H_
+
+#include <main.h>
 
 typedef void (*Function)(void *);
 
 // Menu Item Struct
 typedef struct MenuItem {
-  char name[12];
+  char *name;
   struct MenuItem *next;
   struct MenuItem *previous;
   struct MenuItem *select;
-  Function action;
+  void (*action)(void *);
+  void (*param);
 }MenuItem;
 
 /**
@@ -19,7 +21,7 @@ typedef struct MenuItem {
  * This function should be called from initialize()
  * DO NOT initialize the LCD separately
  */
-MenuItem *lcdmInit();
+MenuItem *lcdmInit(FILE *lcdPort);
 
 /**
  * Adds built in menu features to active menu
@@ -33,14 +35,14 @@ void lcdmAddDefaults(MenuItem *root);
  * This function should be called from initialize()
  * DO NOT initialize the LCD separately
  */
-MenuItem lcdmCreateItem(char name[12], MenuItem *select, Function action);
+MenuItem *lcdmCreateItem(char *name);
 
 /**
  * Adds menu item to LCD menu
  *
  * @param name is the string that appears on the menu
  */
-void lcdmAddItem(MenuItem *root, MenuItem item);
+void lcdmAddItem(MenuItem *root, MenuItem *item);
 
 /**
  * Updates LCD menu
