@@ -49,7 +49,7 @@
     .analog_main = {255,255,255,255},
     .digital_main = {false,false,false,false,false,false,false,false,false,false,false,false},
     .analog_partner = {255,255,255,255},
-    .digital_partner = {false,false,false,false,false,false,false,false,false,false,false,false},
+    .digital_partner = {false,false,false,false,false,false,false,false,false,false,false,false}
   };
 
   // TODO fix all of the descriptions lol
