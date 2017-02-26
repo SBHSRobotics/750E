@@ -88,7 +88,8 @@ bool isHoloInitialized() {
 void holoSet(int xAxis, int yAxis, int rot) {
   switch (currentConfig) {
     case HOLO_X4:
-      holoSetUniversal(-xAxis + -yAxis + -rot, xAxis + -yAxis + -rot, -xAxis + yAxis + -rot, xAxis + yAxis + -rot, DISABLED, DISABLED);
+      //FL BL FR BR TODO: What the daft is this? (Bot might be wired wrong)
+      holoSetUniversal(xAxis + yAxis + rot, xAxis + -yAxis + -rot, -xAxis + -yAxis + rot, xAxis + -yAxis + rot, DISABLED, DISABLED);
       break;
     case HOLO_X6:
       holoSetUniversal(-xAxis + -yAxis + -rot, xAxis + -yAxis + -rot, -xAxis + yAxis + -rot, xAxis + yAxis + -rot, -yAxis + -rot, yAxis + -rot);

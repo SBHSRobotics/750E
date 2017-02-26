@@ -70,8 +70,9 @@ void lcdmAddDefaults(MenuItem *root) {
   selfTest = lcdmCreateItem("<     POST     >");
   lcdmAddItem(root, selfTest);
   selfTest->action = &runSelfTest;
+
   MenuItem *runAuton = malloc(sizeof(MenuItem *));
-  runAuton = lcdmCreateItem("<     Auton    >");
+  runAuton = lcdmCreateItem("<  Autonomous  >");
   lcdmAddItem(root, runAuton);
   runAuton->action = &callAuton;
   // speaker->param = 0;

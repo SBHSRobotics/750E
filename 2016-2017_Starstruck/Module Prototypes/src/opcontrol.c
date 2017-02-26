@@ -25,20 +25,26 @@
  *
  * Code running in this task can take almost any action, as the VEX Joystick is available and
  * the scheduler is operational. However, proper use of delay() or taskDelayUntil() is highly
- * recommended to give other tasks (including system tasks such as updating LCDs) time to run.
+ * recommended to give other tasks (including system tasks such as updating LCDs) time to run.p
  *
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 #define LCD_TEST 0
+
+static const unsigned char LF = 2;	// Front left drive wheel
+static const unsigned char LB = 3;	// Back left drive wheel
+static const unsigned char RF = 9;	// Front Right drive wheel
+static const unsigned char RB = 8;	// Back right drive wheel
 
 void operatorControl() {
 	speakerInit();
 	MenuItem *root = lcdmInit(uart1);
 	lcdmAddDefaults(root);
 	printf("3: %p\n\r",root);
-	holoInitX4(FL, BL, FR, BR);
+	holoInitX4(LF, LB, RF, RB);
 	while (1) {
 		lcdmLoop(root);
-		delay(500);
+		holoSet(joystickGetAnalog(1, 4), joystickGetAnalog(1, 3), joystickGetAnalog(1, 1));
+		delay(200);
 	}
 }
