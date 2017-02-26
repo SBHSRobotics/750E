@@ -76,12 +76,6 @@
    * Reads from file and prints all frames
    */
 
-  void addFrame(Frame *toAdd);
-  /*
-   * Adds toAdd to the end of the linked list of Frames
-   *   Frames are structured circularly
-   */
-
   char* frameToString(Frame *frame);
   /*
    * Converts frame values into a single string, analog values offset from (-127,127) to (0,254)
