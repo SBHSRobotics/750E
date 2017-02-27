@@ -30,10 +30,22 @@ MenuItem *lcdmInit(FILE *lcdPort);
 void lcdmAddDefaults(MenuItem *root);
 
 /**
- * Initializes LCD Menu module
+ * Creates and adds an LCD Menu Item
  *
- * This function should be called from initialize()
- * DO NOT initialize the LCD separately
+ * @param name is the string that appears on the menu
+ * @param root is the root MenuItem to add the new item to
+ * @param action is the function to run when the item is selected
+ * @param param is the parameter to the action7 function
+ */
+MenuItem *lcdmCraddItem(char *name, MenuItem *root, void *action, void *param);
+
+MenuItem *lcdmCraddSubmenu(MenuItem *link);
+
+
+/**
+ * reates an LCD Menu Item
+ *
+ * @param name is the string that appears on the menu
  */
 MenuItem *lcdmCreateItem(char *name);
 

@@ -36,52 +36,48 @@ void lcdmAddDefaults(MenuItem *root) {
   printf("Adding default LCDM features...\n\r");
   delay(100);
   printf("Creating Manual Test menu...\n\r");
-  delay(100);
-  MenuItem *manualTest = malloc(sizeof(MenuItem *)),
-           *exitManualTest = malloc(sizeof(MenuItem *));
-  manualTest = lcdmCreateItem("< Manual Test  >");
-  exitManualTest = lcdmCreateItem("<     Back     >");
-  delay(300);
-  (*exitManualTest).previous = exitManualTest;
-  (*exitManualTest).next = exitManualTest;
-  (*exitManualTest).select = manualTest;
+  delay(200);
+  MenuItem *manualTest = lcdmCraddItem("< Manual Test  >", root, NULL, NULL);
+  MenuItem *exitManualTest = lcdmCraddSubmenu(manualTest);
+
   printf("Adding Manual Test submenus...\n\r");
-  delay(800);
+  delay(500);
   char *title;
   for (int i = 1; i<=10; i++) {
     title = malloc(sizeof(char)*16);
-    sprintf(title, "<   Motor %d  >",i);
+    sprintf(title, "<   Motor %02d   >",i);
     delay(100);
-    MenuItem *motor = malloc(sizeof(MenuItem *));
-    motor = lcdmCreateItem(title);
+    MenuItem *motor = lcdmCraddItem(title, exitManualTest, &pulseMotor, NULL);
+    motor->param = i;
     printf("%s", (*motor).name);
-
-    (*motor).action = &pulseMotor;
-    (*motor).param = i;
-
-    lcdmAddItem(exitManualTest, motor);
   }
-  MenuItem *speaker = malloc(sizeof(MenuItem *));
-  speaker = lcdmCreateItem("<   Speaker    >");
-  lcdmAddItem(exitManualTest, speaker);
-  speaker->action = &beep;
-  //TODO: This is getting repetitive, consider abstracting
-  MenuItem *selfTest = malloc(sizeof(MenuItem *));
-  selfTest = lcdmCreateItem("<     POST     >");
-  lcdmAddItem(root, selfTest);
-  selfTest->action = &runSelfTest;
+  MenuItem *speaker = lcdmCraddItem("<   Speaker    >", exitManualTest, &beep, NULL);
+  lcdmCraddItem("<     POST     >", root, &runSelfTest, NULL);
+  lcdmCraddItem("<  Autonomous  >", root, &callAuton, NULL);
 
-  MenuItem *runAuton = malloc(sizeof(MenuItem *));
-  runAuton = lcdmCreateItem("<  Autonomous  >");
-  lcdmAddItem(root, runAuton);
-  runAuton->action = &callAuton;
   // speaker->param = 0;
   printf("Done.\n\r");
   delay(800);
-  (*manualTest).select = exitManualTest;
   printf("Adding Manual Test menu...\n\r");
   delay(800);
-  lcdmAddItem(root, manualTest);
+  // lcdmAddItem(root, manualTest);
+}
+
+MenuItem *lcdmCraddItem(char *name, MenuItem *root, void *action, void *param) {
+  MenuItem *addee = malloc(sizeof(MenuItem *));
+  addee = lcdmCreateItem(name);
+  lcdmAddItem(root, addee);
+  addee->action = action;
+  return addee;
+}
+
+MenuItem *lcdmCraddSubmenu(MenuItem *link) {
+  MenuItem *submenu = lcdmCraddItem("<     Back     >", NULL, NULL, NULL);
+  submenu->next = submenu;
+  submenu->previous = submenu;
+  link->select = submenu;
+  submenu->select = link;
+  return submenu;
 }
 
 MenuItem *lcdmCreateItem(char *name) {
@@ -103,6 +99,9 @@ MenuItem *lcdmCreateItem(char *name) {
 }
 
 void lcdmAddItem(MenuItem *root, MenuItem *item) {
+  if(root == NULL || item == NULL) {
+    return;
+  }
   MenuItem *last = (*root).previous;
   (*last).next = item;
   (*root).previous = item;
