@@ -83,11 +83,12 @@
 	 *
 	 * This task should never exit; it should end with some kind of infinite loop, even if empty.
 	 */
-
 	void operatorControl() {
+		// MenuItem *lcdRoot = lcdmInit(uart1);
+		// lcdmAddDefaults(lcdRoot);
 		while(1){
 			joystickMap();
-			lcdLoop();
+			// lcdmLoop(lcdRoot);
 			delay(200);
 		}
 	}

@@ -62,8 +62,5 @@
   void driveAuton(int frontLeftSpeed, int backLeftSpeed, int frontRightSpeed, int backRightSpeed);
   void driveOp();
   void stopDrive();
-  void pulseMotor(unsigned char port);
-  void lcdStart();
-  void lcdLoop();
 
 #endif //EUGENELIB_H_
