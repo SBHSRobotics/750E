@@ -20,72 +20,53 @@
 		driveOp();
 
     // Get pincer input
-    if(joystickGetDigital(2,5,JOY_UP)){
-      // If 5U is held on the partner joystick, the pincers can be individually moved to sync them
-      // TODO: mechanically sync pincers
-		  if(abs(joystickGetAnalog(2,4))>15){
-  			motorSet(PL,joystickGetAnalog(2,4));
-  		} else {
-  			motorStop(PL);
-  		}
-  		if(abs(joystickGetAnalog(2,1))>15){
-  			motorSet(PR,joystickGetAnalog(2,1));
-  		} else {
-  			motorStop(PR);
-  		}
-    } else {
-      // Moves pincers normally
-      if(abs(joystickGetAnalog(2,1))>15){
-    		pince(joystickGetAnalog(2,1));
-      } else {
-        pince(0);
-      }
-    }
+    // If 5U is held on the partner joystick, the pincers can be individually moved to sync them
+    // TODO: mechanically sync pincers
 
-    // Get lift input
-    if(abs(joystickGetAnalog(2,3))>15){
-  		lift(joystickGetAnalog(2,3));
-    } else {
-      lift(0);
-    }
-    if(joystickGetDigital(2,7,JOY_UP)){
-      motorSet(CD,127);//-
-    }
-    if(joystickGetDigital(2,7,JOY_LEFT)){
-      motorSet(AB,127);//?
-    }
-    if(joystickGetDigital(2,7,JOY_RIGHT)){
-      motorSet(E,127);
-    }
-    if(joystickGetDigital(2,7,JOY_DOWN)){
-      motorSet(F,127);//-?
-    }
+    // Moves pincers normally
+    // if(joystickGetDigital(1,5,JOY_UP)){
+  		// pince(127);
+    // } else if (joystickGetDigital(1,5,JOY_DOWN)){
+    //   pince(-127);
+    // } else {
+    //   pince(0);
+    // }
 
-    if(joystickGetDigital(2,8,JOY_UP)){
-      motorSet(CD,-127);
-    }
-    if(joystickGetDigital(2,8,JOY_LEFT)){
-      motorSet(AB,-127);
-    }
-    if(joystickGetDigital(2,8,JOY_RIGHT)){
-      motorSet(E,-127);
-    }
-    if(joystickGetDigital(2,8,JOY_DOWN)){
-      motorSet(F,-127);
-    }
+    // if(joystickGetDigital(1,6,JOY_UP)){
+  		// lift(127);
+    // } else if (joystickGetDigital(1,6,JOY_DOWN)){
+    //   lift(-127);
+    // } else {
+    //   lift(0);
+    // }
+    lift(joystickGetAnalog(2,3));
+    pince(joystickGetAnalog(2,1));
+
 	}
 
 // Robot functions
   void lift(int speed){
-    motorSet(AB,speed);
-    motorSet(CD,-speed);
-    motorSet(E,speed);
-    motorSet(F,-speed);
+    int potVal = analogRead(LIFT_POT);
+    if(potVal > LIFT_BOTTOM_THRESH && potVal < LIFT_TOP_THRESH){
+      motorSet(AB,-speed);
+      motorSet(CD,speed);
+      motorSet(E,speed);
+      motorSet(F,-speed);
+    } else {
+      motorStop(AB);
+      motorStop(CD);
+      motorStop(E);
+      motorStop(F);
+    }
   }
 
   void pince(int speed){
-    motorSet(PL,speed);
-    motorSet(PR,-speed);
+    int potVal = analogRead(PINCE_POT);
+    if(potVal > PINCE_BOTTOM_THRESH && potVal < PINCE_TOP_THRESH){
+      motorSet(PINCE,speed);
+    } else {
+      motorStop(PINCE);
+    }
   }
 
   void driveAuton(int frontLeftSpeed, int backLeftSpeed, int frontRightSpeed, int backRightSpeed){
@@ -105,7 +86,7 @@
 
     printf("ch1: %d\t ch2: %d\t ch3: %d\t ch4: %d\n",ch1,ch2,ch3,ch4);
 
-    if ((abs(ch3) > thresh) || (abs(ch4) > thresh) || (abs(ch2) > thresh) || (abs(ch1) > thresh)) {
+    // if ((abs(ch3) > thresh) || (abs(ch4) > thresh) || (abs(ch2) > thresh) || (abs(ch1) > thresh)) {
       if (abs(ch3) < thresh) {
         ch3 = 0;
       }
@@ -125,31 +106,14 @@
         ch3 = 0;
       }
 
-      motorSet(LB, ch3 + ch2 + ch1 - ch4);
+      motorSet(LB, -ch3 + ch2 - ch1 + ch4);
       motorSet(LF, ch3 + ch2 + ch4 + ch1);
       motorSet(RB, -(ch3 + ch2 - ch1 + ch4));
       motorSet(RF, -(ch3 + ch2 - ch4 - ch1));
-    }
-    else if (joystickGetDigital(1, 7, JOY_UP)) {
-      motorSet(LB, 127);
-      motorSet(LF, 127);
-      motorSet(RB, 127);
-      motorSet(RF, 127);
-    }
-    else if (joystickGetDigital(1, 7, JOY_LEFT)) {
-      motorSet(LB, 127);
-      motorSet(LF, -127);
-      motorSet(RB, 127);
-      motorSet(RF, -127);
-    }
-    else if (joystickGetDigital(1, 7, JOY_RIGHT)) {
-      motorSet(LB, -127);
-      motorSet(LF, 127);
-      motorSet(RB, -127);
-      motorSet(RF, 127);
-    } else {
-      stopDrive();
-    }
+
+    // } else {
+    //   stopDrive();
+    // }
     printf("LF: %d\t LB: %d\t RF: %d\t RB: %d\n",motorGet(LF),motorGet(LB),motorGet(RF),motorGet(RB));
     // End holo code
   }
