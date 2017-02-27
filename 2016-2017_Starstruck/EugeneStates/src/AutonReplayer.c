@@ -25,8 +25,8 @@ void startAuton(int s) {
   delay(100);
   slot = s;
   currentFrame = malloc(sizeof(Frame *));
-  fileName = malloc(sizeof(char)*7);
-  sprintf(fileName,"Rec%d.txt",slot);
+  fileName = "Rec1.txt";
+  // sprintf(fileName,"Rec1.txt"); // "Rec%d.txt",slot);
   replayTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 }
 

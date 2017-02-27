@@ -56,13 +56,11 @@
       currentFrame = getCurrentFrame();
       frameVal = frameToString(currentFrame);
       printf("%s",frameVal);
-      delay(100);
       fprintf(recording,frameVal);
-      delay(100);
       if(endTask){ //TODO when this works, make one unused button on joystick end the task
         break;
       }
-      delay(500);
+      delay(200);
     }
     printf("Closing recording %d...\n",slot);
     delay(100);

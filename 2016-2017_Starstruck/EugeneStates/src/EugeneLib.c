@@ -17,7 +17,7 @@
 // Map functions
 	void joystickMap(){
     // Get drive input
-		holoSet(joystickGetAnalog(1,4), joystickGetAnalog(1,3), joystickGetAnalog(1, 1));
+		holoSet(inputGetAnalog(1,4), inputGetAnalog(1,3), inputGetAnalog(1, 1));
 
     // Get pincer input
     // If 5U is held on the partner joystick, the pincers can be individually moved to sync them
@@ -39,8 +39,8 @@
     // } else {
     //   lift(0);
     // }
-    lift(joystickGetAnalog(2,3));
-    pince(joystickGetAnalog(2,1));
+    lift(inputGetAnalog(2,3));
+    pince(inputGetAnalog(2,1));
 
 	}
 
