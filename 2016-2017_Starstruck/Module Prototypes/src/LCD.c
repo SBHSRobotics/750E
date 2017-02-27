@@ -5,6 +5,10 @@ MenuItem *current;
 FILE *port;
 
 void pulseMotor(unsigned char port);
+void beep();
+void boop();
+void runSelfTest();
+void callAuton();
 
 MenuItem *lcdmInit(FILE *lcdPort) {
   port = lcdPort;
@@ -57,6 +61,21 @@ void lcdmAddDefaults(MenuItem *root) {
 
     lcdmAddItem(exitManualTest, motor);
   }
+  MenuItem *speaker = malloc(sizeof(MenuItem *));
+  speaker = lcdmCreateItem("<   Speaker    >");
+  lcdmAddItem(exitManualTest, speaker);
+  speaker->action = &beep;
+  //TODO: This is getting repetitive, consider abstracting
+  MenuItem *selfTest = malloc(sizeof(MenuItem *));
+  selfTest = lcdmCreateItem("<     POST     >");
+  lcdmAddItem(root, selfTest);
+  selfTest->action = &runSelfTest;
+
+  MenuItem *runAuton = malloc(sizeof(MenuItem *));
+  runAuton = lcdmCreateItem("<  Autonomous  >");
+  lcdmAddItem(root, runAuton);
+  runAuton->action = &callAuton;
+  // speaker->param = 0;
   printf("Done.\n\r");
   delay(800);
   (*manualTest).select = exitManualTest;
@@ -122,4 +141,28 @@ void pulseMotor(unsigned char port) {
   motorSet(port, -127);
   delay(500);
   motorStop(port);
+}
+
+void beep() {
+  speakerPlayRtttl("Beep:d=4,o=5,b=100:16f5");
+  speakerPlayRtttl("Beep:d=4,o=5,b=100:16a#6");
+}
+
+void boop() {
+  speakerPlayRtttl("Beep:d=4,o=5,b=100:16a#6");
+  speakerPlayRtttl("Beep:d=4,o=5,b=100:16f5");
+}
+
+void runSelfTest() {
+  lcdSetText(port, 2, "POST: DONT TOUCH");
+  for(int i = 1; i <= 10; i++) {
+    pulseMotor(i);
+  }
+  beep();
+  beep();
+}
+
+void callAuton() {
+  lcdSetText(port, 2, "AUTON-DONT TOUCH");
+  autonomous();
 }

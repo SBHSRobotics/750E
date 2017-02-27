@@ -30,32 +30,45 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 
-
-
-/* ========
- * This program will print the first 20 characters
- * of the Test.txt uploaded to the file system
- * ======== */
-
 void operatorControl() {
-	delay(2000);
-	FILE* ee = fopen("Test.txt","w");
-	fprintf(ee, "123456789potato");
-	fclose(ee);
-	printf("File written and closed. Pausing...\n");
-	delay(2000);
+	startRecording(1);
+	while(true) { //recording while loop
+		if(joystickGetDigital(1,5,JOY_DOWN)) {
+			stopRecording();
+			printf("5 down pressed.\n");
+			delay(1000);
+			break;
+		}
+		delay(200);
+	}
+
+	autonomous();
+
+	while(true){
+
+	}
+
+
+	//stopRecording();
+
+	//loadRecording(1);
+
+	/*
+	//TEST CODE FOR READING A FILE
 
 	//Initialize 20 char string for read
 	char *a = malloc(sizeof(char) * 10);
 	char *b = malloc(sizeof(char) * 10);
 	char *c = malloc(sizeof(char) * 10);
 	//Open Test file in read mode
-	FILE* f = fopen("Test.txt","r");
+	f = fopen("Test.txt","r");
 	//Read file contents to str
-	fgets(a, 4, f);
+	fgets(a, 4, f); //string, max chars + 1, file
 	fgets(b, 4, f);
 	fgets(c, 4, f);
 	//Close file
 	fclose(f);
 	printf("%d, %d, %d\n\r",atoi(a),atoi(b),atoi(c));
+	*/
+
 }

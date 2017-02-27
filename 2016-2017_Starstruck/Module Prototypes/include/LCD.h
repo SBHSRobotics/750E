@@ -51,4 +51,6 @@ void lcdmAddItem(MenuItem *root, MenuItem *item);
  */
 void lcdmLoop(MenuItem *root);
 
+void boop();
+
 #endif //LCD_H_
