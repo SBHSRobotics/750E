@@ -7,7 +7,7 @@
 
 #ifndef AUTONREPLAYER_H_
 
-  void startAuton(int slot);
+  void startAuton(int s);
 
   void stopAuton();
 

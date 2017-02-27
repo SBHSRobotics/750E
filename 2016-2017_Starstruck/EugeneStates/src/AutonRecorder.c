@@ -23,7 +23,7 @@
 
   void startRecording(int s){
     printf("Starting recording %d...\n",s);
-    delay(200);
+    delay(100);
 
     slot = s;
     recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
@@ -32,30 +32,31 @@
     endTask = false;
 
     printf("Recording %d started.\n\n",s);
-    delay(200);
+    delay(100);
   }
 
   void recordingLoop(){
     printf("Titling file...\n");
-    delay(200);
+    delay(100);
+
     sprintf(fileName,"Rec%d.txt",slot);
-    printf("File titled: %s\n\n",fileName);
-    delay(200);
+
+    printf("File titled: %s\n",fileName);
+    delay(100);
 
     printf("Opening %s...\n",fileName);
-    delay(200);
+    delay(100);
     FILE* recording = fopen(fileName,"w");
     printf("%s opened.\n\n",fileName);
-    delay(200);
+    delay(100);
 
     Frame *currentFrame = malloc(sizeof(Frame *));
     char* frameVal = malloc(sizeof(char)*50);
-    delay(100);
     while(!endTask){
       currentFrame = getCurrentFrame();
       frameVal = frameToString(currentFrame);
       printf("%s",frameVal);
-      delay(200);
+      delay(100);
       fprintf(recording,frameVal);
       delay(100);
       if(endTask){ //TODO when this works, make one unused button on joystick end the task
@@ -63,12 +64,13 @@
       }
       delay(500);
     }
+    printf("Closing recording %d...\n",slot);
+    delay(100);
 
     fclose(recording);
-    delay(200);
 
-    printf("Suspending recordTask...\n");
-    delay(200);
+    printf("Recording %d closed.\n\n",slot);
+    delay(100);
     taskSuspend(recordTask);
   }
 
@@ -95,11 +97,25 @@
     return clone;
   }
 
-  char * frameToString(Frame *frame){
+  void printAllFrames(){
+    printf("Printing all frames...\n");
+    delay(100);
+    char* frame = malloc(sizeof(char)*50);
+    FILE* recording = fopen(fileName,"r");
+    while(fgets(frame,50,recording) != NULL){
+      printf("%s",frame);
+      delay(100);
+    }
+    fclose(recording);
+    printf("All frames printed.\n");
+    delay(100);
+  }
+
+  char* frameToString(Frame *frame){
     int ch3 = frame->analog_main[CH3];
     int ch4 = frame->analog_main[CH4];
 
-    char * string = malloc(50);
+    char* string = malloc(50);
     sprintf(string,"%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d\n",
       ((frame->analog_main[CH1] < 0 || frame->analog_main[CH1] > 255) ? 0 : frame->analog_main[CH1]),
       ((frame->analog_main[CH2] < 0 || frame->analog_main[CH2] > 255) ? 0 : frame->analog_main[CH2]),
@@ -159,19 +175,12 @@
   }
 
   char* substring(char* str,int start,int length){
-
-    /*char *substring;// = malloc(length+1);
-    strncpy(substring, str+start, length-start);
-    return substring;
-
-    */ // Code from Mikel, returns 712 instead of 127
-
     char *substring = malloc(length+1);
     int subPos;
 
     if(substring == NULL){
       printf("str in substring method is NULL.\n");
-     	delay(200);
+     	delay(100);
       exit(1);
     }
 
@@ -183,18 +192,4 @@
     *(substring+subPos) = '\0';
 
     return substring;
-  }
-
-  void printAllFrames(){
-    printf("Printing all frames...\n");
-    delay(200);
-    char* frame = malloc(sizeof(char)*51);
-    FILE* recording = fopen(fileName,"r");
-    while(fgets(frame,51,recording) != NULL){
-      printf("%s",frame);
-      delay(200);
-    }
-    fclose(recording);
-    printf("All frames printed.\n\n");
-    delay(200);
   }

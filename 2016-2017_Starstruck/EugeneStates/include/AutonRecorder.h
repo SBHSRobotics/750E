@@ -54,7 +54,7 @@
 
   // TODO fix all of the descriptions lol
 
-  void startRecording(int slot);
+  void startRecording(int s);
   /*
    * Starts the task that runs the Auton Recorder for the file Recorder[slot].txt
    */

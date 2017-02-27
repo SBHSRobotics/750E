@@ -22,7 +22,7 @@ void replayerLoop();
 
 void startAuton(int s) {
   printf("Replaying auton %d...\n",slot);
-  delay(200);
+  delay(100);
   slot = s;
   currentFrame = malloc(sizeof(Frame *));
   fileName = malloc(sizeof(char)*7);
@@ -35,24 +35,33 @@ void stopAuton() {
   taskSuspend(replayTask);
   taskDelete(replayTask);
   motorStopAll();
-  printf("Auton stopped.\n\n");
+  printf("Auton stopped.\n");
 }
 
 void replayerLoop() {
   if (slot == 0) {
     return;
   }
+  printf("Opening recording %d...\n",slot);
+  delay(100);
+
   FILE* recording = fopen(fileName,"r");
   char* frameString = malloc(sizeof(char)*50);
+
+  printf("Recording %d opened.\n",slot);
+  delay(100);
   while(/*isAutonomous() && */fgets(frameString,50,recording) != NULL){
     *currentFrame = stringToFrame(frameString);
     printf("%s",frameString);
-    delay(200);
+    delay(100);
   }
-  printf("Closing file.\n");
+  printf("Closed recording %d...\n",slot);
   delay(100);
 
   fclose(recording);
+
+  printf("Recording %d closed.\n",slot);
+  delay(100);
 }
 
 int inputGetAnalog(unsigned char joystick, unsigned char axis) {
