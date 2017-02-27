@@ -64,7 +64,7 @@
    *
    */
 
-  Frame* getCurrentFrame();
+  Frame getCurrentFrame();
   /*
    * When recording files, this reads the joysticks and puts their values in a Frame structure.
    *   The returned Frame's next and previous values are NULL, and should be set in the circular

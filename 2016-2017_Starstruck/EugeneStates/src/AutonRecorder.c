@@ -50,12 +50,13 @@
     printf("%s opened.\n\n",fileName);
     delay(100);
 
-    Frame *currentFrame = malloc(sizeof(Frame *));
+    Frame currentFrame;
     char* frameVal = malloc(sizeof(char)*50);
     while(!endTask){
       currentFrame = getCurrentFrame();
-      frameVal = frameToString(currentFrame);
+      frameVal = frameToString(&currentFrame);
       printf("%s",frameVal);
+      delay(100);
       fprintf(recording,frameVal);
       if(endTask){ //TODO when this works, make one unused button on joystick end the task
         break;
@@ -76,7 +77,7 @@
     endTask = true;
   }
 
-  Frame* getCurrentFrame(){
+  Frame getCurrentFrame(){
     Frame frame = {
       .analog_main = {joystickGetAnalog(1,1)+127,joystickGetAnalog(1,2)+127,joystickGetAnalog(1,3)+127,joystickGetAnalog(1,4)+127},
       .digital_main = {joystickGetDigital(1,5,JOY_UP),joystickGetDigital(1,5,JOY_DOWN),joystickGetDigital(1,6,JOY_UP),joystickGetDigital(1,6,JOY_DOWN),
@@ -90,9 +91,9 @@
                           }
     };
 
-    Frame *clone = malloc(sizeof(Frame *));
-    *clone = frame;
-    return clone;
+    // Frame *clone = malloc(sizeof(Frame *));
+    // *clone = frame;
+    return frame;
   }
 
   void printAllFrames(){

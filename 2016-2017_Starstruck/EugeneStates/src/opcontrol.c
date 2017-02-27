@@ -87,13 +87,12 @@
 		MenuItem *lcdRoot = lcdmInit(uart1);
 		lcdmAddDefaults(lcdRoot);
 
-		printf("Hello Opcontrol\n\r");
 		while(1){
 			lcdmLoop(lcdRoot);
 			if(joystickGetDigital(1,7,JOY_UP) && joystickGetDigital(1,7,JOY_RIGHT) && joystickGetDigital(1,7,JOY_LEFT) && joystickGetDigital(1,7,JOY_DOWN)){
-				delay(1000);
 				beep();
 				startRecording(1); // TODO change later once LCD is working
+				delay(1000);
 			}
 			else if(joystickGetDigital(1,7,JOY_LEFT)){
 				stopRecording();

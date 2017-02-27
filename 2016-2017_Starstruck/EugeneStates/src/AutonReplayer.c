@@ -42,18 +42,18 @@ void replayerLoop() {
   if (slot == 0) {
     return;
   }
-  printf("Opening recording %d...\n",slot);
+  printf("Opening recording %d from file &s...\n", slot, fileName);
   delay(100);
 
   FILE* recording = fopen(fileName,"r");
   char* frameString = malloc(sizeof(char)*50);
-
+  
   printf("Recording %d opened.\n",slot);
   delay(100);
   while(/*isAutonomous() && */fgets(frameString,50,recording) != NULL){
+    printf("Setting frame: %s",frameString);
+    delay(200);
     *currentFrame = stringToFrame(frameString);
-    printf("%s",frameString);
-    delay(100);
   }
   printf("Closed recording %d...\n",slot);
   delay(100);
