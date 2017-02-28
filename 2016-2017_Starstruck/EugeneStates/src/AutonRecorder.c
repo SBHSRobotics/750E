@@ -177,6 +177,14 @@
     return substring;
   }
 
+  int getSlot(){
+    return slot;
+  }
+
+  void setSlot(int s){
+    slot = s;
+  }
+
 /* Private function declarations */
 
   void recordingLoop(){
