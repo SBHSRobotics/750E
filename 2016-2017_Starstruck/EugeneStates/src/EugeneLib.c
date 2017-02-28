@@ -13,12 +13,26 @@
   * that this file will not compile if EugeneLib.h has not been
   * included properly.
   */
+  bool swap = false;
 
 // Map functions
 	void joystickMap(){
     // Get drive input
-		holoSet(inputGetAnalog(1,4), inputGetAnalog(1,3), inputGetAnalog(1, 1));
 
+    if(inputGetDigital(1, 8, JOY_UP) && inputGetDigital(1, 8, JOY_RIGHT) &&
+        inputGetDigital(2, 8, JOY_UP) && inputGetDigital(2, 8, JOY_RIGHT)) {
+          swap = !swap;
+          delay(500);
+          if (swap) {
+            beep();
+            boop();
+          } else {
+            boop();
+            beep();
+          }
+    }
+
+    holoSet(inputGetAnalog((swap ? 2 : 1),4), inputGetAnalog((swap ? 2 : 1),3), inputGetAnalog((swap ? 2 : 1), 1));
     // Get pincer input
     // If 5U is held on the partner joystick, the pincers can be individually moved to sync them
     // TODO: mechanically sync pincers
@@ -39,8 +53,8 @@
     // } else {
     //   lift(0);
     // }
-    lift(inputGetAnalog(2,3));
-    pince(inputGetAnalog(2,1));
+    lift(inputGetAnalog((swap ? 1 : 2), 3));
+    pince(inputGetAnalog((swap ? 1 : 2), 1));
 
 	}
 

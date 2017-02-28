@@ -47,14 +47,23 @@ void replayerLoop() {
   FILE* recording = fopen(fileName,"r");
   char* frameString = malloc(sizeof(char)*50);
 
+  if (recording == NULL) {
+    while(isAutonomous()) {
+      boop();
+      delay(500);
+      printf("Replayer Error: Selected slot is empty");
+    }
+    return;
+  }
+
   printf("Recording %d opened.\n",slot);
   delay(100);
-  while(/*isAutonomous() && */fgets(frameString,50,recording) != NULL){
+  while(isAutonomous() && fread(frameString,1,49,recording) != NULL){
     printf("Setting frame: %s",frameString);
     delay(200);
     *currentFrame = stringToFrame(frameString);
   }
-  printf("Closed recording %d...\n",slot);
+  printf("Closing recording %d...\n",slot);
   delay(100);
 
   fclose(recording);
