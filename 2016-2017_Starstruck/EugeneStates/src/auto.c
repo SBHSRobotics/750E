@@ -28,9 +28,10 @@
  */
 void autonomous() {
   startAuton(1);
-
+  
   while(1) {
   	joystickMap();
+    printf("LF %d",motorGet(LF));
   	delay(200);
   }
 }
