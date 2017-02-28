@@ -35,6 +35,7 @@
     // Initializes global variables and starts recordTask
     slot = s;
     root = NULLFRAME;
+    fileName = malloc(sizeof(char *));
     sprintf(fileName,"Rec%d.txt",slot);
     endTask = false;
     recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);

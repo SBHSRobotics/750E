@@ -60,8 +60,12 @@ void replayerLoop() {
   delay(100);
   while(isAutonomous() && fread(frameString,1,49,recording) != NULL){
     printf("Setting frame: %s",frameString);
-    delay(200);
+    delay(75);
     *currentFrame = stringToFrame(frameString);
+    delay(75);
+    joystickMap();
+    printf("LF %d",motorGet(LF));
+  	delay(50);
   }
   printf("Closing recording %d...\n",slot);
   delay(100);
