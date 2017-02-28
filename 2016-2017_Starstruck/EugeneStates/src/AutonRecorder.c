@@ -138,7 +138,8 @@
     char* analog_partner = substring(string,25,12);
     char* digital_partner = substring(string,37,12);
 
-    // For loops split analog and digital 
+    // For loops split analog and digital strings into individual
+    //  values to be saved in the frame
     int x;
     for(x=0;x<4;x++){
       frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3))-127;
@@ -153,6 +154,8 @@
   }
 
   char* substring(char* str,int start,int length){
+    // Splits a string into a substring from index start (first index is 1, not 0) of length length
+    // Code taken from online, link in header file
     char *substring = malloc(length+1);
     int subPos;
 
