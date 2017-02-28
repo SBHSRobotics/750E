@@ -130,12 +130,15 @@
   }
 
   Frame stringToFrame(char* string){
+    // Initializes variables for splitting string into Frame values
     Frame frame = NULLFRAME;
+    // Splits string into analog and digital values from main and partner joysticks
     char* analog_main = substring(string,1,12);
     char* digital_main = substring(string,13,12);
     char* analog_partner = substring(string,25,12);
     char* digital_partner = substring(string,37,12);
 
+    // For loops split analog and digital 
     int x;
     for(x=0;x<4;x++){
       frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3))-127;
