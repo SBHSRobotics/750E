@@ -189,13 +189,17 @@
     Frame currentFrame;
     char* frameVal = malloc(sizeof(char)*50);
     while(!endTask){
-      //Gets current joystick state
+      // Gets current joystick state
       currentFrame = getCurrentFrame();
       frameVal = frameToString(&currentFrame);
       printf("%s",frameVal);
       delay(100);
+
+      // Prints frameVal to recording
       fprintf(recording,frameVal);
-      if(endTask){ //TODO when this works, make one unused button on joystick end the task
+
+      // If endTask is true, break out of the loop and suspend the task
+      if(endTask){
         break;
       }
       delay(200);
@@ -203,9 +207,12 @@
     printf("Closing recording %d...\n",slot);
     delay(100);
 
+    // Closes recording
     fclose(recording);
 
     printf("Recording %d closed.\n\n",slot);
     delay(100);
+
+    // Suspends recordTask
     taskSuspend(recordTask);
   }
