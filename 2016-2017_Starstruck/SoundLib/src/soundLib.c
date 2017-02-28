@@ -6,6 +6,8 @@
 
 #include "main.h"
 
+//This is where all of the sound functions are declared
+
 void startUpSound() {
 	speakerPlayRtttl("start: d=4, o=5, b=120: 8b, e, 8g#, b6");
 }
@@ -24,7 +26,7 @@ void fail() {
 void linkinParkIntro() {
 	speakerPlayRtttl("linkin park intro: d=4, o=5, b=100: 4d, 4a6, 4a6, 4f, 4e, 4e, 4e, 8e, 8f, 4d, 4a6, 4a6, 4f, 4e, 4e, 4e, 8e, 8f, 4d, 4a6, 4a6, 4f, 4e, 4e, 4e, 8e, 8f, 4d, 4a6, 4a6, 4f, 2.e");
 }
-void linkinParkChorus() {//doesn't work at all
+void linkinParkChorus() {//TODO: Fix this song, it is far from sounding right
 	speakerPlayRtttl("linkin park chorus: d=4, o=5, b=100: c#, c#, d#, f, 8p, 8d#, 4.d#, 8.c#, 2c#, 16p, 16a#, 8c#, 8d#, 4.f, 8p, 8d#, 16f, 16d#, 8f, 8f#, 8f, d#");
 }
 void neverGonna(){
@@ -33,14 +35,14 @@ void neverGonna(){
 void nyanCat(){
 	speakerPlayRtttl("nyancat:d=4,o=5,b=90:16d#6,16e6,8f#6,8b6,16d#6,16e6,16f#6,16b6,16c#7,16d#7,16c#7,16a#6,8b6,8f#6,16d#6,16e6,8f#6,8b6,16c#7,16a#6,16b6,16c#7,16e7,16d#7,16e7,16c#7,8f#6,8g#6,16d#6,16d#6,16p,16b,16d6,16c#6,16b,16p,8b,8c#6,8d6,16d6,16c#6,16b,16c#6,16d#6,16f#6,16g#6,16d#6,16f#6,16c#6,16d#6,16b,16c#6,16b,8d#6,8f#6,16g#6,16d#6,16f#6,16c#6,16d#6,16b,16d6,16d#6,16d6,16c#6,16b,16c#6,8d6,16b,16c#6,16d#6,16f#6,16c#6,16d#6,16c#6,16b,8c#6,8b,8c#6,8f#6,8g#6,16d#6,16d#6,16p,16b,16d6,16c#6,16b,16p,8b,8c#6,8d6,16d6,16c#6,16b,16c#6,16d#6,16f#6,16g#6,16d#6,16f#6,16c#6,16d#6,16b,16c#6,16b,8d#6,8f#6,16g#6,16d#6,16f#6,16c#6,16d#6,16b,16d6,16d#6,16d6,16c#6,16b,16c#6,8d6,16b,16c#6,16d#6,16f#6,16c#6,16d#6,16c#6,16b,8c#6,8b,8c#6,8b,16f#,16g#,8b,16f#,16g#,16b,16c#6,16d#6,16b,16e6,16d#6,16e6,16f#6,8b,8b,16f#,16g#,16b,16f#,16e6,16d#6,16c#6,16b,16f#,16d#,16e,16f#,8b,16f#,16g#,8b,16f#,16g#,16b,16b,16c#6,16d#6,16b,16f#,16g#,16f#,8b,16b,16a#,16b,16f#,16g#,16b,16e6,16d#6,16e6,16f#6,8b,8a#,8b,16f#,16g#,8b,16f#,16g#,16b,16c#6,16d#6,16b,16e6,16d#6,16e6,16f#6,8b,8b,16f#,16g#,16b,16f#,16e6,16d#6,16c#6,16b,16f#,16d#,16e,16f#,8b,16f#,16g#,8b,16f#,16g#,16b,16b,16c#6,16d#6,16b,16f#,16g#,16f#,8b,16b,16a#,16b,16f#,16g#,16b,16e6,16d#6,16e6,16f#6,8b,8c#6");
 }
-void weAreNumberOne(){//somewhat works
+void weAreNumberOne(){//TODO: Fix the first part of this song, sounds weird
 	speakerPlayRtttl("we are number one: d=4, o=5, b=150: f4, 8p, 8c, 16b, 16c, 16b, 16c, 8b, 8c, b#4, f4, 8p, 8f4, 8b#4, 8c, c#, b#4, c#, d#, 8c, 8c#, 8c, 8d#, 8c, 8p, c6");
 }
 
-
+//TThis is where the batter check funtion is defined. It checks the battery and if it is 20% or under, it will play a low battery sound
 void batteryCheck(){
 	unsigned int powerLevel=powerLevelMain();
-	if(powerLevel==1440)
+	if(powerLevel<=1440)
 		lowBattery();
 }
 

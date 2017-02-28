@@ -43,11 +43,9 @@
 // This prevents multiple inclusion, which isn't bad for this file but is good practice
 #define SOUNDLIB_H_
 
-/*
- * Plays single-track mario
- */
-void superMarioBro();
+//This is where the funtions that play the sounds are declared
 
+void superMarioBro();
 void startUpSound();
 void connectedSound();
 void lowBattery();
@@ -58,12 +56,9 @@ void linkinParkChorus();
 void neverGonna();
 void nyanCat();
 void weAreNumberOne();
-
-void batteryCheck();
-/*
- * Plays two-track mario
- */
 void superMarioBros();
+
+void batteryCheck();//This is where the funtion that checks for low battery and plays the low battery sound is declared
 
 
 #endif

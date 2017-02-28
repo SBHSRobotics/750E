@@ -30,6 +30,9 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
+
+//testing code for the sound functions
+
 	while(1){
 	if(joystickGetDigital(1, 7, JOY_LEFT) == 1) {
 		superMarioBro();
