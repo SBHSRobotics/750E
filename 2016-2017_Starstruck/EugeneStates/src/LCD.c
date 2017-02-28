@@ -8,7 +8,7 @@ void pulseMotor(unsigned char port);
 void beep();
 void boop();
 void runSelfTest();
-void callAuton();
+void recordAuton(int recordSlot);
 
 MenuItem *lcdmInit(FILE *lcdPort) {
   port = lcdPort;
@@ -54,6 +54,23 @@ void lcdmAddDefaults(MenuItem *root) {
   MenuItem *speaker = lcdmCraddItem("<   Speaker    >", exitManualTest, &beep, NULL);
   lcdmCraddItem("<     POST     >", root, &runSelfTest, NULL);
   lcdmCraddItem("<  Autonomous  >", root, &callAuton, NULL);
+
+  printf("Creating Auton Recorder menu...\n");
+  delay(200);
+  MenuItem *autonRecorder = lcdmCraddItem("<  Make Auton  >", root, NULL, NULL);
+  MenuItem *exitAutonRecorder = lcdmCraddSubmenu(autonRecorder);
+
+  printf("Adding Auton Recorder submenu...\n");
+  delay(200);
+
+  for(int x = 1; x<=8; x++){
+    title = malloc(sizeof(char)*16);
+    sprintf(title,"<    Slot %d    >",x);
+    delay(100);
+    MenuItem *autonSlot = lcdmCraddItem(title,exitAutonRecorder, &recordAuton, NULL);
+    autonSlot->param = x;
+    printf("%s",(*autonSlot).name);
+  }
 
   // speaker->param = 0;
   printf("Done.\n\r");
@@ -161,7 +178,8 @@ void runSelfTest() {
   beep();
 }
 
-void callAuton() {
-  lcdSetText(port, 2, "AUTON-DONT TOUCH");
+void recordAuton(int recordSlot) {
+  lcdSetText(port, 2, "Recording Auton ");
+  setSlot(recordSlot);
   autonomous();
 }

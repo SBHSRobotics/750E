@@ -170,7 +170,7 @@
       return;
     }
 
-    printf("Recording %d opened.\n",getSlot();
+    printf("Recording %d opened.\n",getSlot());
     delay(100);
 
     // Loop only runs in autonomous mode
