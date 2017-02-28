@@ -69,7 +69,7 @@
     * Sets the bool endTask to true, which will in turn suspend the recordingLoop task
     */
 
-   Frame* getCurrentFrame();
+   Frame getCurrentFrame();
    /*
     * When recording files, this reads the joysticks and puts their values in a Frame structure.
     *   The function returns a pointer to the current frame.
