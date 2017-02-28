@@ -13,6 +13,8 @@
  *   compile without AutonRecorder.h properly included in main.h.
  */
 
+/* Global variable declarations */
+
   int slot;
   TaskHandle recordTask;
   Frame root;
@@ -32,7 +34,7 @@
     printf("Starting recording %d...\n",s);
     delay(100);
 
-    // Initializes global variables and starts recordTask
+    // Defines global variables and starts recordTask
     slot = s;
     root = NULLFRAME;
     fileName = malloc(sizeof(char *));

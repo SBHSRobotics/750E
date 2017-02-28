@@ -8,9 +8,9 @@
  #include <main.h>
 
 /*
- * This file abstracts all of the functionality of 750E's Auton Recorder.
+ * This file abstracts all of the functionality of 750E's Auton Replayer.
  *   This file should be placed in the src directory. Note that it won't
- *   compile without AutonRecorder.h properly included in main.h.
+ *   compile without AutonReplayer.h properly included in main.h.
  */
 
 /* Global variable declarations */
@@ -39,6 +39,7 @@
   }
 
   void stopAuton() {
+    // Stops the auton by suspending and deleting replayTask and stops all of the motors on the robot
     printf("Stopping auton...\n");
     taskSuspend(replayTask);
     taskDelete(replayTask);
@@ -46,46 +47,8 @@
     printf("Auton stopped.\n");
   }
 
-  void replayerLoop() {
-    if (slot == 0) {
-      return;
-    }
-    printf("Opening recording %d from file &s...\n", slot, fileName);
-    delay(100);
-
-    FILE* recording = fopen(fileName,"r");
-    char* frameString = malloc(sizeof(char)*50);
-
-    if (recording == NULL) {
-      while(isAutonomous()) {
-        boop();
-        delay(500);
-        printf("Replayer Error: Selected slot is empty");
-      }
-      return;
-    }
-
-    printf("Recording %d opened.\n",slot);
-    delay(100);
-    while(isAutonomous() && fread(frameString,1,49,recording) != NULL){
-      printf("Setting frame: %s",frameString);
-      delay(75);
-      *currentFrame = stringToFrame(frameString);
-      delay(75);
-      joystickMap();
-      printf("LF %d",motorGet(LF));
-    	delay(50);
-    }
-    printf("Closing recording %d...\n",slot);
-    delay(100);
-
-    fclose(recording);
-
-    printf("Recording %d closed.\n",slot);
-    delay(100);
-  }
-
   int inputGetAnalog(unsigned char joystick, unsigned char axis) {
+    // If the robot is replaying auton, get values from currentFrame
     if(isAutonomous()) {
       if(joystick == 1) {
         return currentFrame->analog_main[axis - 1];
@@ -93,11 +56,13 @@
         return currentFrame->analog_partner[axis - 1];
       }
     }
+    // Otherwise return the value of joystick for use in opcontrol
     return joystickGetAnalog(joystick, axis);
   }
 
   bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
       unsigned char button) {
+    // If the robot is replaying auton, get values from currentFrame
     if(isAutonomous()) {
       if(joystick == 1) { //main
         switch(buttonGroup){
@@ -179,5 +144,58 @@
           }
       }
     }
+    // Otherwise return the value of joystick for use in opcontrol
     return joystickGetDigital(joystick, buttonGroup, button);
+  }
+
+/* Private function definitions */
+
+  void replayerLoop() {
+    // If slot doesn't initialize properly, end replay immediately
+    if (slot == 0) {
+      return;
+    }
+    printf("Opening recording %d from file &s...\n", slot, fileName);
+    delay(100);
+    // Initializes variables for iterating through file
+    FILE* recording = fopen(fileName,"r");
+    char* frameString = malloc(sizeof(char)*50);
+
+    // Makes sure the file exists, otherwise ends replay
+    if (recording == NULL) {
+      while(isAutonomous()) {
+        boop();
+        delay(500);
+        printf("Replayer Error: Selected slot is empty");
+      }
+      return;
+    }
+
+    printf("Recording %d opened.\n",slot);
+    delay(100);
+
+    // Loop only runs in autonomous mode
+    // fread assigns values to frameString from recording until end of file
+    while(isAutonomous() && fread(frameString,1,49,recording) != NULL){
+      printf("Setting frame: %s",frameString);
+      delay(75);
+
+      // Creates frame from string and assigns it to
+      //   global variable currentFrame for use in inputGet functions
+      *currentFrame = stringToFrame(frameString);
+      delay(75);
+
+      // Sets values from currentFrame to motors on robot
+      joystickMap();
+      printf("LF %d",motorGet(LF));
+      delay(50);
+    }
+    printf("Closing recording %d...\n",slot);
+    delay(100);
+
+    // Closes recording file
+    fclose(recording);
+
+    printf("Recording %d closed.\n",slot);
+    delay(100);
   }

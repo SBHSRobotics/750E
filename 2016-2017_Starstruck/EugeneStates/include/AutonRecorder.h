@@ -36,44 +36,44 @@
   #define BTN8L 10
   #define BTN8R 11
 
-   typedef struct Frame {
-       int analog_main[4]; //ch1, ch2, ch3, ch4
-       bool digital_main[12]; //5U, 5D, 6U, 6D, 7U, 7D, 7L, 7R, 8U, 8D, 8L, 8R
-       int analog_partner[4];
-       bool digital_partner[12];
-     }Frame;
-   /*
-    * Structure that holds the analog and digital values of the current state of both joysticks
-    */
+  typedef struct Frame {
+    int analog_main[4]; //ch1, ch2, ch3, ch4
+    bool digital_main[12]; //5U, 5D, 6U, 6D, 7U, 7D, 7L, 7R, 8U, 8D, 8L, 8R
+    int analog_partner[4];
+    bool digital_partner[12];
+  }Frame;
+  /*
+   * Structure that holds the analog and digital values of the current state of both joysticks
+   */
 
 
-   static const Frame NULLFRAME = {
-     .analog_main = {255,255,255,255},
-     .digital_main = {false,false,false,false,false,false,false,false,false,false,false,false},
-     .analog_partner = {255,255,255,255},
-     .digital_partner = {false,false,false,false,false,false,false,false,false,false,false,false}
-   };
-   /*
-    * Global Frame that acts as a NULL operator for algorithmic purposes
-    */
+  static const Frame NULLFRAME = {
+    .analog_main = {255,255,255,255},
+    .digital_main = {false,false,false,false,false,false,false,false,false,false,false,false},
+    .analog_partner = {255,255,255,255},
+    .digital_partner = {false,false,false,false,false,false,false,false,false,false,false,false}
+  };
+  /*
+   * Global Frame that acts as a NULL operator for algorithmic purposes
+   */
 
 /* Public function declarations */
 
-   void startRecording(int slot);
-   /*
-    * Starts the task that runs the AutonRecorder for the file Rec[slot].txt
-    */
+  void startRecording(int slot);
+  /*
+   * Starts the task that runs the AutonRecorder for the file Rec[slot].txt
+   */
 
-   void stopRecording();
-   /*
-    * Sets the bool endTask to true, which will in turn suspend the recordingLoop task
-    */
+  void stopRecording();
+  /*
+   * Sets the bool endTask to true, which will in turn suspend the recordingLoop task
+   */
 
-   Frame getCurrentFrame();
-   /*
-    * When recording files, this reads the joysticks and puts their values in a Frame structure.
-    *   The function returns a pointer to the current frame.
-    */
+  Frame getCurrentFrame();
+  /*
+   * When recording files, this reads the joysticks and puts their values in a Frame structure.
+   *   The function returns a pointer to the current frame.
+   */
 
   void printAllFrames();
   /*
