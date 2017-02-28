@@ -6,7 +6,7 @@
 
 #include "main.h"
 
-//This is where all of the sound functions are declared
+//This is where all of the sound functions are defined
 
 void startUpSound() {
 	speakerPlayRtttl("start: d=4, o=5, b=120: 8b, e, 8g#, b6");
