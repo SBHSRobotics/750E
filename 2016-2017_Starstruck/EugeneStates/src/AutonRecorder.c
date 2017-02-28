@@ -34,14 +34,14 @@
     delay(100);
 
     // Defines global variables and starts recordTask
-    slot = s;
+    setSlot(s);
     root = NULLFRAME;
     fileName = malloc(sizeof(char *));
-    sprintf(fileName,"Rec%d.txt",slot);
+    sprintf(fileName,"Rec%d.txt",getSlot());
     endTask = false;
     recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 
-    printf("Recording %d started.\n\n",s);
+    printf("Recording %d started.\n\n",getSlot());
     delay(100);
   }
 
@@ -181,7 +181,7 @@
 
   void recordingLoop(){
     // If slot doesn't initialize properly, end recording immediately
-    if(slot == 0){
+    if(getSlot() == 0){
       return;
     }
 
@@ -211,13 +211,13 @@
       }
       delay(200);
     }
-    printf("Closing recording %d...\n",slot);
+    printf("Closing recording %d...\n",getSlot());
     delay(100);
 
     // Closes recording
     fclose(recording);
 
-    printf("Recording %d closed.\n\n",slot);
+    printf("Recording %d closed.\n\n",getSlot());
     delay(100);
 
     // Suspends recordTask

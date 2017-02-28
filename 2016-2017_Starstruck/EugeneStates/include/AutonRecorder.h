@@ -101,4 +101,14 @@
    *   Code taken from online at http://www.programmingsimplified.com/c/source-code/c-substring
    */
 
+  int getSlot();
+  /*
+   * Returns the recording slot
+   */
+
+  void setSlot(int s);
+  /*
+   * Sets the current slot for replaying or recording to s
+   */
+
 #endif /* AUTONRECORDER_H_ */
