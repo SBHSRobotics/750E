@@ -17,7 +17,6 @@
 
   TaskHandle replayTask;
   Frame *currentFrame;
-  int slot = 0;
   char* fileName;
 
 /* Private function declarations */
@@ -155,7 +154,7 @@
     if (slot == 0) {
       return;
     }
-    printf("Opening recording %d from file &s...\n", slot, fileName);
+    printf("Opening recording %d from file %s...\n", slot, fileName);
     delay(100);
     // Initializes variables for iterating through file
     FILE* recording = fopen(fileName,"r");

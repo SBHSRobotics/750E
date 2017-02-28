@@ -15,7 +15,6 @@
 
 /* Global variable declarations */
 
-  int slot;
   TaskHandle recordTask;
   Frame root;
   char* fileName;
@@ -181,6 +180,11 @@
 /* Private function declarations */
 
   void recordingLoop(){
+    // If slot doesn't initialize properly, end recording immediately
+    if(slot == 0){
+      return;
+    }
+
     // Opens file Rec[slot].txt in write mode
     printf("Opening %s...\n",fileName);
     delay(100);

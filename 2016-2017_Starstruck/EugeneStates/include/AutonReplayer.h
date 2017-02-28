@@ -17,9 +17,9 @@
 
 /* Public function declarations */
 
-  void startAuton(int slot);
+  void startAuton(int s);
   /*
-   * Starts the task that replays the autonomous program in Rec[slot].txt
+   * Starts the task that replays the autonomous program in Rec[s].txt
    */
 
   void stopAuton();

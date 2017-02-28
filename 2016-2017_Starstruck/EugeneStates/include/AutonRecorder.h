@@ -46,7 +46,6 @@
    * Structure that holds the analog and digital values of the current state of both joysticks
    */
 
-
   static const Frame NULLFRAME = {
     .analog_main = {255,255,255,255},
     .digital_main = {false,false,false,false,false,false,false,false,false,false,false,false},
@@ -57,11 +56,16 @@
    * Global Frame that acts as a NULL operator for algorithmic purposes
    */
 
+  int slot = 0;
+  /*
+   * Current recording slot, for use in recorder and replayer
+   */
+
 /* Public function declarations */
 
-  void startRecording(int slot);
+  void startRecording(int s);
   /*
-   * Starts the task that runs the AutonRecorder for the file Rec[slot].txt
+   * Starts the task that runs the AutonRecorder for the file Rec[s].txt
    */
 
   void stopRecording();
