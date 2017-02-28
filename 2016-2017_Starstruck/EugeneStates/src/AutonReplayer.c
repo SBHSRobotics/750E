@@ -74,6 +74,9 @@ void replayerLoop() {
 
   printf("Recording %d closed.\n",slot);
   delay(100);
+
+  // Suspends replayTask
+  taskSuspend(replayTask);
 }
 
 int inputGetAnalog(unsigned char joystick, unsigned char axis) {
