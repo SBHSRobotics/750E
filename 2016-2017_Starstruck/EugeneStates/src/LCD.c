@@ -10,6 +10,7 @@ void boop();
 void runSelfTest();
 void callAuton();
 void recordAuton(int recordSlot);
+void replayAuton(int replaySlot);
 
 MenuItem *lcdmInit(FILE *lcdPort) {
   port = lcdPort;
@@ -69,6 +70,23 @@ void lcdmAddDefaults(MenuItem *root) {
     sprintf(title,"<    Slot %d    >",x);
     delay(100);
     MenuItem *autonSlot = lcdmCraddItem(title,exitAutonRecorder, &recordAuton, NULL);
+    autonSlot->param = x;
+    printf("%s",(*autonSlot).name);
+  }
+
+  printf("Creating Auton Replayer menu...\n");
+  delay(200);
+  MenuItem *autonReplayer = lcdmCraddItem("<  Play Auton  >", root, NULL, NULL);
+  MenuItem *exitAutonReplayer = lcdmCraddSubmenu(autonReplayer);
+
+  printf("Adding Auton Replayer submenu...\n");
+  delay(200);
+
+  for(int x = 1; x<=8; x++){
+    title = malloc(sizeof(char)*16);
+    sprintf(title,"<    Slot %d    >",x);
+    delay(100);
+    MenuItem *autonSlot = lcdmCraddItem(title,exitAutonReplayer, &replayAuton, NULL);
     autonSlot->param = x;
     printf("%s",(*autonSlot).name);
   }
@@ -186,6 +204,11 @@ void callAuton() {
 
 void recordAuton(int recordSlot) {
   lcdSetText(port, 2, "Recording Auton ");
-  setSlot(recordSlot);
+  startRecording(recordSlot);
+}
+
+void replayAuton(int replaySlot) {
+  lcdSetText(port, 2, "Playing auton ");
+  setSlot(replaySlot);
   autonomous();
 }
