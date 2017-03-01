@@ -63,52 +63,54 @@
 
 /* Public function declarations */
 
-  void startRecording(int s);
   /*
    * Starts the task that runs the AutonRecorder for the file Rec[s].txt
+   *
+   * @param s is the slot that the recording will be saved to
    */
+  void startRecording(int s);
 
-  void stopRecording();
   /*
    * Sets the bool endTask to true, which will in turn suspend the recordingLoop task
    */
+  void stopRecording();
 
-  Frame getCurrentFrame();
   /*
    * When recording files, this reads the joysticks and puts their values in a Frame structure.
    *   The function returns a pointer to the current frame.
    */
+  Frame getCurrentFrame();
 
-  void printAllFrames();
   /*
    * Reads from file and prints all frames in order
    */
+  void printAllFrames();
 
-  char* frameToString(Frame *frame);
   /*
    * Converts frame values into a single string, analog values offset from (-127,127) to (0,254)
    *   Ex: 127127127127000000000000127127127127000000000000 <- all buttons and analog sticks are at 0
    */
+  char* frameToString(Frame *frame);
 
-  Frame stringToFrame(char* str);
   /*
    * Converts single string into a Frame struct
    */
+  Frame stringToFrame(char* str);
 
-  char* substring(char* str,int start,int length);
   /*
    * Returns substring of str beginning at start of length length (first position in str is 1 not 0)
    *   Code taken from online at http://www.programmingsimplified.com/c/source-code/c-substring
    */
+  char* substring(char* str,int start,int length);
 
-  int getSlot();
   /*
    * Returns the recording slot
    */
+  int getSlot();
 
-  void setSlot(int s);
   /*
    * Sets the current slot for replaying or recording to s
    */
+  void setSlot(int s);
 
 #endif /* AUTONRECORDER_H_ */

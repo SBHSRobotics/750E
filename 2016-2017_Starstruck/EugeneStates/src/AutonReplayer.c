@@ -166,7 +166,7 @@
         boop();
         delay(500);
         printf("Replayer Error: Selected slot is empty");
-      }
+      } 
       return;
     }
 
