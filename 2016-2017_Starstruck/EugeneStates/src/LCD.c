@@ -90,24 +90,30 @@ void lcdmAddDefaults(MenuItem *root) {
 }
 
 MenuItem *lcdmCraddItem(char *name, MenuItem *root, void *action, void *param) {
+  // Create item to be added
   MenuItem *addee = malloc(sizeof(MenuItem *));
   addee = lcdmCreateItem(name);
   lcdmAddItem(root, addee);
   addee->action = action;
+  // Return pointer to item
   return addee;
 }
 
 MenuItem *lcdmCraddSubmenu(MenuItem *link) {
+  // Create "Back" item (root of submenu)
   MenuItem *submenu = lcdmCraddItem("<     Back     >", NULL, NULL, NULL);
+  // Make it circular
   submenu->next = submenu;
   submenu->previous = submenu;
+  // Link main menu entry to submenu
   link->select = submenu;
+  // Link submenu back to main menu
   submenu->select = link;
   return submenu;
 }
 
 MenuItem *lcdmCreateItem(char *name) {
-  // MenuItem *item = malloc(sizeof(MenuItem *));
+  // Initialize MenuItem fields
   MenuItem item = { .name = name,
                     .previous = malloc(sizeof(MenuItem *)),
                     .next = malloc(sizeof(MenuItem *)),
@@ -115,9 +121,13 @@ MenuItem *lcdmCreateItem(char *name) {
                     .action = malloc(sizeof(void *)),
                     .param = malloc(sizeof(void *))
                   };
+  // Set pointers to NULL
   item.select = NULL;
   item.action = NULL;
   item.param = NULL;
+  // Clone MenuItem to persistent memory location 
+  // (prevents it from being deleted since item is within the scope of this function)
+  // Returning &item would cause a null pointer issue and thus a cortex crash
   MenuItem *clone = malloc(sizeof(MenuItem *));
   *clone = item;
 
@@ -125,9 +135,11 @@ MenuItem *lcdmCreateItem(char *name) {
 }
 
 void lcdmAddItem(MenuItem *root, MenuItem *item) {
+  // Make sure not to add null items to menu (prevent runtime crashes due to code errors)
   if(root == NULL || item == NULL) {
     return;
   }
+  // Link all the items together (effectively inserts the item before the root and closes the circle in both directions)
   MenuItem *last = (*root).previous;
   (*last).next = item;
   (*root).previous = item;
@@ -136,18 +148,22 @@ void lcdmAddItem(MenuItem *root, MenuItem *item) {
 }
 
 void lcdmLoop(MenuItem *root) {
+  // Debug printouts
   printf("loop: %p\n\r",current);
   printf("Current: %s\n\r",(*current).name);
   lcdSetText(port, 2, (*current).name);
 
+  // Check buttons
   if(lcdReadButtons(port) == LCD_BTN_LEFT) {
     current = (*current).previous;
   } else if (lcdReadButtons(port) == LCD_BTN_RIGHT) {
     current = (*current).next;
   } else if (lcdReadButtons(port) == LCD_BTN_CENTER) {
     if((*current).select > 0) {
+      // If selected item is linked to submenu, navigate to that submenu
       current = (*current).select;
     } else if((*current).action > 0) {
+      // If selected item is linked to function, run that function with saved parameters
       (*current).action((*current).param);
       printf("action %p\tpulseMotor %p",(*current).action, &pulseMotor);
     } else {
@@ -161,6 +177,7 @@ void lcdmLoop(MenuItem *root) {
  */
 
 void pulseMotor(unsigned char port) {
+  // Pulse motor in both directions and stop
   motorSet(port, 127);
   delay(500);
   motorSet(port, -127);
@@ -169,17 +186,20 @@ void pulseMotor(unsigned char port) {
 }
 
 void beep() {
+  // F, A# (aka b-flat)
   speakerPlayRtttl("Beep:d=4,o=5,b=100:16f5");
   speakerPlayRtttl("Beep:d=4,o=5,b=100:16a#6");
 }
 
 void boop() {
+  // A# (aka b-flat), F
   speakerPlayRtttl("Beep:d=4,o=5,b=100:16a#6");
   speakerPlayRtttl("Beep:d=4,o=5,b=100:16f5");
 }
 
 void runSelfTest() {
   lcdSetText(port, 2, "POST: DONT TOUCH");
+  // Pulse all motors
   for(int i = 1; i <= 10; i++) {
     pulseMotor(i);
   }
@@ -188,6 +208,7 @@ void runSelfTest() {
 }
 
 void callAuton() {
+  // Add warning to LCD before calling auton
   lcdSetText(port, 2, "AUTON-DONT TOUCH");
   autonomous();
 }
