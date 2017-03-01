@@ -1,31 +1,49 @@
 #include <main.h>
 #include <string.h>
 
-MenuItem *current;
-FILE *port;
+MenuItem *current; // The currently active MenuItem
+FILE *port; // The port that the LCD is connected to
 
+// Private functions
+
+/**
+* Runs a motor at 127 forward and back for half a second each
+* 
+* @param port is the motor port to pulse
+*/
 void pulseMotor(unsigned char port);
-void beep();
-void boop();
+
+/**
+* Runs a Power-On-Self-Test (pulses all motors and bleeps speaker when done)
+*/
 void runSelfTest();
+
+/**
+* Switches to autonomous mode
+*/
 void callAuton();
 
 MenuItem *lcdmInit(FILE *lcdPort) {
   port = lcdPort;
+  // Initialize LCD
   lcdInit(lcdPort);
   lcdClear(lcdPort);
   lcdSetBacklight(lcdPort, true);
+  // Set Default text
   lcdSetText(lcdPort, 1, "~~750Evolution~~");
   lcdSetText(lcdPort, 2, "Initializing...");
   printf("LCD Initialized. Creating root menu...\n\r");
   delay(300);
-  // char title[] = "<    Select    >";
+
+  // Initialize the MenuItem linked list
   MenuItem *root = malloc(sizeof(MenuItem *));
   root = lcdmCreateItem("<   Select     >");
+  // Make list circular for adding items later
   (*root).previous = root;
   (*root).next = root;
   printf("Menu created. Setting active menu...\n\r");
   delay(200);
+  // Start up menu TODO: Call loop in separate task?
   current = root;
   printf("LCD Menu Initialized\n\r");
   delay(200);
@@ -37,22 +55,30 @@ void lcdmAddDefaults(MenuItem *root) {
   delay(100);
   printf("Creating Manual Test menu...\n\r");
   delay(200);
+  // Create Manual Test entry on main menu
   MenuItem *manualTest = lcdmCraddItem("< Manual Test  >", root, NULL, NULL);
+  // Create Manual Test submenu (item that links back to main menu)
   MenuItem *exitManualTest = lcdmCraddSubmenu(manualTest);
 
   printf("Adding Manual Test submenus...\n\r");
   delay(500);
   char *title;
+  // Adds an item for each motor port
   for (int i = 1; i<=10; i++) {
     title = malloc(sizeof(char)*16);
     sprintf(title, "<   Motor %02d   >",i);
     delay(100);
+    // Creates/adds the menu item that will call pulseMotor
     MenuItem *motor = lcdmCraddItem(title, exitManualTest, &pulseMotor, NULL);
+    // Parameter needs to be set separately to avoid type errors (TODO: Figure out why)
     motor->param = i;
     printf("%s", (*motor).name);
   }
+  //Create speaker test item and add to Manual Test submenu
   MenuItem *speaker = lcdmCraddItem("<   Speaker    >", exitManualTest, &beep, NULL);
+  // Create POST test menu item
   lcdmCraddItem("<     POST     >", root, &runSelfTest, NULL);
+  //Create autonomous menu item
   lcdmCraddItem("<  Autonomous  >", root, &callAuton, NULL);
 
   // speaker->param = 0;
