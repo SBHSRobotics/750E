@@ -8,6 +8,7 @@ void pulseMotor(unsigned char port);
 void beep();
 void boop();
 void runSelfTest();
+void callAuton();
 void recordAuton(int recordSlot);
 
 MenuItem *lcdmInit(FILE *lcdPort) {
@@ -176,6 +177,11 @@ void runSelfTest() {
   }
   beep();
   beep();
+}
+
+void callAuton() {
+  lcdSetText(port, 2, "AUTON-DONT TOUCH");
+  autonomous();
 }
 
 void recordAuton(int recordSlot) {
