@@ -35,7 +35,9 @@
     currentFrame = malloc(sizeof(Frame *));
     fileName = malloc(sizeof(char *));
     sprintf(fileName,"Rec%d.txt",activeSlot);
-    isRunning = true;
+    if(!isAutonomous()) {
+      isRunning = true;
+    }
     replayTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
   }
 
@@ -169,11 +171,14 @@
 
     // Makes sure the file exists, otherwise ends replay
     if (recording == NULL) {
-      while(isAutonomous() || isReplayerAuton()) {
+      int runs = 0;
+      while(isAutonomous() || isReplayerAuton() && runs <=2) {
         boop();
         delay(500);
         printf("Replayer Error: Selected slot is empty");
+        runs++;
       }
+      stopAuton();
       return;
     }
 

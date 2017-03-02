@@ -249,6 +249,7 @@ void callAuton() {
 }
 
 void recordAuton(int recordSlot) {
+  beep();
   lcdSetText(port, 2, "Recording Auton ");
   startRecording(recordSlot);
   delay(500);

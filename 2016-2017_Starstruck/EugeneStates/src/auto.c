@@ -28,8 +28,9 @@
  */
 void autonomous() {
   startAuton(1);
-
-  while(1) {
-  	
+  while(isAutonomous() || isReplayerAuton()) {
+    if(joystickGetDigital(1,7,JOY_DOWN)) {
+      stopAuton();//TODO Make sure this isn't necessary
+    }
   }
 }
