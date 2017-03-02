@@ -89,3 +89,17 @@
     motorSet(RF,frontRightSpeed);
     motorSet(RB,backRightSpeed);
   }
+
+  void driveSetByDistance(int ultrasonicDistance) {
+  	int AUTON_PID_THRESH = 5;
+  	float err = ultrasonicDistance-ultrasonicGet(sonar);
+
+  	if(abs(err)<=AUTON_PID_THRESH){
+  				//driveSet(); these functions don't exist anymore since they aren't relevant to starstruck
+  				//beep();
+  			} else {
+  				float K = 25;
+  				err=(err>0)?-K-err:K-err;
+  				//driveSet(err, err, 0);
+  			}
+  }

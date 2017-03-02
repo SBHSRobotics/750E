@@ -40,6 +40,7 @@ void initializeIO() {
 
 void initialize() {
   speakerInit();
+  sonar = ultrasonicInit(3, 4);
   holoInitX4(LF, LB, RF, RB);
   beep();
 }
