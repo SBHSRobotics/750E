@@ -8,7 +8,7 @@ FILE *port; // The port that the LCD is connected to
 
 /**
 * Runs a motor at 127 forward and back for half a second each
-* 
+*
 * @param port is the motor port to pulse
 */
 void pulseMotor(unsigned char port);
@@ -22,6 +22,8 @@ void runSelfTest();
 * Switches to autonomous mode
 */
 void callAuton();
+void recordAuton(int recordSlot);
+void replayAuton(int replaySlot);
 
 MenuItem *lcdmInit(FILE *lcdPort) {
   port = lcdPort;
@@ -81,6 +83,40 @@ void lcdmAddDefaults(MenuItem *root) {
   //Create autonomous menu item
   lcdmCraddItem("<  Autonomous  >", root, &callAuton, NULL);
 
+  printf("Creating Auton Recorder menu...\n");
+  delay(200);
+  MenuItem *autonRecorder = lcdmCraddItem("<  Make Auton  >", root, NULL, NULL);
+  MenuItem *exitAutonRecorder = lcdmCraddSubmenu(autonRecorder);
+
+  printf("Adding Auton Recorder submenu...\n");
+  delay(200);
+
+  for(int x = 1; x<=8; x++){
+    title = malloc(sizeof(char)*16);
+    sprintf(title,"<    Slot %d    >",x);
+    delay(100);
+    MenuItem *autonSlot = lcdmCraddItem(title,exitAutonRecorder, &recordAuton, NULL);
+    autonSlot->param = x;
+    printf("%s",(*autonSlot).name);
+  }
+
+  printf("Creating Auton Replayer menu...\n");
+  delay(200);
+  MenuItem *autonReplayer = lcdmCraddItem("<  Play Auton  >", root, NULL, NULL);
+  MenuItem *exitAutonReplayer = lcdmCraddSubmenu(autonReplayer);
+
+  printf("Adding Auton Replayer submenu...\n");
+  delay(200);
+
+  for(int x = 1; x<=8; x++){
+    title = malloc(sizeof(char)*16);
+    sprintf(title,"<    Slot %d    >",x);
+    delay(100);
+    MenuItem *autonSlot = lcdmCraddItem(title,exitAutonReplayer, &replayAuton, NULL);
+    autonSlot->param = x;
+    printf("%s",(*autonSlot).name);
+  }
+
   // speaker->param = 0;
   printf("Done.\n\r");
   delay(800);
@@ -125,7 +161,7 @@ MenuItem *lcdmCreateItem(char *name) {
   item.select = NULL;
   item.action = NULL;
   item.param = NULL;
-  // Clone MenuItem to persistent memory location 
+  // Clone MenuItem to persistent memory location
   // (prevents it from being deleted since item is within the scope of this function)
   // Returning &item would cause a null pointer issue and thus a cortex crash
   MenuItem *clone = malloc(sizeof(MenuItem *));
@@ -148,9 +184,9 @@ void lcdmAddItem(MenuItem *root, MenuItem *item) {
 }
 
 void lcdmLoop(MenuItem *root) {
-  // Debug printouts
-  printf("loop: %p\n\r",current);
-  printf("Current: %s\n\r",(*current).name);
+  // printf("loop: %p\n\r",current);
+  // printf("Current: %s\n\r",(*current).name);
+
   lcdSetText(port, 2, (*current).name);
 
   // Check buttons
@@ -165,7 +201,6 @@ void lcdmLoop(MenuItem *root) {
     } else if((*current).action > 0) {
       // If selected item is linked to function, run that function with saved parameters
       (*current).action((*current).param);
-      printf("action %p\tpulseMotor %p",(*current).action, &pulseMotor);
     } else {
       printf("Nothing to do for %s\n\r", (*current).name);
     }
@@ -210,5 +245,17 @@ void runSelfTest() {
 void callAuton() {
   // Add warning to LCD before calling auton
   lcdSetText(port, 2, "AUTON-DONT TOUCH");
+  autonomous();
+}
+
+void recordAuton(int recordSlot) {
+  lcdSetText(port, 2, "Recording Auton ");
+  startRecording(recordSlot);
+  delay(500);
+}
+
+void replayAuton(int replaySlot) {
+  lcdSetText(port, 2, "Playing auton ");
+  setActiveSlot(replaySlot);
   autonomous();
 }

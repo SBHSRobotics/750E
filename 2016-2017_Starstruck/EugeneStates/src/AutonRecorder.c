@@ -15,11 +15,12 @@
 
 /* Global variable declarations */
 
-  int slot;
   TaskHandle recordTask;
   Frame root;
   char* fileName;
   bool endTask;
+
+  int activeSlot;
 
 /* Private function declarations */
 
@@ -30,19 +31,19 @@
 
 /* Public function definitons */
 
-  void startRecording(int s){
-    printf("Starting recording %d...\n",s);
+  void startRecording(int slot){
+    activeSlot = slot;
+    printf("Starting recording %d...\n",slot);
     delay(100);
 
     // Defines global variables and starts recordTask
-    slot = s;
     root = NULLFRAME;
     fileName = malloc(sizeof(char *));
     sprintf(fileName,"Rec%d.txt",slot);
     endTask = false;
     recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 
-    printf("Recording %d started.\n\n",s);
+    printf("Recording %d started.\n\n",slot);
     delay(100);
   }
 
@@ -93,7 +94,7 @@
       // Saves these certain values to int variables, cortex issue
     int ch3 = frame->analog_main[CH3];
     int ch4 = frame->analog_main[CH4];
-    char* string = malloc(sizeof(char *));
+    char* string = malloc(sizeof(char)*50);
     sprintf(string,"%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d\n",
       ((frame->analog_main[CH1] < 0 || frame->analog_main[CH1] > 255) ? 0 : frame->analog_main[CH1]),
       ((frame->analog_main[CH2] < 0 || frame->analog_main[CH2] > 255) ? 0 : frame->analog_main[CH2]),
@@ -181,6 +182,11 @@
 /* Private function declarations */
 
   void recordingLoop(){
+    // If slot doesn't initialize properly, end recording immediately
+    if(activeSlot == 0){
+      return;
+    }
+
     // Opens file Rec[slot].txt in write mode
     printf("Opening %s...\n",fileName);
     delay(100);
@@ -207,13 +213,13 @@
       }
       delay(200);
     }
-    printf("Closing recording %d...\n",slot);
+    printf("Closing recording %d...\n",activeSlot);
     delay(100);
 
     // Closes recording
     fclose(recording);
 
-    printf("Recording %d closed.\n\n",slot);
+    printf("Recording %d closed.\n\n",activeSlot);
     delay(100);
 
     // Suspends recordTask
