@@ -18,6 +18,7 @@
   TaskHandle replayTask;
   Frame *currentFrame;
   char* fileName;
+  bool isRunning = false;
 
   int activeSlot;
 /* Private function declarations */
@@ -34,21 +35,27 @@
     currentFrame = malloc(sizeof(Frame *));
     fileName = malloc(sizeof(char *));
     sprintf(fileName,"Rec%d.txt",activeSlot);
+    isRunning = true;
     replayTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
   }
 
   void stopAuton() {
     // Stops the auton by suspending and deleting replayTask and stops all of the motors on the robot
     printf("Stopping auton...\n");
+    isRunning = false;
     taskSuspend(replayTask);
     taskDelete(replayTask);
     motorStopAll();
     printf("Auton stopped.\n");
   }
 
+  bool isReplayerAuton(){
+    return isRunning;
+  }
+
   int inputGetAnalog(unsigned char joystick, unsigned char axis) {
     // If the robot is replaying auton, get values from currentFrame
-    if(isAutonomous()) {
+    if(isAutonomous() || isReplayerAuton()) {
       if(joystick == 1) {
         return currentFrame->analog_main[axis - 1];
       } else if (joystick == 2) {
@@ -62,7 +69,7 @@
   bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
       unsigned char button) {
     // If the robot is replaying auton, get values from currentFrame
-    if(isAutonomous()) {
+    if(isAutonomous() || isReplayerAuton()) {
       if(joystick == 1) { //main
         switch(buttonGroup){
           case 5:
@@ -162,7 +169,7 @@
 
     // Makes sure the file exists, otherwise ends replay
     if (recording == NULL) {
-      while(isAutonomous()) {
+      while(isAutonomous() || isReplayerAuton()) {
         boop();
         delay(500);
         printf("Replayer Error: Selected slot is empty");
@@ -175,7 +182,7 @@
 
     // Loop only runs in autonomous mode
     // fread assigns values to frameString from recording until end of file
-    while(isAutonomous() && fread(frameString,1,49,recording) != NULL){
+    while((isAutonomous() || isReplayerAuton()) && fread(frameString,1,49,recording) != NULL){
       printf("Setting frame: %s",frameString);
       delay(75);
 
