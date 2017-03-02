@@ -56,7 +56,7 @@
    * Global Frame that acts as a NULL operator for algorithmic purposes
    */
 
-  int slot = 0;
+  int slot;
   /*
    * Current recording slot, for use in recorder and replayer
    */
