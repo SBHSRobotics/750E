@@ -52,6 +52,9 @@
   #define MANUAL_VAL 8
   #define MEMES_VAL 9
 
+// Global Vars
+MenuItem *lcdRoot;
+
 // Map functions
   void joystickMap();
   void joystickMapPartner();
