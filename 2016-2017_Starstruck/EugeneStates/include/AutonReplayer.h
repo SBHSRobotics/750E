@@ -28,6 +28,11 @@
   void stopAuton();
 
   /*
+   * Returns true if the replayer is running
+   */
+  bool isReplayerAuton();
+
+  /*
    * Returns the value of the specified axis on the specified joystick for
    *   replaying auton, otherwise just returns the value from the joystick
    *   in opcontrol.
