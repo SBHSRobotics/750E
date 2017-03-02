@@ -39,8 +39,6 @@
  */
 
 #ifndef SOUNDLIB_H_
-
-// This prevents multiple inclusion, which isn't bad for this file but is good practice
 #define SOUNDLIB_H_
 
 //This is where the funtions that play the sounds are declared
