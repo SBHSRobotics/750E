@@ -94,7 +94,7 @@
       // Saves these certain values to int variables, cortex issue
     int ch3 = frame->analog_main[CH3];
     int ch4 = frame->analog_main[CH4];
-    char* string = malloc(sizeof(char *));
+    char* string = malloc(sizeof(char)*50);
     sprintf(string,"%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d\n",
       ((frame->analog_main[CH1] < 0 || frame->analog_main[CH1] > 255) ? 0 : frame->analog_main[CH1]),
       ((frame->analog_main[CH2] < 0 || frame->analog_main[CH2] > 255) ? 0 : frame->analog_main[CH2]),
