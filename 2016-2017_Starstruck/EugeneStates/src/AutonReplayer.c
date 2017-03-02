@@ -17,39 +17,45 @@
 
   TaskHandle replayTask;
   Frame *currentFrame;
-  int slot = 0;
   char* fileName;
+  bool isRunning = false;
 
+  int activeSlot;
 /* Private function declarations */
 
   void replayerLoop();
 
 /* Public function definitons */
 
-  void startAuton(int s) {
-    printf("Replaying auton %d...\n",slot);
+  void startAuton() {
+    printf("Replaying auton %d...\n",activeSlot);
     delay(100);
 
     // Defines global variables and starts replayTask
-    slot = s;
     currentFrame = malloc(sizeof(Frame *));
     fileName = malloc(sizeof(char *));
-    sprintf(fileName,"Rec%d.txt",slot);
+    sprintf(fileName,"Rec%d.txt",activeSlot);
+    isRunning = true;
     replayTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
   }
 
   void stopAuton() {
     // Stops the auton by suspending and deleting replayTask and stops all of the motors on the robot
     printf("Stopping auton...\n");
+    isRunning = false;
     taskSuspend(replayTask);
     taskDelete(replayTask);
     motorStopAll();
     printf("Auton stopped.\n");
   }
 
+  bool isReplayerAuton(){
+    return isRunning;
+  }
+
   int inputGetAnalog(unsigned char joystick, unsigned char axis) {
     // If the robot is replaying auton, get values from currentFrame
-    if(isAutonomous()) {
+    if(isAutonomous() || isReplayerAuton()) {
       if(joystick == 1) {
         return currentFrame->analog_main[axis - 1];
       } else if (joystick == 2) {
@@ -63,7 +69,7 @@
   bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
       unsigned char button) {
     // If the robot is replaying auton, get values from currentFrame
-    if(isAutonomous()) {
+    if(isAutonomous() || isReplayerAuton()) {
       if(joystick == 1) { //main
         switch(buttonGroup){
           case 5:
@@ -152,10 +158,10 @@
 
   void replayerLoop() {
     // If slot doesn't initialize properly, end replay immediately
-    if (slot == 0) {
+    if (activeSlot == 0) {
       return;
     }
-    printf("Opening recording %d from file &s...\n", slot, fileName);
+    printf("Opening recording %d from file %s...\n", activeSlot, fileName);
     delay(100);
     // Initializes variables for iterating through file
     FILE* recording = fopen(fileName,"r");
@@ -163,7 +169,7 @@
 
     // Makes sure the file exists, otherwise ends replay
     if (recording == NULL) {
-      while(isAutonomous()) {
+      while(isAutonomous() || isReplayerAuton()) {
         boop();
         delay(500);
         printf("Replayer Error: Selected slot is empty");
@@ -171,12 +177,12 @@
       return;
     }
 
-    printf("Recording %d opened.\n",slot);
+    printf("Recording %d opened.\n",activeSlot);
     delay(100);
 
     // Loop only runs in autonomous mode
     // fread assigns values to frameString from recording until end of file
-    while(isAutonomous() && fread(frameString,1,49,recording) != NULL){
+    while((isAutonomous() || isReplayerAuton()) && fread(frameString,1,49,recording) != NULL){
       printf("Setting frame: %s",frameString);
       delay(75);
 
@@ -190,12 +196,16 @@
       printf("LF %d",motorGet(LF));
       delay(50);
     }
-    printf("Closing recording %d...\n",slot);
+    printf("Closing recording %d...\n",activeSlot);
     delay(100);
 
     // Closes recording file
     fclose(recording);
 
-    printf("Recording %d closed.\n",slot);
+    printf("Recording %d closed.\n",activeSlot);
     delay(100);
+  }
+
+  void setActiveSlot(int slot) {
+    activeSlot = slot;
   }

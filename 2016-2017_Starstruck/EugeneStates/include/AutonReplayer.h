@@ -17,30 +17,41 @@
 
 /* Public function declarations */
 
-  void startAuton(int slot);
   /*
-   * Starts the task that replays the autonomous program in Rec[slot].txt
+   * Starts the task that replays the autonomous program in Rec[s].txt
    */
+  void startAuton();
 
-  void stopAuton();
   /*
    * Suspends and deletes the replayer task which stops the auton
    */
+  void stopAuton();
 
-  int inputGetAnalog(unsigned char joystick, unsigned char axis);
+  /*
+   * Returns true if the replayer is running
+   */
+  bool isReplayerAuton();
+
   /*
    * Returns the value of the specified axis on the specified joystick for
    *   replaying auton, otherwise just returns the value from the joystick
    *   in opcontrol.
    */
+  int inputGetAnalog(unsigned char joystick, unsigned char axis);
 
-  bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
-    unsigned char button);
   /*
    * Returns the value of the specified button from the specified buttonGroup
    *   on the specified joystick for replaying auton, otherwise just returns
    *   the value from the joystick in opcontrol.
    */
+  bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
+    unsigned char button);
+
+
+    /*
+     * Sets the current slot for replaying or recording to s
+     */
+    void setActiveSlot(int s);
 
   #define AUTON_REPLAYER_H_
 

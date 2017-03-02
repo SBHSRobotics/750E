@@ -101,8 +101,6 @@
 				//stopped beep
 			}
 
-
-
 			joystickMap();
 			// lcdmLoop(lcdRoot);
 			delay(200);
