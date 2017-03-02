@@ -52,7 +52,7 @@ void superMarioBros() {
 	speakerPlayArray(rtttl);
 }
 
-//This is where the battery check funtion is defined. It checks the battery and if it is 20% or under, it will play a low battery sound
+//This is where the battery check function is defined. It checks the battery and if it is 20% or under, it will play a low battery sound
 void batteryCheck() {
 	if(powerLevelMain() <= 1440) {
 		lowBattery();
