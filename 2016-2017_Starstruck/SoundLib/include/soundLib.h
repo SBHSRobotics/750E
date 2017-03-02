@@ -41,22 +41,29 @@
 #ifndef SOUNDLIB_H_
 #define SOUNDLIB_H_
 
-//This is where the funtions that play the sounds are declared
+/*
+ * Plays given sound in a separate task
+ */
+void playSoundAsync(const void *sound);
 
-void superMarioBro();
-void startUpSound();
-void connectedSound();
-void lowBattery();
-void success();
-void fail();
-void linkinParkIntro();
-void linkinParkChorus();
-void neverGonna();
-void nyanCat();
-void weAreNumberOne();
-void superMarioBros();
+/*
+* Plays low battery sound if battery is low
+*/
+void batteryCheck();
 
-void batteryCheck();//This is where the funtion that checks for low battery and plays the low battery sound is declared
+// Available Sounds:
+extern const void *S_SUPER_MARIO;
+extern const void *S_STARTUP;
+extern const void *S_CONNECTED;
+extern const void *S_BATTERY_LOW;
+extern const void *S_SUCCESS;
+extern const void *S_FAIL;
+extern const void *S_LINKIN_PARK_INTRO;
+extern const void *S_LINKIN_PARK_CHORUS;
+extern const void *S_NEVER_GONNA;
+extern const void *S_NYAN;
+extern const void *S_WE_ARE_NUMBER_ONE;
+extern const void *S_SUPER_MARIO_POLY;
 
 
 #endif

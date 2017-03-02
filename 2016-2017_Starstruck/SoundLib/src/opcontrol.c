@@ -35,35 +35,35 @@ void operatorControl() {
 
 	while(1){
 	if(joystickGetDigital(1, 7, JOY_LEFT) == 1) {
-		superMarioBro();
+		playSoundAsync(S_SUPER_MARIO_POLY);
 		delay(500);
 	}
 	if(joystickGetDigital(1, 7, JOY_RIGHT) == 1) {
-		startUpSound();
+		playSoundAsync(S_STARTUP);
 		delay(500);
 	}
 	if(joystickGetDigital(1, 7, JOY_DOWN) == 1) {
-		connectedSound();
+		playSoundAsync(S_CONNECTED);
 		delay(500);
 	}
 	if(joystickGetDigital(1, 7, JOY_UP) == 1) {
-		lowBattery();
+		playSoundAsync(S_BATTERY_LOW);
 		delay(500);
 	}
 	if(joystickGetDigital(1, 8, JOY_LEFT) == 1) {
-		linkinParkChorus();
+		playSoundAsync(S_LINKIN_PARK_CHORUS);
 		delay(500);
 	}
 	if(joystickGetDigital(1, 8, JOY_RIGHT) == 1) {
-		weAreNumberOne();
+		playSoundAsync(S_WE_ARE_NUMBER_ONE);
 		delay(500);
 	}
 	if(joystickGetDigital(1, 8, JOY_UP) == 1) {
-		success();
+		playSoundAsync(S_SUCCESS);
 		delay(500);
 	}
 	if(joystickGetDigital(1, 8, JOY_DOWN) == 1) {
-		fail();
+		playSoundAsync(S_FAIL);
 		delay(500);
 	}
 	delay(20);
