@@ -20,6 +20,8 @@
   char* fileName;
   bool endTask;
 
+  int activeSlot;
+
 /* Private function declarations */
 
   void recordingLoop();
@@ -29,19 +31,19 @@
 
 /* Public function definitons */
 
-  void startRecording(int s){
-    printf("Starting recording %d...\n",s);
+  void startRecording(int slot){
+    activeSlot = slot;
+    printf("Starting recording %d...\n",slot);
     delay(100);
 
     // Defines global variables and starts recordTask
-    setSlot(s);
     root = NULLFRAME;
     fileName = malloc(sizeof(char *));
-    sprintf(fileName,"Rec%d.txt",getSlot());
+    sprintf(fileName,"Rec%d.txt",slot);
     endTask = false;
     recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 
-    printf("Recording %d started.\n\n",getSlot());
+    printf("Recording %d started.\n\n",slot);
     delay(100);
   }
 
@@ -177,19 +179,11 @@
     return substring;
   }
 
-  int getSlot(){
-    return slot;
-  }
-
-  void setSlot(int s){
-    slot = s;
-  }
-
 /* Private function declarations */
 
   void recordingLoop(){
     // If slot doesn't initialize properly, end recording immediately
-    if(getSlot() == 0){
+    if(activeSlot == 0){
       return;
     }
 
@@ -219,13 +213,13 @@
       }
       delay(200);
     }
-    printf("Closing recording %d...\n",getSlot());
+    printf("Closing recording %d...\n",activeSlot);
     delay(100);
 
     // Closes recording
     fclose(recording);
 
-    printf("Recording %d closed.\n\n",getSlot());
+    printf("Recording %d closed.\n\n",activeSlot);
     delay(100);
 
     // Suspends recordTask

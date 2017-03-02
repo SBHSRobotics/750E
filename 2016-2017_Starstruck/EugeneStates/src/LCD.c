@@ -146,8 +146,8 @@ void lcdmAddItem(MenuItem *root, MenuItem *item) {
 }
 
 void lcdmLoop(MenuItem *root) {
-  printf("loop: %p\n\r",current);
-  printf("Current: %s\n\r",(*current).name);
+  // printf("loop: %p\n\r",current);
+  // printf("Current: %s\n\r",(*current).name);
   lcdSetText(port, 2, (*current).name);
 
   if(lcdReadButtons(port) == LCD_BTN_LEFT) {
@@ -159,7 +159,6 @@ void lcdmLoop(MenuItem *root) {
       current = (*current).select;
     } else if((*current).action > 0) {
       (*current).action((*current).param);
-      printf("action %p\tpulseMotor %p",(*current).action, &pulseMotor);
     } else {
       printf("Nothing to do for %s\n\r", (*current).name);
     }
@@ -205,10 +204,11 @@ void callAuton() {
 void recordAuton(int recordSlot) {
   lcdSetText(port, 2, "Recording Auton ");
   startRecording(recordSlot);
+  delay(500);
 }
 
 void replayAuton(int replaySlot) {
   lcdSetText(port, 2, "Playing auton ");
-  setSlot(replaySlot);
+  setActiveSlot(replaySlot);
   autonomous();
 }

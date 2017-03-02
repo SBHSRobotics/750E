@@ -56,7 +56,6 @@
    * Global Frame that acts as a NULL operator for algorithmic purposes
    */
 
-  int slot;
   /*
    * Current recording slot, for use in recorder and replayer
    */
@@ -103,14 +102,5 @@
    */
   char* substring(char* str,int start,int length);
 
-  /*
-   * Returns the recording slot
-   */
-  int getSlot();
-
-  /*
-   * Sets the current slot for replaying or recording to s
-   */
-  void setSlot(int s);
 
 #endif /* AUTONRECORDER_H_ */

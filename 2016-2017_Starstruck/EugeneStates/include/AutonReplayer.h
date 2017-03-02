@@ -20,7 +20,7 @@
   /*
    * Starts the task that replays the autonomous program in Rec[s].txt
    */
-  void startAuton(int s);
+  void startAuton();
 
   /*
    * Suspends and deletes the replayer task which stops the auton
@@ -41,6 +41,12 @@
    */
   bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
     unsigned char button);
+
+
+    /*
+     * Sets the current slot for replaying or recording to s
+     */
+    void setActiveSlot(int s);
 
   #define AUTON_REPLAYER_H_
 

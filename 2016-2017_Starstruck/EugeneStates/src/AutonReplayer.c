@@ -19,21 +19,21 @@
   Frame *currentFrame;
   char* fileName;
 
+  int activeSlot;
 /* Private function declarations */
 
   void replayerLoop();
 
 /* Public function definitons */
 
-  void startAuton(int s) {
-    printf("Replaying auton %d...\n",s);
+  void startAuton() {
+    printf("Replaying auton %d...\n",activeSlot);
     delay(100);
 
     // Defines global variables and starts replayTask
-    setSlot(s);
     currentFrame = malloc(sizeof(Frame *));
     fileName = malloc(sizeof(char *));
-    sprintf(fileName,"Rec%d.txt",getSlot());
+    sprintf(fileName,"Rec%d.txt",activeSlot);
     replayTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
   }
 
@@ -151,10 +151,10 @@
 
   void replayerLoop() {
     // If slot doesn't initialize properly, end replay immediately
-    if (getSlot() == 0) {
+    if (activeSlot == 0) {
       return;
     }
-    printf("Opening recording %d from file %s...\n", getSlot(), fileName);
+    printf("Opening recording %d from file %s...\n", activeSlot, fileName);
     delay(100);
     // Initializes variables for iterating through file
     FILE* recording = fopen(fileName,"r");
@@ -166,11 +166,11 @@
         boop();
         delay(500);
         printf("Replayer Error: Selected slot is empty");
-      } 
+      }
       return;
     }
 
-    printf("Recording %d opened.\n",getSlot());
+    printf("Recording %d opened.\n",activeSlot);
     delay(100);
 
     // Loop only runs in autonomous mode
@@ -189,12 +189,16 @@
       printf("LF %d",motorGet(LF));
       delay(50);
     }
-    printf("Closing recording %d...\n",getSlot());
+    printf("Closing recording %d...\n",activeSlot);
     delay(100);
 
     // Closes recording file
     fclose(recording);
 
-    printf("Recording %d closed.\n",getSlot());
+    printf("Recording %d closed.\n",activeSlot);
     delay(100);
+  }
+
+  void setActiveSlot(int slot) {
+    activeSlot = slot;
   }
