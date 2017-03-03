@@ -7,6 +7,16 @@
 #define HOLO_H6 4
 #define HOLO_H56 5
 
+#define FILTER_SIZE 10
+// Integral Filter Vars
+int xHist[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int yHist[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int rotHist[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int xSum = 0;
+int ySum = 0;
+int rotSum = 0;
+
+
 int currentConfig = 0;
 unsigned char W_FL, // Front left wheel port
               W_FR, // Front right wheel port
@@ -84,8 +94,25 @@ bool isHoloInitialized() {
   return currentConfig > 0;
 }
 
-
 void holoSet(int xAxis, int yAxis, int rot) {
+  xSum -= xHist[0];
+  ySum -= yHist[0];
+  rotSum -= rotHist[0];
+  for(int i = 0; i<(FILTER_SIZE-1); i++) {
+    xHist[i]=xHist[i+1];
+    yHist[i]=xHist[i+1];
+    rotHist[i]=xHist[i+1];
+  }// TODO: Store 'overwrite' index instead of shifting all?
+  xHist[FILTER_SIZE-1] = xAxis;
+  yHist[FILTER_SIZE-1] = yAxis;
+  rotHist[FILTER_SIZE-1] = rot;
+  xSum += xAxis;
+  xAxis = (int)((float)xSum / FILTER_SIZE);
+  ySum += yAxis;
+  yAxis = (int)((float)ySum / FILTER_SIZE);
+  rotSum += rot;
+  rot = (int)((float)rotSum / FILTER_SIZE);
+
   switch (currentConfig) {
     case HOLO_X4:
       //FL BL FR BR TODO: What the daft is this? (Bot might be wired wrong)
