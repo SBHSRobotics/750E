@@ -68,5 +68,6 @@ MenuItem *lcdRoot;
   void driveOp();
   void stopDrive();
   void driveSetByDistance(int ultrasonicDistance);
+  void liftSetByDistance(int encoderDist);
 
 #endif //EUGENELIB_H_
