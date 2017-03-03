@@ -83,20 +83,25 @@
 	 *
 	 * This task should never exit; it should end with some kind of infinite loop, even if empty.
 	 */
-	void operatorControl() {
-		MenuItem *lcdRoot = lcdmInit(uart1);
-		lcdmAddDefaults(lcdRoot);
+	 MenuItem *lcdRoot;
 
+	void operatorControl() {
+		if(lcdRoot == NULL) {
+			lcdRoot = lcdmInit(uart1);
+			lcdmAddDefaults(lcdRoot);
+			playSoundAsync(S_UP);
+		}
 		while(1){
 			lcdmLoop(lcdRoot);
 			if(joystickGetDigital(1,7,JOY_UP) && joystickGetDigital(1,7,JOY_RIGHT) && joystickGetDigital(1,7,JOY_LEFT) && joystickGetDigital(1,7,JOY_DOWN)){
-				beep();
+
+				playSoundAsync(S_SUCCESS);
 				startRecording(1); // TODO change later once LCD is working
 				delay(1000);
 			}
 			else if(joystickGetDigital(1,7,JOY_LEFT)){
 				stopRecording();
-				boop();
+				playSoundAsync(S_FAIL);
 				delay(1000);
 				//stopped beep
 			}

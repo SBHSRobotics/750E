@@ -35,7 +35,7 @@ MenuItem *lcdmInit(FILE *lcdPort) {
   lcdSetText(lcdPort, 1, "~~750Evolution~~");
   lcdSetText(lcdPort, 2, "Initializing...");
   printf("LCD Initialized. Creating root menu...\n\r");
-  delay(300);
+  delay(20);
 
   // Initialize the MenuItem linked list
   MenuItem *root = malloc(sizeof(MenuItem *));
@@ -44,32 +44,32 @@ MenuItem *lcdmInit(FILE *lcdPort) {
   (*root).previous = root;
   (*root).next = root;
   printf("Menu created. Setting active menu...\n\r");
-  delay(200);
+  delay(20);
   // Start up menu TODO: Call loop in separate task?
   current = root;
   printf("LCD Menu Initialized\n\r");
-  delay(200);
+  delay(20);
   return root;
 }
 
 void lcdmAddDefaults(MenuItem *root) {
   printf("Adding default LCDM features...\n\r");
-  delay(100);
+  delay(20);
   printf("Creating Manual Test menu...\n\r");
-  delay(200);
+  delay(20);
   // Create Manual Test entry on main menu
   MenuItem *manualTest = lcdmCraddItem("< Manual Test  >", root, NULL, NULL);
   // Create Manual Test submenu (item that links back to main menu)
   MenuItem *exitManualTest = lcdmCraddSubmenu(manualTest);
 
   printf("Adding Manual Test submenus...\n\r");
-  delay(500);
+  delay(20);
   char *title;
   // Adds an item for each motor port
   for (int i = 1; i<=10; i++) {
     title = malloc(sizeof(char)*16);
     sprintf(title, "<   Motor %02d   >",i);
-    delay(100);
+    delay(20);
     // Creates/adds the menu item that will call pulseMotor
     MenuItem *motor = lcdmCraddItem(title, exitManualTest, &pulseMotor, NULL);
     // Parameter needs to be set separately to avoid type errors (TODO: Figure out why)
@@ -84,17 +84,17 @@ void lcdmAddDefaults(MenuItem *root) {
   lcdmCraddItem("<  Autonomous  >", root, &callAuton, NULL);
 
   printf("Creating Auton Recorder menu...\n");
-  delay(200);
+  delay(20);
   MenuItem *autonRecorder = lcdmCraddItem("<  Make Auton  >", root, NULL, NULL);
   MenuItem *exitAutonRecorder = lcdmCraddSubmenu(autonRecorder);
 
   printf("Adding Auton Recorder submenu...\n");
-  delay(200);
+  delay(20);
 
   for(int x = 1; x<=8; x++){
     title = malloc(sizeof(char)*16);
     sprintf(title,"<    Slot %d    >",x);
-    delay(100);
+    delay(20);
     MenuItem *autonSlot = lcdmCraddItem(title,exitAutonRecorder, &recordAuton, NULL);
     autonSlot->param = x;
     printf("%s",(*autonSlot).name);
@@ -106,12 +106,12 @@ void lcdmAddDefaults(MenuItem *root) {
   MenuItem *exitAutonReplayer = lcdmCraddSubmenu(autonReplayer);
 
   printf("Adding Auton Replayer submenu...\n");
-  delay(200);
+  delay(20);
 
   for(int x = 1; x<=8; x++){
     title = malloc(sizeof(char)*16);
     sprintf(title,"<    Slot %d    >",x);
-    delay(100);
+    delay(20);
     MenuItem *autonSlot = lcdmCraddItem(title,exitAutonReplayer, &replayAuton, NULL);
     autonSlot->param = x;
     printf("%s",(*autonSlot).name);
@@ -119,10 +119,7 @@ void lcdmAddDefaults(MenuItem *root) {
 
   // speaker->param = 0;
   printf("Done.\n\r");
-  delay(800);
-  printf("Adding Manual Test menu...\n\r");
-  delay(800);
-  // lcdmAddItem(root, manualTest);
+  delay(20);
 }
 
 MenuItem *lcdmCraddItem(char *name, MenuItem *root, void *action, void *param) {

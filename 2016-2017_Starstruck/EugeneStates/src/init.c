@@ -37,9 +37,8 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 
-
 void initialize() {
   speakerInit();
   holoInitX4(LF, LB, RF, RB);
-  beep();
+  playSoundAsync(S_STARTUP);
 }
