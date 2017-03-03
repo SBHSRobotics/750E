@@ -39,8 +39,8 @@ void initializeIO() {
 
 void initialize() {
   speakerInit();
-  sonar = ultrasonicInit(3, 4);
-  liftEnc = encoderInit(1, 2, false);
+  sonar = ultrasonicInit(SONAR_ORANGE, SONAR_YELLOW);
+  liftEnc = encoderInit(ENC_TOP, ENC_BOT, false);
   holoInitX4(LF, LB, RF, RB);
   playSoundAsync(S_STARTUP);
 }

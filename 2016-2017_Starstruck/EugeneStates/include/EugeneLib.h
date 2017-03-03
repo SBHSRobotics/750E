@@ -30,9 +30,10 @@
     static const unsigned char PINCE = 6;
 
 //Sensors
-  static const unsigned char LIFT_POT = 0;
-  static const unsigned char PINCE_POT = 0;
-  static const unsigned char AUTON_SEL = 0;
+  static const unsigned char ENC_TOP = 1;
+  static const unsigned char ENC_BOT = 2;
+  static const unsigned char SONAR_ORANGE = 3;
+  static const unsigned char SONAR_YELLOW = 4;
 
   Ultrasonic sonar;
   Encoder liftEnc;
