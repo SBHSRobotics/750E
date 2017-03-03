@@ -15,6 +15,12 @@
   */
   bool swap = false;
 
+  // Lift positions
+  #define LIFT_CARRY 550
+  #define LIFT_TOP 930
+  #define LIFT_STAR_SIDE 380
+  #define LIFT_STAR_CENTER 280
+
 // Map functions
 	void joystickMap(){
     // Get drive input
@@ -41,8 +47,22 @@
     if(isJoystickConnected(2)) {
       lift(inputGetAnalog((swap ? 1 : 2), 3));
       pince(inputGetAnalog((swap ? 1 : 2), 1));
+
+      if(joystickGetDigital(2,5,JOY_UP) && joystickGetDigital(2,5,JOY_DOWN)) {
+        encoderReset(liftEnc);
+        beep();
+      } else if(joystickGetDigital(2, 8, JOY_UP)) {
+        liftSetByDistance(LIFT_TOP);
+      } else if(joystickGetDigital(2, 8, JOY_RIGHT)) {
+        liftSetByDistance(LIFT_CARRY);
+      } else if(joystickGetDigital(2, 8, JOY_LEFT)) {
+        liftSetByDistance(LIFT_STAR_SIDE);
+      } else if(joystickGetDigital(2, 8, JOY_DOWN)) {
+        liftSetByDistance(LIFT_STAR_CENTER);
+      }
+
     } else if(joystickGetDigital(1, 8, JOY_RIGHT)){
-      //Single Driver Controls
+      //Single Driver Controls (NOT INCLUDED IN AUTON RECORDINGS)
       if(joystickGetDigital(1,5,JOY_UP)){
       pince(127);
       } else if (joystickGetDigital(1,5,JOY_DOWN)){
@@ -95,17 +115,32 @@
     motorSet(RB,backRightSpeed);
   }
 
-  void driveSetByDistance(int ultrasonicDistance) {
-  	int AUTON_PID_THRESH = 5;
-  	float err = ultrasonicDistance-ultrasonicGet(sonar);
+    void driveSetByDistance(int ultrasonicDistance) {
+    	int AUTON_PID_THRESH = 5;
+    	float err = ultrasonicDistance-ultrasonicGet(sonar);
 
-  	if(abs(err)<=AUTON_PID_THRESH){
-  				beep();
-          holoSet(0, 0, 0);
-  			} else {
-  				float K = 25;
-  				err=(err>0)?-K-err:K-err;
-          printf("ERR %f\n", err);
-  				holoSet(0, -err, 0);
-  			}
-  }
+    	if(abs(err)<=AUTON_PID_THRESH){
+    				beep();
+            holoSet(0, 0, 0);
+    			} else {
+    				float K = 25;
+    				err=(err>0)?-K-err:K-err;
+            printf("ERR %f\n", err);
+    				holoSet(0, -err, 0);
+    			}
+    }
+
+    void liftSetByDistance(int ultrasonicDistance) {
+    	int AUTON_PID_THRESH = 5;
+    	float err = ultrasonicDistance-encoderGet(liftEnc);
+
+    	if(abs(err)<=AUTON_PID_THRESH){
+    				beep();
+            holoSet(0, 0, 0);
+    			} else {
+    				float K = -10;
+    				err=(err>0)?-K-err:K-err;
+            printf("ENC %d TAR %d ERR %f\n",encoderGet(liftEnc), ultrasonicDistance, err);
+    				lift(-err);
+    			}
+    }

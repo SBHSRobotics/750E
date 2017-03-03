@@ -34,7 +34,6 @@
   static const unsigned char PINCE_POT = 0;
   static const unsigned char AUTON_SEL = 0;
 
-  Ultrasonic sonar;
 
 //Sensor Thresholds
   static const int LIFT_TOP_THRESH = 0;
@@ -56,6 +55,8 @@
 
 // Global Vars
 MenuItem *lcdRoot;
+Ultrasonic sonar;
+Encoder liftEnc;
 
 // Map functions
   void joystickMap();
