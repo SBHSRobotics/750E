@@ -47,11 +47,15 @@
   bool inputGetDigital(unsigned char joystick, unsigned char buttonGroup,
     unsigned char button);
 
+  /*
+   * Sets the current slot for replaying or recording to s
+   */
+  void setActiveSlot(int s);
 
-    /*
-     * Sets the current slot for replaying or recording to s
-     */
-    void setActiveSlot(int s);
+  /*
+   *
+   */
+  void lcdmAddAutonReplayer(FILE* port,MenuItem* root);
 
   #define AUTON_REPLAYER_H_
 
