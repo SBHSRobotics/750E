@@ -80,8 +80,8 @@ void linkinParkIntro() {
 	speakerPlayRtttl("linkin park intro: d=4, o=5, b=100: 4d, 4a6, 4a6, 4f, 4e, 4e, 4e, 8e, 8f, 4d, 4a6, 4a6, 4f, 4e, 4e, 4e, 8e, 8f, 4d, 4a6, 4a6, 4f, 4e, 4e, 4e, 8e, 8f, 4d, 4a6, 4a6, 4f, 2.e");
 }
 
-void linkinParkChorus() {//TODO: Fix this song, it is far from sounding right
-	speakerPlayRtttl("linkin park chorus: d=4, o=5, b=100: c#, c#, d#, f, 8p, 8d#, 4.d#, 8.c#, 2c#, 16p, 16a#, 8c#, 8d#, 4.f, 8p, 8d#, 16f, 16d#, 8f, 8f#, 8f, d#");
+void linkinParkChorus() {
+	speakerPlayRtttl("linkin park chorus: d=4, o=5, b=100: 8c#, c#, d#, f, 8p, 8f, 4f, c#, c#, 16p, 8a#4, c#, d#, f, 8p, 8f, 16f, 16d#, 8f, 8f#, 8f, d#");
 }
 
 void neverGonna() {
