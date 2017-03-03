@@ -46,6 +46,7 @@
 #include <API.h>
 #include <Holo.h>
 #include <LCD.h>
+#include <SoundLib.h>
 #include <AutonRecorder.h>
 #include <AutonReplayer.h>
 #include <EugeneLib.h>

@@ -30,7 +30,6 @@ void autonomous() {
   startAuton(1);
 
   while(1) {
-  	joystickMap();
-  	delay(200);
+  	
   }
 }

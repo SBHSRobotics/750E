@@ -52,6 +52,9 @@ void playSoundAsync(const void *sound);
 void batteryCheck();
 
 // Available Sounds:
+extern const void *S_F;
+extern const void *S_BFLAT;
+extern const void *S_UP;
 extern const void *S_SUPER_MARIO;
 extern const void *S_STARTUP;
 extern const void *S_CONNECTED;

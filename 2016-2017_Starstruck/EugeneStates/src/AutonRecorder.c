@@ -13,71 +13,47 @@
  *   compile without AutonRecorder.h properly included in main.h.
  */
 
-  int slot;
+/* Global variable declarations */
+
   TaskHandle recordTask;
   Frame root;
   char* fileName;
   bool endTask;
 
+  int activeSlot;
+
+/* Private function declarations */
+
   void recordingLoop();
+  /*
+   * Function contains a while loop that reads the joysticks and prints the values to a file
+   */
 
-  void startRecording(int s){
-    printf("Starting recording %d...\n",s);
+/* Public function definitons */
+
+  void startRecording(int slot){
+    activeSlot = slot;
+    printf("Starting recording %d...\n",slot);
     delay(100);
 
-    slot = s;
-    recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
+    // Defines global variables and starts recordTask
     root = NULLFRAME;
-    fileName = malloc(sizeof(char)*14);
-    endTask = false;
-
-    printf("Recording %d started.\n\n",s);
-    delay(100);
-  }
-
-  void recordingLoop(){
-    printf("Titling file...\n");
-    delay(100);
-
+    fileName = malloc(sizeof(char *));
     sprintf(fileName,"Rec%d.txt",slot);
+    endTask = false;
+    recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 
-    printf("File titled: %s\n",fileName);
+    printf("Recording %d started.\n\n",slot);
     delay(100);
-
-    printf("Opening %s...\n",fileName);
-    delay(100);
-    FILE* recording = fopen(fileName,"w");
-    printf("%s opened.\n\n",fileName);
-    delay(100);
-
-    Frame currentFrame;
-    char* frameVal = malloc(sizeof(char)*50);
-    while(!endTask){
-      currentFrame = getCurrentFrame();
-      frameVal = frameToString(&currentFrame);
-      printf("%s",frameVal);
-      delay(100);
-      fprintf(recording,frameVal);
-      if(endTask){ //TODO when this works, make one unused button on joystick end the task
-        break;
-      }
-      delay(200);
-    }
-    printf("Closing recording %d...\n",slot);
-    delay(100);
-
-    fclose(recording);
-
-    printf("Recording %d closed.\n\n",slot);
-    delay(100);
-    taskSuspend(recordTask);
   }
 
   void stopRecording(){
+    // Sets endTask to true in order to suspend recordTask
     endTask = true;
   }
 
   Frame getCurrentFrame(){
+    // Creates Frame struct of current joystick state and returns it
     Frame frame = {
       .analog_main = {joystickGetAnalog(1,1)+127,joystickGetAnalog(1,2)+127,joystickGetAnalog(1,3)+127,joystickGetAnalog(1,4)+127},
       .digital_main = {joystickGetDigital(1,5,JOY_UP),joystickGetDigital(1,5,JOY_DOWN),joystickGetDigital(1,6,JOY_UP),joystickGetDigital(1,6,JOY_DOWN),
@@ -90,31 +66,35 @@
                            joystickGetDigital(2,8,JOY_UP),joystickGetDigital(2,8,JOY_DOWN),joystickGetDigital(2,8,JOY_LEFT),joystickGetDigital(2,8,JOY_RIGHT),
                           }
     };
-
-    // Frame *clone = malloc(sizeof(Frame *));
-    // *clone = frame;
     return frame;
   }
 
   void printAllFrames(){
     printf("Printing all frames...\n");
     delay(100);
+
+    // Initializes variables for iterating through file
     char* frame = malloc(sizeof(char)*50);
     FILE* recording = fopen(fileName,"r");
+
+    // fgets saves the next 50 bytes from recording to string frame
     while(fgets(frame,50,recording) != NULL){
+      // Prints current frame
       printf("%s",frame);
       delay(100);
     }
+    // Closes recording
     fclose(recording);
     printf("All frames printed.\n");
     delay(100);
   }
 
   char* frameToString(Frame *frame){
+    //Initializes variables for saving to a string
+      // Saves these certain values to int variables, cortex issue
     int ch3 = frame->analog_main[CH3];
     int ch4 = frame->analog_main[CH4];
-
-    char* string = malloc(50);
+    char* string = malloc(sizeof(char)*50);
     sprintf(string,"%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d%03d%03d%03d%03d%d%d%d%d%d%d%d%d%d%d%d%d\n",
       ((frame->analog_main[CH1] < 0 || frame->analog_main[CH1] > 255) ? 0 : frame->analog_main[CH1]),
       ((frame->analog_main[CH2] < 0 || frame->analog_main[CH2] > 255) ? 0 : frame->analog_main[CH2]),
@@ -154,12 +134,16 @@
   }
 
   Frame stringToFrame(char* string){
+    // Initializes variables for splitting string into Frame values
     Frame frame = NULLFRAME;
+    // Splits string into analog and digital values from main and partner joysticks
     char* analog_main = substring(string,1,12);
     char* digital_main = substring(string,13,12);
     char* analog_partner = substring(string,25,12);
     char* digital_partner = substring(string,37,12);
 
+    // For loops split analog and digital strings into individual
+    //  values to be saved in the frame
     int x;
     for(x=0;x<4;x++){
       frame.analog_main[x] = atoi(substring(analog_main,(x*3)+1,3))-127;
@@ -174,6 +158,8 @@
   }
 
   char* substring(char* str,int start,int length){
+    // Splits a string into a substring from index start (first index is 1, not 0) of length length
+    // Code taken from online, link in header file
     char *substring = malloc(length+1);
     int subPos;
 
@@ -191,4 +177,51 @@
     *(substring+subPos) = '\0';
 
     return substring;
+  }
+
+/* Private function declarations */
+
+  void recordingLoop(){
+    // If slot doesn't initialize properly, end recording immediately
+    if(activeSlot == 0){
+      return;
+    }
+
+    // Opens file Rec[slot].txt in write mode
+    printf("Opening %s...\n",fileName);
+    delay(100);
+    FILE* recording = fopen(fileName,"w");
+    printf("%s opened.\n\n",fileName);
+    delay(100);
+
+    // Initializes variables for saving joystick values
+    Frame currentFrame;
+    char* frameVal = malloc(sizeof(char)*50);
+    while(!endTask){
+      // Gets current joystick state
+      currentFrame = getCurrentFrame();
+      frameVal = frameToString(&currentFrame);
+      printf("%s",frameVal);
+      delay(100);
+
+      // Prints frameVal to recording
+      fprintf(recording,frameVal);
+
+      // If endTask is true, break out of the loop and suspend the task
+      if(endTask){
+        break;
+      }
+      delay(200);
+    }
+    printf("Closing recording %d...\n",activeSlot);
+    delay(100);
+
+    // Closes recording
+    fclose(recording);
+
+    printf("Recording %d closed.\n\n",activeSlot);
+    delay(100);
+
+    // Suspends recordTask
+    taskSuspend(recordTask);
   }

@@ -7,6 +7,9 @@
 #include "main.h"
 
 // Declare Synchronous Sound Functions
+void f();
+void bflat();
+void up();
 void superMarioBro();
 void startUpSound();
 void connectedSound();
@@ -21,6 +24,9 @@ void weAreNumberOne();
 void superMarioBros();
 
 // Define public sound from header
+const void *S_F = &f;
+const void *S_BFLAT = &bflat;
+const void *S_UP = &up;
 const void *S_SUPER_MARIO = &superMarioBro;
 const void *S_STARTUP = &startUpSound;
 const void *S_CONNECTED = &connectedSound;
@@ -52,6 +58,18 @@ void playSoundAsync(const void *sound) {
 }
 
 //This is where all of the sound functions are defined
+void f() {
+	speakerPlayRtttl("start: d=4, o=5, b=120: 4f");
+}
+
+void bflat() {
+	speakerPlayRtttl("start: d=4, o=5, b=120: 5a#");
+}
+
+void up() {
+	speakerPlayRtttl("start: d=4, o=5, b=200: 16f, 16g, 16a, 16a#");
+}
+
 void superMarioBro() {
 	speakerPlayRtttl("Super Mario:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p,8g,8p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,16p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,16p,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16c7,16p,16c7,16c7,8p.,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16d#6,8p,16d6,8p,16c6");
 }
@@ -80,8 +98,8 @@ void linkinParkIntro() {
 	speakerPlayRtttl("linkin park intro: d=4, o=5, b=100: 4d, 4a6, 4a6, 4f, 4e, 4e, 4e, 8e, 8f, 4d, 4a6, 4a6, 4f, 4e, 4e, 4e, 8e, 8f, 4d, 4a6, 4a6, 4f, 4e, 4e, 4e, 8e, 8f, 4d, 4a6, 4a6, 4f, 2.e");
 }
 
-void linkinParkChorus() {
-	speakerPlayRtttl("linkin park chorus: d=4, o=5, b=100: 8c#, c#, d#, f, 8p, 8f, 4f, c#, c#, 16p, 8a#4, c#, d#, f, 8p, 8f, 16f, 16d#, 8f, 8f#, 8f, d#");
+void linkinParkChorus() {//TODO: Fix this song, it is far from sounding right
+	speakerPlayRtttl("linkin park chorus: d=4, o=5, b=100: c#, c#, d#, f, 8p, 8d#, 4.d#, 8.c#, 2c#, 16p, 16a#, 8c#, 8d#, 4.f, 8p, 8d#, 16f, 16d#, 8f, 8f#, 8f, d#");
 }
 
 void neverGonna() {

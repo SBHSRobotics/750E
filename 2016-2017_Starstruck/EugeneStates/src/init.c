@@ -37,9 +37,9 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 
-
 void initialize() {
   speakerInit();
+  sonar = ultrasonicInit(3, 4);
   holoInitX4(LF, LB, RF, RB);
-  beep();
+  playSoundAsync(S_STARTUP);
 }
