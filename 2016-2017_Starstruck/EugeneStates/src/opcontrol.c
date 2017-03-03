@@ -99,9 +99,10 @@
 				boop();
 				delay(1000);
 				//stopped beep
+			} else {
+				joystickMap();//TODO MOVE THIS BUTTON INTO JOYMAP
 			}
 
-			joystickMap();
 			// lcdmLoop(lcdRoot);
 			delay(200);
 		}
