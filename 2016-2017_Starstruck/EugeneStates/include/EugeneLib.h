@@ -35,6 +35,7 @@
   static const unsigned char AUTON_SEL = 0;
 
   Ultrasonic sonar;
+  Encoder liftEnc;
 
 //Sensor Thresholds
   static const int LIFT_TOP_THRESH = 0;
@@ -68,5 +69,6 @@ MenuItem *lcdRoot;
   void driveOp();
   void stopDrive();
   void driveSetByDistance(int ultrasonicDistance);
+  void liftSetByDistance(int encVal);
 
 #endif //EUGENELIB_H_
