@@ -34,6 +34,8 @@
   static const unsigned char PINCE_POT = 0;
   static const unsigned char AUTON_SEL = 0;
 
+  Ultrasonic sonar;
+
 //Sensor Thresholds
   static const int LIFT_TOP_THRESH = 0;
   static const int LIFT_BOTTOM_THRESH = 0;
@@ -65,5 +67,6 @@ MenuItem *lcdRoot;
   void driveAuton(int frontLeftSpeed, int backLeftSpeed, int frontRightSpeed, int backRightSpeed);
   void driveOp();
   void stopDrive();
+  void driveSetByDistance(int ultrasonicDistance);
 
 #endif //EUGENELIB_H_

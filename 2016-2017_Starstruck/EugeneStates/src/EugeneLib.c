@@ -30,31 +30,36 @@
             boop();
             beep();
           }
+    } else if (joystickGetDigital(1,7,JOY_UP)) {
+      driveSetByDistance(50);
+      printf("SONAR %d\n",ultrasonicGet(sonar));
+    } else {
+      holoSet(inputGetAnalog((swap ? 2 : 1),4), inputGetAnalog((swap ? 2 : 1),3), inputGetAnalog((swap ? 2 : 1), 1));
     }
 
-    holoSet(inputGetAnalog((swap ? 2 : 1),4), inputGetAnalog((swap ? 2 : 1),3), inputGetAnalog((swap ? 2 : 1), 1));
     // Get pincer input
-    // If 5U is held on the partner joystick, the pincers can be individually moved to sync them
-    // TODO: mechanically sync pincers
+    if(isJoystickConnected(2)) {
+      lift(inputGetAnalog((swap ? 1 : 2), 3));
+      pince(inputGetAnalog((swap ? 1 : 2), 1));
+    } else if(joystickGetDigital(1, 8, JOY_RIGHT)){
+      //Single Driver Controls
+      if(joystickGetDigital(1,5,JOY_UP)){
+      pince(127);
+      } else if (joystickGetDigital(1,5,JOY_DOWN)){
+        pince(-127);
+      } else {
+        pince(0);
+      }
 
-    // Moves pincers normally
-    // if(joystickGetDigital(1,5,JOY_UP)){
-  		// pince(127);
-    // } else if (joystickGetDigital(1,5,JOY_DOWN)){
-    //   pince(-127);
-    // } else {
-    //   pince(0);
-    // }
+      if(joystickGetDigital(1,6,JOY_UP)){
+      lift(127);
+      } else if (joystickGetDigital(1,6,JOY_DOWN)){
+        lift(-127);
+      } else {
+        lift(0);
+      }
 
-    // if(joystickGetDigital(1,6,JOY_UP)){
-  		// lift(127);
-    // } else if (joystickGetDigital(1,6,JOY_DOWN)){
-    //   lift(-127);
-    // } else {
-    //   lift(0);
-    // }
-    lift(inputGetAnalog((swap ? 1 : 2), 3));
-    pince(inputGetAnalog((swap ? 1 : 2), 1));
+    }
 
 	}
 
@@ -88,4 +93,19 @@
     motorSet(LB,backLeftSpeed);
     motorSet(RF,frontRightSpeed);
     motorSet(RB,backRightSpeed);
+  }
+
+  void driveSetByDistance(int ultrasonicDistance) {
+  	int AUTON_PID_THRESH = 5;
+  	float err = ultrasonicDistance-ultrasonicGet(sonar);
+
+  	if(abs(err)<=AUTON_PID_THRESH){
+  				beep();
+          holoSet(0, 0, 0);
+  			} else {
+  				float K = 25;
+  				err=(err>0)?-K-err:K-err;
+          printf("ERR %f\n", err);
+  				holoSet(0, -err, 0);
+  			}
   }
