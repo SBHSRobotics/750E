@@ -19,12 +19,14 @@
   Frame root;
   char* fileName;
   bool endTask;
+  FILE* lcdPort;
 
   int activeSlot;
 
 /* Private function declarations */
 
   void recordingLoop();
+  void lcdmRecordAuton();
   /*
    * Function contains a while loop that reads the joysticks and prints the values to a file
    */
@@ -224,4 +226,33 @@
 
     // Suspends recordTask
     taskSuspend(recordTask);
+  }
+
+  void lcdmAddAutonRecorder(FILE* port,MenuItem *root){
+    #ifdef LCD_H_
+      lcdPort = port;
+      printf("Creating Auton Recorder menu...\n");
+      delay(200);
+      MenuItem *autonRecorder = lcdmCraddItem("<  Make Auton  >", root, NULL, NULL);
+      MenuItem *exitAutonRecorder = lcdmCraddSubmenu(autonRecorder);
+      char* title;
+
+      printf("Adding Auton Recorder submenu...\n");
+      delay(200);
+
+      for(int x = 1; x<=8; x++){
+        title = malloc(sizeof(char)*16);
+        sprintf(title,"<    Slot %d    >",x);
+        delay(100);
+        MenuItem *autonSlot = lcdmCraddItem(title,exitAutonRecorder, &lcdmRecordAuton, NULL);
+        autonSlot->param = x;
+        printf("%s",(*autonSlot).name);
+      }
+    #endif /* LCD_H_ */
+  }
+
+  void lcdmRecordAuton(int recordSlot){
+    lcdSetText(lcdPort, 2, "Recording Auton ");
+    startRecording(recordSlot);
+    delay(500);
   }

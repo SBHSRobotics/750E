@@ -97,6 +97,11 @@
   Frame stringToFrame(char* str);
 
   /*
+   * Adds controls for auton recorder in LCD menu
+   */
+  void lcdmAddAutonRecorder(FILE* port,MenuItem* root);
+
+  /*
    * Returns substring of str beginning at start of length length (first position in str is 1 not 0)
    *   Code taken from online at http://www.programmingsimplified.com/c/source-code/c-substring
    */

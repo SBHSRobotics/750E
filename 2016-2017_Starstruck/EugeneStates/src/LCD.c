@@ -82,41 +82,7 @@ void lcdmAddDefaults(MenuItem *root) {
   lcdmCraddItem("<     POST     >", root, &runSelfTest, NULL);
   //Create autonomous menu item
   lcdmCraddItem("<  Autonomous  >", root, &callAuton, NULL);
-
-  printf("Creating Auton Recorder menu...\n");
-  delay(20);
-  MenuItem *autonRecorder = lcdmCraddItem("<  Make Auton  >", root, NULL, NULL);
-  MenuItem *exitAutonRecorder = lcdmCraddSubmenu(autonRecorder);
-
-  printf("Adding Auton Recorder submenu...\n");
-  delay(20);
-
-  for(int x = 1; x<=8; x++){
-    title = malloc(sizeof(char)*16);
-    sprintf(title,"<    Slot %d    >",x);
-    delay(20);
-    MenuItem *autonSlot = lcdmCraddItem(title,exitAutonRecorder, &recordAuton, NULL);
-    autonSlot->param = x;
-    printf("%s",(*autonSlot).name);
-  }
-
-  printf("Creating Auton Replayer menu...\n");
-  delay(200);
-  MenuItem *autonReplayer = lcdmCraddItem("<  Play Auton  >", root, NULL, NULL);
-  MenuItem *exitAutonReplayer = lcdmCraddSubmenu(autonReplayer);
-
-  printf("Adding Auton Replayer submenu...\n");
-  delay(20);
-
-  for(int x = 1; x<=8; x++){
-    title = malloc(sizeof(char)*16);
-    sprintf(title,"<    Slot %d    >",x);
-    delay(20);
-    MenuItem *autonSlot = lcdmCraddItem(title,exitAutonReplayer, &replayAuton, NULL);
-    autonSlot->param = x;
-    printf("%s",(*autonSlot).name);
-  }
-
+  
   // speaker->param = 0;
   printf("Done.\n\r");
   delay(20);

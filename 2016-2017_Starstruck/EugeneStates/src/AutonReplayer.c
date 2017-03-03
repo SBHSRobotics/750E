@@ -19,11 +19,12 @@
   Frame *currentFrame;
   char* fileName;
   bool isRunning = false;
-
   int activeSlot;
+  FILE* lcdPort;
 /* Private function declarations */
 
   void replayerLoop();
+  void lcdmReplayAuton(int replaySlot);
 
 /* Public function definitons */
 
@@ -36,6 +37,7 @@
     fileName = malloc(sizeof(char *));
     sprintf(fileName,"Rec%d.txt",activeSlot);
     isRunning = true;
+
     replayTask = taskCreate(replayerLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
   }
 
@@ -208,4 +210,33 @@
 
   void setActiveSlot(int slot) {
     activeSlot = slot;
+  }
+
+  void lcdmAddAutonReplayer(FILE* port,MenuItem *root){
+    #ifdef LCD_H_
+      lcdPort = port;
+      printf("Creating Auton Replayer menu...\n");
+      delay(20);
+      MenuItem *autonReplayer = lcdmCraddItem("<  Play Auton  >", root, NULL, NULL);
+      MenuItem *exitAutonReplayer = lcdmCraddSubmenu(autonReplayer);
+      char* title;
+
+      printf("Adding Auton Replayer submenu...\n");
+      delay(20);
+
+      for(int x = 1; x<=8; x++){
+        title = malloc(sizeof(char)*16);
+        sprintf(title,"<    Slot %d    >",x);
+        delay(100);
+        MenuItem *autonSlot = lcdmCraddItem(title,exitAutonReplayer, &lcdmReplayAuton, NULL);
+        autonSlot->param = x;
+        printf("%s",(*autonSlot).name);
+      }
+    #endif /* LCD_H_ */
+  }
+
+  void lcdmReplayAuton(int replaySlot){
+    lcdSetText(lcdPort, 2, "Playing auton ");
+    setActiveSlot(replaySlot);
+    autonomous();
   }
