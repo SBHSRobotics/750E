@@ -1,9 +1,3 @@
-/** @file opcontrol.c
- * @brief File for operator control code
- *
- * This file contains functions corresponding to different sounds
- */
-
 #include "main.h"
 
 // Declare Synchronous Sound Functions
