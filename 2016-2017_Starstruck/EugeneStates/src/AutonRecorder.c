@@ -50,6 +50,8 @@
   void stopRecording(){
     // Sets endTask to true in order to suspend recordTask
     endTask = true;
+    // Frees allocated memory from fileName
+    free(fileName);
   }
 
   Frame getCurrentFrame(){
@@ -85,6 +87,9 @@
     }
     // Closes recording
     fclose(recording);
+
+    // Frees allocated memory from frame
+    free(frame);
     printf("All frames printed.\n");
     delay(100);
   }
@@ -218,6 +223,9 @@
 
     // Closes recording
     fclose(recording);
+
+    // Frees allocated memory from frameVal
+    free(frameVal);
 
     printf("Recording %d closed.\n\n",activeSlot);
     delay(100);

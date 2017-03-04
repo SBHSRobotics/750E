@@ -85,14 +85,15 @@
 
 // Robot functions
   void lift(int speed){
-    motorSet(AB,-speed);
-    motorSet(CD,speed);
-    motorSet(E,speed);
-    motorSet(F,-speed);
+    motorSet(AB,-speed); // -
+    motorSet(CD,-speed); // +
+    motorSet(E,speed); // +
+    motorSet(F,-speed); // -
   }
 
   void pince(int speed){
-    motorSet(PINCE,speed);
+    motorSet(P_L,speed);
+    motorSet(P_R,speed);
   }
 
   void driveAuton(int frontLeftSpeed, int backLeftSpeed, int frontRightSpeed, int backRightSpeed){

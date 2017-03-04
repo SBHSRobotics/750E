@@ -15,19 +15,20 @@
 
 // Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
   // Chassis
-    static const unsigned char LF = 2;	// Front left drive wheel
-    static const unsigned char LB = 3;	// Back left drive wheel
-    static const unsigned char RF = 8;	// Front Right drive wheel
-    static const unsigned char RB = 9;	// Back right drive wheel
+    static const unsigned char LF = 1;	// Front left drive wheel
+    static const unsigned char LB = 2;	// Back left drive wheel
+    static const unsigned char RF = 9;	// Front Right drive wheel
+    static const unsigned char RB = 10;	// Back right drive wheel
 
   // Lift
-    static const unsigned char AB = 4; // Top of lift, Motors A and B together
-    static const unsigned char CD = 5; // Bottom of lift, Motors C and D together
-    static const unsigned char E = 7; // Left-side lift, middle motor
-    static const unsigned char F = 10; // Right-side lift, middle motor
+    static const unsigned char AB = 5; // Top of lift, Motors A and B together
+    static const unsigned char CD = 6; // Bottom of lift, Motors C and D together
+    static const unsigned char E = 4; // Left-side lift, middle motor
+    static const unsigned char F = 7; // Right-side lift, middle motor
 
   //Pincers
-    static const unsigned char PINCE = 6;
+    static const unsigned char P_L = 3;
+    static const unsigned char P_R = 8;
 
 //Sensors
   static const unsigned char ENC_TOP = 1;

@@ -46,6 +46,9 @@
     taskSuspend(replayTask);
     taskDelete(replayTask);
     motorStopAll();
+    // Frees allocated memory from currentFrame and fileName
+    free(currentFrame);
+    free(fileName);
     printf("Auton stopped.\n");
   }
 
@@ -201,6 +204,9 @@
 
     // Closes recording file
     fclose(recording);
+
+    // Frees allocated memory from frameString
+    free(frameString);
 
     printf("Recording %d closed.\n",activeSlot);
     delay(100);
