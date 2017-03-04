@@ -14,6 +14,9 @@
  *
  * This file should be placed in include and included in main.h
  */
+#ifndef DEBUG_MODE
+  #define DEBUG_MODE 0
+#endif
 
 /* Public function declarations */
 

@@ -18,6 +18,10 @@
  * This file should be placed in include and included in main.h
  */
 
+  #ifndef DEBUG_MODE
+    #define DEBUG_MODE 0
+  #endif
+
   //Frame array macros, makes getting info from arrays within Frames more intuitive
   #define CH1 0
   #define CH2 1

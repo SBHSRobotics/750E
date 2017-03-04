@@ -33,8 +33,10 @@
 
   void startRecording(int slot){
     activeSlot = slot;
-    printf("Starting recording %d...\n",slot);
-    delay(100);
+    #if (DEBUG_MODE == 1)
+      printf("Starting recording %d...\n",slot);
+      delay(100);
+    #endif
 
     // Defines global variables and starts recordTask
     root = NULLFRAME;
@@ -43,8 +45,10 @@
     endTask = false;
     recordTask = taskCreate(recordingLoop,TASK_DEFAULT_STACK_SIZE,NULL,TASK_PRIORITY_DEFAULT);
 
-    printf("Recording %d started.\n\n",slot);
-    delay(100);
+    #if (DEBUG_MODE == 1)
+      printf("Recording %d started.\n\n",slot);
+      delay(100);
+    #endif
   }
 
   void stopRecording(){
@@ -169,8 +173,10 @@
     int subPos;
 
     if(substring == NULL){
-      printf("str in substring method is NULL.\n");
-     	delay(100);
+      #if (DEBUG_MODE == 1)
+        printf("str in substring method is NULL.\n");
+       	delay(100);
+      #endif
       exit(1);
     }
 
@@ -193,11 +199,17 @@
     }
 
     // Opens file Rec[slot].txt in write mode
-    printf("Opening %s...\n",fileName);
-    delay(100);
+    #if (DEBUG_MODE == 1)
+      printf("Opening %s...\n",fileName);
+      delay(100);
+    #endif
+
     FILE* recording = fopen(fileName,"w");
-    printf("%s opened.\n\n",fileName);
-    delay(100);
+
+    #if (DEBUG_MODE == 1)
+      printf("%s opened.\n\n",fileName);
+      delay(100);
+    #endif
 
     // Initializes variables for saving joystick values
     Frame currentFrame;
@@ -206,8 +218,10 @@
       // Gets current joystick state
       currentFrame = getCurrentFrame();
       frameVal = frameToString(&currentFrame);
-      printf("%s",frameVal);
-      delay(100);
+      #if (DEBUG_MODE == 1)
+        printf("%s",frameVal);
+        delay(100);
+      #endif
 
       // Prints frameVal to recording
       fprintf(recording,frameVal);
@@ -218,17 +232,20 @@
       }
       delay(200);
     }
-    printf("Closing recording %d...\n",activeSlot);
-    delay(100);
+    #if (DEBUG_MODE == 1)
+      printf("Closing recording %d...\n",activeSlot);
+      delay(100);
+    #endif
 
     // Closes recording
     fclose(recording);
 
     // Frees allocated memory from frameVal
     free(frameVal);
-
-    printf("Recording %d closed.\n\n",activeSlot);
-    delay(100);
+    #if (DEBUG_MODE == 1)
+      printf("Recording %d closed.\n\n",activeSlot);
+      delay(100);
+    #endif
 
     // Suspends recordTask
     taskSuspend(recordTask);

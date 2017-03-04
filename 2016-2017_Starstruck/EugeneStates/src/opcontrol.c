@@ -87,14 +87,13 @@
 
 	void operatorControl() {
 		if(lcdRoot == NULL) {
-			lcdRoot = lcdmInit(uart1);
+			lcdRoot = lcdmInit(uart2);
 			lcdmAddDefaults(lcdRoot);
 			playSoundAsync(S_UP);
 		}
 		while(1){
 			lcdmLoop(lcdRoot);
 			if(joystickGetDigital(1,7,JOY_UP) && joystickGetDigital(1,7,JOY_RIGHT) && joystickGetDigital(1,7,JOY_LEFT) && joystickGetDigital(1,7,JOY_DOWN)){
-
 				playSoundAsync(S_SUCCESS);
 				startRecording(1); // TODO change later once LCD is working
 				delay(1000);

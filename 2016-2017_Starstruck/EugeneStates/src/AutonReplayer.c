@@ -28,8 +28,10 @@
 /* Public function definitons */
 
   void startAuton() {
-    printf("Replaying auton %d...\n",activeSlot);
-    delay(100);
+    #if (DEBUG_MODE == 1)
+      printf("Replaying auton %d...\n",activeSlot);
+      delay(100);
+    #endif
 
     // Defines global variables and starts replayTask
     currentFrame = malloc(sizeof(Frame *));
@@ -164,8 +166,11 @@
     if (activeSlot == 0) {
       return;
     }
-    printf("Opening recording %d from file %s...\n", activeSlot, fileName);
-    delay(100);
+    #if (DEBUG_MODE == 1)
+      printf("Opening recording %d from file %s...\n", activeSlot, fileName);
+      delay(100);
+    #endif
+
     // Initializes variables for iterating through file
     FILE* recording = fopen(fileName,"r");
     char* frameString = malloc(sizeof(char)*50);
@@ -175,41 +180,53 @@
       while(isAutonomous() || isReplayerAuton()) {
         boop();
         delay(500);
-        printf("Replayer Error: Selected slot is empty");
+        #if (DEBUG_MODE == 1)
+          printf("Replayer Error: Selected slot is empty");
+        #endif
       }
       return;
     }
-
-    printf("Recording %d opened.\n",activeSlot);
-    delay(100);
+    #if (DEBUG_MODE == 1)
+      printf("Recording %d opened.\n",activeSlot);
+      delay(100);
+    #endif
 
     // Loop only runs in autonomous mode
     // fread assigns values to frameString from recording until end of file
     while((isAutonomous() || isReplayerAuton()) && fread(frameString,1,49,recording) != NULL){
-      printf("Setting frame: %s",frameString);
-      delay(75);
+      #if (DEBUG_MODE == 1)
+        printf("Setting frame: %s",frameString);
+        delay(75);
+      #endif
 
       // Creates frame from string and assigns it to
       //   global variable currentFrame for use in inputGet functions
       *currentFrame = stringToFrame(frameString);
-      delay(75);
 
       // Sets values from currentFrame to motors on robot
       joystickMap();
-      printf("LF %d",motorGet(LF));
-      delay(50);
+
+      #if (DEBUG_MODE == 1)
+        printf("LF %d",motorGet(LF));
+        delay(50);
+      #endif
+
+      delay(200);
     }
-    printf("Closing recording %d...\n",activeSlot);
-    delay(100);
+    #if (DEBUG_MODE == 1)
+      printf("Closing recording %d...\n",activeSlot);
+      delay(100);
+    #endif
 
     // Closes recording file
     fclose(recording);
 
     // Frees allocated memory from frameString
     free(frameString);
-
-    printf("Recording %d closed.\n",activeSlot);
-    delay(100);
+    #if (DEBUG_MODE == 1)
+      printf("Recording %d closed.\n",activeSlot);
+      delay(100);
+    #endif
   }
 
   void setActiveSlot(int slot) {

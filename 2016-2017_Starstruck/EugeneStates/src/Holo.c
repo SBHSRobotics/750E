@@ -95,6 +95,7 @@ bool isHoloInitialized() {
 }
 
 void holoSet(int xAxis, int yAxis, int rot) {
+  /*
   xSum -= xHist[0];
   ySum -= yHist[0];
   rotSum -= rotHist[0];
@@ -112,6 +113,7 @@ void holoSet(int xAxis, int yAxis, int rot) {
   yAxis = (int)((float)ySum / FILTER_SIZE);
   rotSum += rot;
   rot = (int)((float)rotSum / FILTER_SIZE);
+  */
 
   switch (currentConfig) {
     case HOLO_X4:
