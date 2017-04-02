@@ -85,11 +85,13 @@
 	 */
 	 MenuItem *lcdRoot;
 
+	 void autonSel();
 
 	void operatorControl() {
 		if(lcdRoot == NULL) {
 			lcdRoot = lcdmInit(uart2);
-			taskCreate(lcdmAddDefaults,TASK_DEFAULT_STACK_SIZE,lcdRoot,TASK_PRIORITY_DEFAULT);
+			lcdmAddDefaults(lcdRoot);
+			lcdmCraddItem("<  Auton Sel   >", lcdRoot, &autonSel, NULL);
 			playSoundAsync(S_UP);
 		}
 		while(1){
@@ -118,4 +120,12 @@
 			// lcdmLoop(lcdRoot);
 			delay(200);
 		}
+	}
+
+	void autonSel(){
+		char * string = malloc(sizeof(char)*16);
+		sprintf(string,"Pot val: %d",analogRead(POT));
+		lcdSetText(uart2,1,"Auton Sel");
+		lcdSetText(uart2,2,string);
+		free(string);
 	}

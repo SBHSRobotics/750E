@@ -40,13 +40,15 @@
       driveSetByDistance(50);
       printf("SONAR %d\n",ultrasonicGet(sonar));
     } else {
-      holoSet(inputGetAnalog((swap ? 2 : 1),4), inputGetAnalog((swap ? 2 : 1),3), inputGetAnalog((swap ? 2 : 1), 1));
+      holoSet(0, inputGetAnalog((swap ? 2 : 1),3), inputGetAnalog((swap ? 2 : 1), 1));
     }
 
     // Get pincer input
     if(isJoystickConnected(2) || isAutonomous() || isReplayerAuton()) {
       lift(inputGetAnalog((swap ? 1 : 2), 3));
       pince(inputGetAnalog((swap ? 1 : 2), 1));
+      // lift(joystickGetDigital(1, 5, JOY_UP) ? 127 : joystickGetDigital(1,5,JOY_DOWN) ? -127 : 0);
+      // pince(joystickGetDigital(1, 6, JOY_UP) ? 127 : joystickGetDigital(1, 6, JOY_DOWN) ? -127 : 0);
 
       // if(joystickGetDigital(2,5,JOY_UP) && joystickGetDigital(2,5,JOY_DOWN)) {
       //   encoderReset(liftEnc);
@@ -61,40 +63,43 @@
       //   liftSetByDistance(LIFT_STAR_CENTER);
       // }
 
-    } else if(joystickGetDigital(1, 8, JOY_RIGHT)){
+    } else if(digitalRead(1)){
+      digitalWrite(2,HIGH);
       //Single Driver Controls (NOT INCLUDED IN AUTON RECORDINGS)
-      if(joystickGetDigital(1,5,JOY_UP)){
-      pince(127);
-      } else if (joystickGetDigital(1,5,JOY_DOWN)){
-        pince(-127);
+      if(joystickGetDigital(1,6,JOY_UP)){
+      pince(-127);
+    } else if (joystickGetDigital(1,6,JOY_DOWN)){
+        pince(127);
       } else {
         pince(0);
       }
 
-      if(joystickGetDigital(1,6,JOY_UP)){
+      if(joystickGetDigital(1,5,JOY_UP)){
       lift(127);
-      } else if (joystickGetDigital(1,6,JOY_DOWN)){
+    } else if (joystickGetDigital(1,5,JOY_DOWN)){
         lift(-127);
       } else {
         lift(0);
       }
 
+    } else {
+      digitalWrite(2, LOW);
     }
 
 	}
 
 // Robot functions
-  void lift(int speed){
-    motorSet(AB,-speed);
-    motorSet(CD,-speed);
-    motorSet(E,speed);
-    motorSet(F,-speed);
-  }
+void lift(int speed){
+  motorSet(AB,speed);
+  motorSet(C,speed);
+  motorSet(D,speed);
+  motorSet(E,speed);
+  motorSet(F,speed);
+}
 
-  void pince(int speed){
-    motorSet(P_L,speed);
-    motorSet(P_R,speed);
-  }
+void pince(int speed){
+  motorSet(P_L,speed);
+}
 
   void driveAuton(int frontLeftSpeed, int backLeftSpeed, int frontRightSpeed, int backRightSpeed){
     motorSet(LF,frontLeftSpeed);
