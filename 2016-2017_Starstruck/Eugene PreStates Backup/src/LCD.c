@@ -24,7 +24,6 @@ void runSelfTest();
 void callAuton();
 void recordAuton(int recordSlot);
 void replayAuton(int replaySlot);
-void autonSel();
 
 MenuItem *lcdmInit(FILE *lcdPort) {
   port = lcdPort;
@@ -77,7 +76,6 @@ void lcdmAddDefaults(MenuItem *root) {
     motor->param = i;
     printf("%s", (*motor).name);
   }
-
   //Create speaker test item and add to Manual Test submenu
   MenuItem *speaker = lcdmCraddItem("<   Speaker    >", exitManualTest, &beep, NULL);
   // Create POST test menu item
@@ -122,8 +120,6 @@ void lcdmAddDefaults(MenuItem *root) {
   // speaker->param = 0;
   printf("Done.\n\r");
   delay(20);
-  lcdmCraddItem("<  Auton Sel   >", lcdRoot, &autonSel, NULL);
-
 }
 
 MenuItem *lcdmCraddItem(char *name, MenuItem *root, void *action, void *param) {
@@ -223,14 +219,14 @@ void pulseMotor(unsigned char port) {
 
 void beep() {
   // F, A# (aka b-flat)
-  speakerPlayRtttl("Beep:d=4,o=5,b=300:16f5");
-  speakerPlayRtttl("Beep:d=4,o=5,b=300:16a#6");
+  speakerPlayRtttl("Beep:d=4,o=5,b=100:16f5");
+  speakerPlayRtttl("Beep:d=4,o=5,b=100:16a#6");
 }
 
 void boop() {
   // A# (aka b-flat), F
-  speakerPlayRtttl("Beep:d=4,o=5,b=300:16a#6");
-  speakerPlayRtttl("Beep:d=4,o=5,b=300:16f5");
+  speakerPlayRtttl("Beep:d=4,o=5,b=100:16a#6");
+  speakerPlayRtttl("Beep:d=4,o=5,b=100:16f5");
 }
 
 void runSelfTest() {
@@ -259,13 +255,4 @@ void replayAuton(int replaySlot) {
   lcdSetText(port, 2, "Playing auton ");
   setActiveSlot(replaySlot);
   autonomous();
-}
-
-
-void autonSel(){
-	char * string = malloc(sizeof(char)*16);
-	sprintf(string,"Pot val: %d",analogRead(POT));
-	lcdSetText(uart2,1,"Auton Sel");
-	lcdSetText(uart2,2,string);
-	free(string);
 }

@@ -13,22 +13,24 @@
    * This file should be placed in include and included in main.h
 	 */
 
-// Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
-  // Chassis
-    static const unsigned char LF = 1;	// Front left drive wheel
-    static const unsigned char LB = 2;	// Back left drive wheel
-    static const unsigned char RF = 9;	// Front Right drive wheel
-    static const unsigned char RB = 10;	// Back right drive wheel
+ // Port Definitions - Implemented as constants for type-safety. In low-memory situations, these may be substituted for macros.
+   // Chassis
+     static const unsigned char LF = 1;	// Front left drive wheel, was 1
+     static const unsigned char LB = 7;	// Back left drive wheel, was previously 2
+     static const unsigned char RF = 10;	// Front Right drive wheel, was previously 9
+     static const unsigned char RB = 2;	// Back right drive wheel, was previously 10
 
-  // Lift
-    static const unsigned char AB = 5; // Top of lift, Motors A and B together
-    static const unsigned char CD = 6; // Bottom of lift, Motors C and D together
-    static const unsigned char E = 4; // Left-side lift, middle motor
-    static const unsigned char F = 7; // Right-side lift, middle motor
+   // Lift
+     static const unsigned char AB = 3; // Top of lift, Motors A and B together, was 5
+     static const unsigned char C = 8; // Motors C bottomleft lift, was 6 y-ed off)
+     static const unsigned char E = 4; // Left-side lift, middle motor, was 4
+     static const unsigned char F = 9; // Right-side lift, middle motor, was 7
+     static const unsigned char D = 5; //Motor D bottom right lift, was 6 yed-off
 
-  //Pincers
-    static const unsigned char P_L = 3;
-    static const unsigned char P_R = 8;
+   //Pincers
+     static const unsigned char P_L = 6;
+
+
 
 //Sensors
   static const unsigned char ENC_TOP = 1;

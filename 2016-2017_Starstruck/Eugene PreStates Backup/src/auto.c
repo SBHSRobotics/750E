@@ -27,6 +27,7 @@
  * so, the robot will await a switch to another mode or disable/enable cycle.
  */
 void autonomous() {
+  delay(1000);
   if(isAutonomous()){
     // 4095
     if(analogRead(POT) > 2730){
@@ -41,7 +42,7 @@ void autonomous() {
       beep();
 
     } else {
-      setActiveSlot(1);
+      setActiveSlot(2);
       beep();
 
      }

@@ -69,11 +69,11 @@ void superMarioBro() {
 }
 
 void startUpSound() {
-	speakerPlayRtttl("start: d=4, o=5, b=300: 8b, e, 8g#, b6");
+	speakerPlayRtttl("start: d=4, o=5, b=120: 8b, e, 8g#, b6");
 }
 
 void connectedSound() {
-	speakerPlayRtttl("connect: d=4, o=5, b=250: 8c, 16a, 16g, 8e");
+	speakerPlayRtttl("connect: d=4, o=5, b=120: 8c, 16a, 16g, 8e");
 }
 
 void lowBattery() {

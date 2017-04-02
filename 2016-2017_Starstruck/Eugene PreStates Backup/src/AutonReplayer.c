@@ -214,7 +214,7 @@
         delay(50);
       #endif
 
-      delay(100);
+      delay(200);
     }
     #if (DEBUG_MODE == 1)
       printf("Closing recording %d...\n",activeSlot);
