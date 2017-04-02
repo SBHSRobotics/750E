@@ -94,16 +94,23 @@
 		while(1){
 			lcdmLoop(lcdRoot);
 			if(joystickGetDigital(1,7,JOY_UP) && joystickGetDigital(1,7,JOY_RIGHT) && joystickGetDigital(1,7,JOY_LEFT) && joystickGetDigital(1,7,JOY_DOWN)){
-				playSoundAsync(S_SUCCESS);
+				beep();
+				// playSoundAsync(S_SUCCESS);
 				startRecording(1); // TODO change later once LCD is working
 				delay(1000);
 			}
 			else if(joystickGetDigital(1,7,JOY_LEFT)){
 				stopRecording();
-				playSoundAsync(S_FAIL);
+				boop();
+				// playSoundAsync(S_FAIL);
 				delay(1000);
 				//stopped beep
-			} else {
+			} else if(joystickGetDigital(1,7,JOY_DOWN)){
+					stopAuton();
+					boop();
+					boop();
+					delay(1000);
+				} else {
 				joystickMap();//TODO MOVE THIS BUTTON INTO JOYMAP
 			}
 

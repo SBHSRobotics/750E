@@ -48,18 +48,18 @@
       lift(inputGetAnalog((swap ? 1 : 2), 3));
       pince(inputGetAnalog((swap ? 1 : 2), 1));
 
-      if(joystickGetDigital(2,5,JOY_UP) && joystickGetDigital(2,5,JOY_DOWN)) {
-        encoderReset(liftEnc);
-        beep();
-      } else if(joystickGetDigital(2, 8, JOY_UP)) {
-        liftSetByDistance(LIFT_TOP);
-      } else if(joystickGetDigital(2, 8, JOY_RIGHT)) {
-        liftSetByDistance(LIFT_CARRY);
-      } else if(joystickGetDigital(2, 8, JOY_LEFT)) {
-        liftSetByDistance(LIFT_STAR_SIDE);
-      } else if(joystickGetDigital(2, 8, JOY_DOWN)) {
-        liftSetByDistance(LIFT_STAR_CENTER);
-      }
+      // if(joystickGetDigital(2,5,JOY_UP) && joystickGetDigital(2,5,JOY_DOWN)) {
+      //   encoderReset(liftEnc);
+      //   beep();
+      // } else if(joystickGetDigital(2, 8, JOY_UP)) {
+      //   liftSetByDistance(LIFT_TOP);
+      // } else if(joystickGetDigital(2, 8, JOY_RIGHT)) {
+      //   liftSetByDistance(LIFT_CARRY);
+      // } else if(joystickGetDigital(2, 8, JOY_LEFT)) {
+      //   liftSetByDistance(LIFT_STAR_SIDE);
+      // } else if(joystickGetDigital(2, 8, JOY_DOWN)) {
+      //   liftSetByDistance(LIFT_STAR_CENTER);
+      // }
 
     } else if(joystickGetDigital(1, 8, JOY_RIGHT)){
       //Single Driver Controls (NOT INCLUDED IN AUTON RECORDINGS)
@@ -88,7 +88,7 @@
     motorSet(AB,-speed);
     motorSet(CD,-speed);
     motorSet(E,speed);
-    motorSet(F,-speed); 
+    motorSet(F,-speed);
   }
 
   void pince(int speed){

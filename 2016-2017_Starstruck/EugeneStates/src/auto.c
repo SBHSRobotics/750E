@@ -29,7 +29,5 @@
 void autonomous() {
   startAuton(1);
 
-  while(1) {
-  	
-  }
+  while(isAutonomous() || isReplayerAuton());
 }

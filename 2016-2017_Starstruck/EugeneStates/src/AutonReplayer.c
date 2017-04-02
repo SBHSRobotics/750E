@@ -45,12 +45,11 @@
     // Stops the auton by suspending and deleting replayTask and stops all of the motors on the robot
     printf("Stopping auton...\n");
     isRunning = false;
-    taskSuspend(replayTask);
     taskDelete(replayTask);
     motorStopAll();
     // Frees allocated memory from currentFrame and fileName
-    free(currentFrame);
-    free(fileName);
+    // free(currentFrame);
+    // free(fileName);
     printf("Auton stopped.\n");
   }
 
@@ -177,13 +176,14 @@
 
     // Makes sure the file exists, otherwise ends replay
     if (recording == NULL) {
-      while(isAutonomous() || isReplayerAuton()) {
+      for(int i = 0; i<3; i++) {
         boop();
         delay(500);
         #if (DEBUG_MODE == 1)
           printf("Replayer Error: Selected slot is empty");
         #endif
       }
+      stopAuton();
       return;
     }
     #if (DEBUG_MODE == 1)
@@ -227,6 +227,8 @@
       printf("Recording %d closed.\n",activeSlot);
       delay(100);
     #endif
+
+    stopAuton();
   }
 
   void setActiveSlot(int slot) {
