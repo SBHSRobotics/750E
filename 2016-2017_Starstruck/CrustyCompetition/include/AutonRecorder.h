@@ -22,6 +22,8 @@
     #define DEBUG_MODE 0
   #endif
 
+  int activeSlot;
+
   //Frame array macros, makes getting info from arrays within Frames more intuitive
   #define CH1 0
   #define CH2 1

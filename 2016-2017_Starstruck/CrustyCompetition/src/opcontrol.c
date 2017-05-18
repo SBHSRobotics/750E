@@ -87,17 +87,33 @@
 
 
 	void operatorControl() {
-		if(lcdRoot == NULL) {
-			lcdRoot = lcdmInit(uart2);
-			taskCreate(lcdmAddDefaults,TASK_DEFAULT_STACK_SIZE,lcdRoot,TASK_PRIORITY_DEFAULT);
-			playSoundAsync(S_UP);
-		}
+		// lcdRoot = lcdmInit(uart2);
+		// taskCreate(lcdmAddDefaults,TASK_DEFAULT_STACK_SIZE,lcdRoot,TASK_PRIORITY_DEFAULT);
+		playSoundAsync(S_UP);
+
 		while(1){
-			lcdmLoop(lcdRoot);
+			// lcdmLoop(lcdRoot);
 			if(joystickGetDigital(1,7,JOY_UP) && joystickGetDigital(1,7,JOY_RIGHT) && joystickGetDigital(1,7,JOY_LEFT) && joystickGetDigital(1,7,JOY_DOWN)){
 				beep();
 				// playSoundAsync(S_SUCCESS);
-				startRecording(1); // TODO change later once LCD is working
+				if(analogRead(POT) > 2730){
+					setActiveSlot(3);
+					beep();
+					beep();
+					beep();
+
+				} else if(analogRead(POT) > 1365){
+					setActiveSlot(2);
+					beep();
+					beep();
+
+				} else {
+					setActiveSlot(1);
+					beep();
+
+				 }
+
+				startRecording(activeSlot); // TODO change later once LCD is working
 				delay(1000);
 			}
 			else if(joystickGetDigital(1,7,JOY_LEFT)){

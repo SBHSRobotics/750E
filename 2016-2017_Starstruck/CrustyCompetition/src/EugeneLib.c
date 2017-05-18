@@ -44,7 +44,7 @@
     }
 
     // Get pincer input
-    if(isJoystickConnected(2) || isAutonomous() || isReplayerAuton()) {
+    if(/*isJoystickConnected(2) || isAutonomous() || isReplayerAuton()*/false) {
       lift(inputGetAnalog((swap ? 1 : 2), 3));
       pince(inputGetAnalog((swap ? 1 : 2), 1));
       // lift(joystickGetDigital(1, 5, JOY_UP) ? 127 : joystickGetDigital(1,5,JOY_DOWN) ? -127 : 0);
@@ -66,17 +66,17 @@
     } else if(digitalRead(1)){
       digitalWrite(2,HIGH);
       //Single Driver Controls (NOT INCLUDED IN AUTON RECORDINGS)
-      if(joystickGetDigital(1,6,JOY_UP)){
-      pince(-127);
-    } else if (joystickGetDigital(1,6,JOY_DOWN)){
-        pince(127);
+      if(inputGetDigital(1,6,JOY_UP)){
+        pince(-127);
+      } else if (inputGetDigital(1,6,JOY_DOWN)){
+          pince(127);
       } else {
         pince(0);
       }
 
-      if(joystickGetDigital(1,5,JOY_UP)){
+      if(inputGetDigital(1,5,JOY_UP)){
       lift(127);
-    } else if (joystickGetDigital(1,5,JOY_DOWN)){
+    } else if (inputGetDigital(1,5,JOY_DOWN)){
         lift(-127);
       } else {
         lift(0);

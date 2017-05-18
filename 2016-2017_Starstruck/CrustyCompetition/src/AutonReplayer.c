@@ -115,7 +115,7 @@
             }
             break;
         }
-      } else if (joystick == 2) {
+      } else if (joystick == 2) {  //was joystick==2
         switch(buttonGroup){
           case 5:
             if(button==JOY_UP){
@@ -214,7 +214,7 @@
         delay(50);
       #endif
 
-      delay(100);
+      delay(170);
     }
     #if (DEBUG_MODE == 1)
       printf("Closing recording %d...\n",activeSlot);

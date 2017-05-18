@@ -46,7 +46,8 @@ void autonomous() {
 
      }
    }
-  startAuton(1);
+  startAuton(activeSlot);
+  printf("Slot: %d", activeSlot);
 
   while(isAutonomous() || isReplayerAuton());
 }
