@@ -20,7 +20,7 @@
   char* fileName;
   bool endTask;
 
-  int activeSlot;
+  //int activeSlot;
 
 /* Private function declarations */
 
@@ -32,7 +32,6 @@
 /* Public function definitons */
 
   void startRecording(int slot){
-    activeSlot = slot;
     #if (DEBUG_MODE == 1)
       printf("Starting recording %d...\n",slot);
       delay(100);

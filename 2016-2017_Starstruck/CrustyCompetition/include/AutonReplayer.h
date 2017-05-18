@@ -52,9 +52,9 @@
 
 
     /*
-     * Sets the current slot for replaying or recording to s
+     * Sets the current slot for replaying or recording to slot
      */
-    void setActiveSlot(int s);
+    void setActiveSlot(int slot);
 
   #define AUTON_REPLAYER_H_
 
