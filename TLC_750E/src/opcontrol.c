@@ -10,7 +10,6 @@
  * obtained from http://sourceforge.net/projects/freertos/files/ or on request.
  */
 
-#include "variables.h"
 #include "main.h"
 
 /*
@@ -98,7 +97,7 @@ void operatorControl() {
 			motorStop(MOTOR_BASE_RIGHT2_);
 		}
 
-/*		if((ch6U == 1) || (ch6D == 1)){
+		if((ch6U == 1) || (ch6D == 1)){
 			lift((ch6U-ch6D)*127);
 		}
 		else {
@@ -110,6 +109,6 @@ void operatorControl() {
 		}
 		else {
 			pince(0);
-		} */
+		}
 	}
 }

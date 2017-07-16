@@ -11,6 +11,7 @@
  */
 
 #include "main.h"
+#include "variables.h"
 
 /*
  * Runs pre-initialization code. This function will be started in kernel mode one time while the
@@ -37,4 +38,6 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
+  Encoder encoder_right = encoderInit(BASE_ENC_RIGHT_TOP, BASE_ENC_RIGHT_BOTTOM, false);
+  Encoder encoder_left = encoderInit(BASE_ENC_LEFT_TOP, BASE_ENC_LEFT_BOTTOM, false);
 }
