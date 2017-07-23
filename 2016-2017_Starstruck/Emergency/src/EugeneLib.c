@@ -210,6 +210,156 @@
          count=MEMES_VAL;
        }
        break;
+    case SOUND_MENU:
+      lcdSetText(uart1, 1, "     Sounds     ");
+      lcdSetText(uart1, 1, "<    Select    >");
+      if (lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+        count--;
+      }
+      else if (lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+        count++;
+      }
+      else if (lcdReadButtons(uart1)==LCD_BTN_CENTER) {
+        count=SOUND_VAL;
+      }
+      break;
+      case SOUND_VAL:
+      lcdClear(uart1);
+      lcdPrint(uart1, 1, "Choose Sound");
+      switch (soundCount){
+        case 0:
+          lcdPrint(uart1, 2, "Start up sound");
+          if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+            soundCount--;
+          } else if(lcdReadButtons(uart)==LCD_BTN_CENTER) {
+            startUpSound();
+            count=SOUND_MENU;
+          } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+            soundCount++;
+          }
+          break;
+        case 1:
+          lcdPrint(uart1, 2, "Connected Sound");
+          if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+            soundCount--;
+          } else if(lcdReadButtons(uart)==LCD_BTN_CENTER) {
+            connectedSound();
+            count=SOUND_MENU;
+          } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+            soundCount++;
+          }
+          break;
+        case 2:
+          lcdPrint(uart1, 2, "Low Battery");
+          if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+            soundCount--;
+          } else if(lcdReadButtons(uart)==LCD_BTN_CENTER) {
+            lowBattery();
+            count=SOUND_MENU;
+          } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+            soundCount++;
+          }
+          break;
+        case 3:
+          lcdPrint(uart1, 2, "Success");
+          if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+            soundCount--;
+          } else if(lcdReadButtons(uart)==LCD_BTN_CENTER) {
+            success();
+            count=SOUND_MENU;
+          } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+            soundCount++;
+          }
+          break;
+        case 4:
+          lcdPrint(uart1, 2, "Fail");
+          if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+            soundCount--;
+          } else if(lcdReadButtons(uart)==LCD_BTN_CENTER) {
+            fail();
+            count=SOUND_MENU;
+          } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+            soundCount++;
+          }
+          break;
+        case 5:
+          lcdPrint(uart1, 2, "Super Mario Bro");
+          if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+            soundCount--;
+          } else if(lcdReadButtons(uart)==LCD_BTN_CENTER) {
+            superMarioBro();
+            count=SOUND_MENU;
+          } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+            soundCount++;
+          }
+          break;
+        case 6:
+          lcdPrint(uart1, 2, "In The End Intro");
+          if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+            soundCount--;
+          } else if(lcdReadButtons(uart)==LCD_BTN_CENTER) {
+            linkinParkIntro();
+            count=SOUND_MENU;
+          } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+            soundCount++;
+          }
+          break;
+        case 7:
+          lcdPrint(uart1, 2, "In The End Chorus");
+          if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+            soundCount--;
+          } else if(lcdReadButtons(uart)==LCD_BTN_CENTER) {
+            linkinParkChorus();
+          count=SOUND_MENU;
+          } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+            soundCount++;
+          }
+          break;
+        case 8:
+          lcdPrint(uart1, 2, "Never Gonna Give You Up");
+          if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+            soundCount--;
+          } else if(lcdReadButtons(uart)==LCD_BTN_CENTER) {
+            neverGonna();
+            count=SOUND_MENU;
+          } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+            soundCount++;
+          }
+          break;
+        case 9:
+          lcdPrint(uart1, 2, "Nyan Cat");
+          if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+            soundCount--;
+          } else if(lcdReadButtons(uart)==LCD_BTN_CENTER) {
+            nyanCat();
+            count=SOUND_MENU;
+          } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+            soundCount++;
+          }
+          break;
+        case 10:
+          lcdPrint(uart1, 2, "We are Number One");
+          if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+            soundCount--;
+          } else if(lcdReadButtons(uart)==LCD_BTN_CENTER) {
+            weAreNumberOne();
+            count=SOUND_MENU;
+          } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+            soundCount++;
+          }
+          break;
+        case 11:
+          lcdPrint(uart1, 2, "Super Mario Bros");
+          if(lcdReadButtons(uart1)==LCD_BTN_LEFT) {
+            soundCount--;
+          } else if(lcdReadButtons(uart)==LCD_BTN_CENTER) {
+            superMarioBros();
+          count=SOUND_MENU;
+          } else if(lcdReadButtons(uart1)==LCD_BTN_RIGHT) {
+            soundCount++;
+          }
+          break;
+      }
  		case BATTERY_VAL: // get battery voltage
  		  lcdPrint(uart1, 1, "Main: %dmV",powerLevelMain()); //Display main battery on LCD
  		  //lcdPrint(uart1, 2, "Expander: %dmV",(int)(analogRead(EXPANDER)*35.84)); //Display power expander battery on LCD
