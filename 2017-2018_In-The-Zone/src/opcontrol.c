@@ -32,13 +32,13 @@
  */
 
 
-int ch1;
 int ch2;
+int ch3;
 
 void operatorControl() {
   while(true) {
-    ch1 = joystickAxes(1);
     ch2 = joystickAxes(2);
-    drive(ch1, ch2);
+    ch3 = joystickAxes(3);
+    drive(ch3, ch2);
   }
 }
