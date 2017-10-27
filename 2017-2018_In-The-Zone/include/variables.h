@@ -3,11 +3,11 @@
 
 #include "main.h"
 
-#define drive_frontLeft 3
-#define drive_backLeft 2
+#define drive_frontLeft 2
+#define drive_backLeft 3
 #define drive_backRight 4
 #define drive_frontRight 5
-
+int THRESH = 20;
 //const unsigned char drive_frontLeft 2;
 //const unsigned char drive_backLeft 3;
 //const unsigned char drive_backRight 4;
