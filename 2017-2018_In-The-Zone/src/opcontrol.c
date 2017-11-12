@@ -32,13 +32,39 @@
  */
 
 
-int ch2;
-int ch3;
+int ch2, ch3;
+bool ch5u, ch5d, ch6u, ch6d, ch7l, slowToggle;
+slowToggle = false;
 
 void operatorControl() {
   while(true) {
     ch2 = joystickAxes(2);
     ch3 = joystickAxes(3);
-    drive(ch3, ch2);
+    ch5u = joystickGetDigital(1, 5, JOY_UP);
+    ch5d = joystickGetDigital(1, 5, JOY_DOWN);
+    ch6u = joystickGetDigital(1, 6, JOY_UP);
+    ch6d = joystickGetDigital(1, 6, JOY_DOWN);
+    ch7l = joystickGetDigital(1, 7, JOY_LEFT);
+
+    if (ch7l) {
+      if (slowToggle) {
+        slowToggle = false;
+      } else {
+        slowToggle = true;
+      }
+    }
+
+    if (slowToggle) {
+      slowDrive(ch3, ch2);
+    } else {
+      drive(ch3, ch2);
+    }
+
+    if (ch6u || ch6d) {
+      lift(ch6u, ch6d);
+    }
+    if (ch5u || ch5d) {
+      clawFunct(ch5u, ch5d);
+    }
   }
 }
