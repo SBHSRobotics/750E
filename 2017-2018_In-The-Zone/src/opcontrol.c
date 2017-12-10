@@ -31,40 +31,41 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 
-
-int ch2, ch3;
-bool ch5u, ch5d, ch6u, ch6d, ch7l, slowToggle;
-slowToggle = false;
-
+int A2, A3, D5, U5, D6, U6;
+THRESH = 20;
+//int U7;
+//bool slowDrive;
 void operatorControl() {
-  while(true) {
-    ch2 = joystickAxes(2);
-    ch3 = joystickAxes(3);
-    ch5u = joystickGetDigital(1, 5, JOY_UP);
-    ch5d = joystickGetDigital(1, 5, JOY_DOWN);
-    ch6u = joystickGetDigital(1, 6, JOY_UP);
-    ch6d = joystickGetDigital(1, 6, JOY_DOWN);
-    ch7l = joystickGetDigital(1, 7, JOY_LEFT);
-
-    if (ch7l) {
-      if (slowToggle) {
-        slowToggle = false;
-      } else {
-        slowToggle = true;
+//  slowDrive = false;
+  while(true){
+      if((abs)(joystickGetAnalog(1, 2)) > THRESH) {
+        A2 = joystickGetAnalog(1, 2);
       }
-    }
+      else A2 = 0;
+      if((abs)(joystickGetAnalog(1, 3)) > THRESH) {
+        A3 = joystickGetAnalog(1, 3);
+      }
+      else A3 = 0;
+      D5 = joystickGetDigital(1, 5, JOY_DOWN);
+      U5 = joystickGetDigital(1, 5, JOY_UP);
+      D6 = joystickGetDigital(1, 6, JOY_DOWN);
+      U6 = joystickGetDigital(1, 6, JOY_UP);
+      /*U7 = joystickGetDigital(1, 7, JOY_UP);
+      if(U7 == 1){
+        if(slowDrive) {
+          slowDrive = false;
+        }
+        else slowDrive = true;
+      }
 
-    if (slowToggle) {
-      slowDrive(ch3, ch2);
-    } else {
-      drive(ch3, ch2);
-    }
+      if(slowDrive) {
+        A2 = 60*A2/(abs)(A2);
+        A3 = 60*A3/(abs)(A3);
+      }*/
+      drive(A2, A3);
 
-    if (ch6u || ch6d) {
-      lift(ch6u, ch6d);
-    }
-    if (ch5u || ch5d) {
-      clawFunct(ch5u, ch5d);
-    }
+      lift(U6, D6);
+
+      claw(U5, D5);
   }
 }

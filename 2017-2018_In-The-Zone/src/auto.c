@@ -26,5 +26,25 @@
  * The autonomous task may exit, unlike operatorControl() which should never exit. If it does
  * so, the robot will await a switch to another mode or disable/enable cycle.
  */
+double drive_speed;
+double lift_speed;
+double drive_distance1 = 16.44;
+double drive_distance2;
+double lift_distance;
 void autonomous() {
+  drive(127, 127);
+  delay(drive_distance1/drive_speed);
+  drive(0, 0);
+
+  lift(1, 0);
+  delay(lift_distance/lift_speed);
+  lift(0, 0);
+
+  drive(127, 127);
+  delay(drive_distance2/drive_speed);
+  drive(0, 0);
+
+  claw(1, 0);
+  delay(1000);
+  claw(0, 0);
 }

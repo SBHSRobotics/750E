@@ -1,46 +1,21 @@
 #include "variables.h"
 #include "main.h"
 
-void drive (int l, int r) {
-    motorSet(drive_frontLeft, l);
-    motorSet(drive_backLeft, -l);
-    motorSet(drive_frontRight, r);
-    motorSet(drive_backRight, -r);
+THRESH = 20;
+void drive(int A2, int A3) {
+  motorSet(MOTOR_BASE_LB, -A3);
+  motorSet(MOTOR_BASE_LF, A3);
+  motorSet(MOTOR_BASE_RB, -A2);
+  motorSet(MOTOR_BASE_RF, -A2);
 }
 
-void lift (bool u, bool d) {
-    if (u && !d) {
-      motorSet(liftBot, 127);
-      motorSet(liftTop, 127)
-    }
-    else if (d && !u) {
-      motorSet(liftBot, -127);
-      motorSet(liftTop, -127);
-    }
+void lift(int U6, int D6) {
+    motorSet(LIFT_LB, (U6-D6)*65);
+    motorSet(LIFT_LT, (U6-D6)*65);
+    motorSet(LIFT_RB, -(U6-D6)*65);
+    motorSet(LIFT_RT, -(U6-D6)*65);
 }
 
-void clawFunct (bool u, bool d) {
-    if (u && !d) {
-      motorSet(claw, 127);
-    }
-    else if (d && !u) {
-      motorSet(claw, -127);
-    }
-}
-
-void slowDrive (int l, int r) {
-  motorSet(drive_frontLeft, 60*sgn(l));
-  motorSet(drive_backLeft, 60*sgn(-l));
-  motorSet(drive_frontRight, 60*sgn(r));
-  motorSet(drive_backRight, 60*sgn(-r));
-}
-int joystickAxes (int ch) {
-  if (abs(joystickGetAnalog(1, ch)) > THRESH) {
-    return joystickGetAnalog(1, ch);
-  } else {
-    return 0;
-  }
-}
-int sgn (int i) {
-  return ((i > 0) - (i < 0));
+void claw(int U5, int D5) {
+  motorSet(CLAW, -(U5-D5)*127);
 }
