@@ -90,7 +90,7 @@
 		if(lcdRoot == NULL) {
 			lcdRoot = lcdmInit(uart2);
 			taskCreate(lcdmAddDefaults,TASK_DEFAULT_STACK_SIZE,lcdRoot,TASK_PRIORITY_DEFAULT);
-			playSoundAsync(S_UP);
+			playSoundAsync(S_STARTUP);
 		}
 		while(1){
 			lcdmLoop(lcdRoot);

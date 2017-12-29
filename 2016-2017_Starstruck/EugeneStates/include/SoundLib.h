@@ -25,6 +25,7 @@ extern const void *S_LINKIN_PARK_INTRO;
 extern const void *S_LINKIN_PARK_CHORUS;
 extern const void *S_NEVER_GONNA;
 extern const void *S_NYAN;
+extern const void *S_TAKE_ON_ME;
 extern const void *S_WE_ARE_NUMBER_ONE;
 extern const void *S_SUPER_MARIO_POLY;
 
