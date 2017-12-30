@@ -12,12 +12,15 @@
 #define LIFT_LT 7
 #define LIFT_LB 8
 #define CLAW 9
-int THRESH;
+
+int fileNumber;
 
 void drive(int A2, int A3);
 
 void lift(int U6, int D6);
 
 void claw(int U5, int D5);
+
+void moveFunction();
 
 #endif

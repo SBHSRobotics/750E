@@ -1,0 +1,48 @@
+#include "autonRec.h"
+#include "variables.h"
+#include "main.h"
+
+void recordAuton(){
+
+  moveFunctions = taskCreate(moveFunctions, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
+  FILE * fp;
+  if(fileNumber == 1)
+    fp = fopen("auton1.txt", "w");
+  if(fileNumber == 2)
+    fp = fopen("auton2.txt", "w");
+  if(fileNumber == 3)
+    fp = fopen("auton3.txt", "w");
+
+  int timeInMs = 0;
+  bool recAuton = true;
+
+  while(timeInMs <= 15000 && recAuton){
+    if(joystickGetDigital(1, 7, JOY_LEFT))
+      recAuton = false;
+
+    int A2, A3, U5, D5, U6, D6;
+    int THRESH = 20;
+
+    if((abs)(joystickGetAnalog(1, 2)) > THRESH) {
+      A2 = joystickGetAnalog(1, 2);
+    }
+    else A2 = 0;
+    if((abs)(joystickGetAnalog(1, 3)) > THRESH) {
+      A3 = joystickGetAnalog(1, 3);
+    }
+    else A3 = 0;
+    D5 = joystickGetDigital(1, 5, JOY_DOWN);
+    U5 = joystickGetDigital(1, 5, JOY_UP);
+    D6 = joystickGetDigital(1, 6, JOY_DOWN);
+    U6 = joystickGetDigital(1, 6, JOY_UP);
+
+    fprintf(fp, "%d %d %d %d %d %d\n", A2, A3, U5, D5, U6, D6);
+    printf("%d %d %d %d %d %d\n", A2, A3, U5, D5, U6, D6);
+    delay(1);
+  }
+
+  taskDelete(moveFunctions);
+}
+
+
+//fprintf(fileptr, "%d %d %d %d", analog[0]);

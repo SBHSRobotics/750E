@@ -12,6 +12,7 @@
 
 #include "variables.h"
 #include "main.h"
+#include "autonRec.h"
 
 /*
  * Runs the user operator control code. This function will be started in its own task with the
@@ -31,8 +32,8 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 
-int A2, A3, D5, U5, D6, U6;
-THRESH = 20;
+int A2, A3, D5, U5, D6, U6, U8;
+int THRESH = 20;
 //int U7;
 //bool slowDrive;
 void operatorControl() {
@@ -50,6 +51,8 @@ void operatorControl() {
       U5 = joystickGetDigital(1, 5, JOY_UP);
       D6 = joystickGetDigital(1, 6, JOY_DOWN);
       U6 = joystickGetDigital(1, 6, JOY_UP);
+      U8 = joystickGetDigital(1, 8, JOY_UP);
+
       /*U7 = joystickGetDigital(1, 7, JOY_UP);
       if(U7 == 1){
         if(slowDrive) {
@@ -67,5 +70,17 @@ void operatorControl() {
       lift(U6, D6);
 
       claw(U5, D5);
+
+      if(U8) {
+        if(fileNumber == 1)
+          fileNumber = 2;
+        if(fileNumber == 2)
+          fileNumber = 3;
+        if(fileNumber == 3)
+          fileNumber = 1;
+      }
+
+      if(joystickGetDigital(1, 7, JOY_LEFT))
+        recordAuton();
   }
 }

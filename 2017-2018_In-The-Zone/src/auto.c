@@ -35,7 +35,6 @@ void autonomous() {
   drive(127, 127);
   delay(drive_distance1/drive_speed);
   drive(0, 0);
-
   lift(1, 0);
   delay(lift_distance/lift_speed);
   lift(0, 0);
