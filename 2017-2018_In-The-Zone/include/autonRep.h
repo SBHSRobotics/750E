@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-struct Moment {
+/*struct Moment {
   int speed;
   int channels;
 };
@@ -12,7 +12,7 @@ struct Moment driveMoment;
 struct Moment liftMoment;
 struct Moment clawMoment;
 
-Moment Moments[] = {driveMoment, liftMoment, clawMoment};
+Moment Moments[] = {driveMoment, liftMoment, clawMoment};*/
 
 void autonRep();
 

@@ -36,8 +36,26 @@ void recordAuton(){
     D6 = joystickGetDigital(1, 6, JOY_DOWN);
     U6 = joystickGetDigital(1, 6, JOY_UP);
 
-    fprintf(fp, "%d %d %d %d %d %d\n", A2, A3, U5, D5, U6, D6);
-    printf("%d %d %d %d %d %d\n", A2, A3, U5, D5, U6, D6);
+    int temp = A2;
+    while(temp < 100) {
+      temp *= 10;
+      fprintf(fp, "0");
+      printf("0");
+    }
+    fprintf(fp, "%d", A2);
+    printf("%d", A2);
+
+    temp = A3;
+    while(temp < 100) {
+      temp *= 10;
+      fprintf(fp, "0");
+      printf("0");
+    }
+    fprintf(fp, "%d", A3);
+    printf("%d", A3);
+    
+    fprintf(fp, "%d %d %d %d\n", U5, D5, U6, D6);
+    printf("%d %d %d %d\n",  U5, D5, U6, D6);
     delay(1);
   }
 
