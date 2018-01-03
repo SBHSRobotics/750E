@@ -80,7 +80,8 @@ void operatorControl() {
           fileNumber = 1;
       }
 
-      if(joystickGetDigital(1, 7, JOY_LEFT))
+      if(joystickGetDigital(1, 7, JOY_LEFT)) {
         recordAuton();
+      }
   }
 }

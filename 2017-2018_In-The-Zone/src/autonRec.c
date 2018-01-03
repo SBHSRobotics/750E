@@ -5,7 +5,7 @@
 void recordAuton(){
 
   //moveFunctions = taskCreate(moveFunctions, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
-  printf("TEST");
+  //printf("TEST");
   FILE * fp;
   if(fileNumber == 1)
     fp = fopen("auton1.txt", "w");
@@ -17,8 +17,8 @@ void recordAuton(){
   int timeInMs = 0;
   bool recAuton = true;
 
-  /*while(timeInMs <= 15000 && recAuton){
-    if(joystickGetDigital(1, 7, JOY_LEFT))
+  while(timeInMs <= 15000 && recAuton){
+    if(joystickGetDigital(1, 7, JOY_LEFT) && timeInMs > 1000)//ya i cant get it to stop
       recAuton = false;
 
     int A2, A3, U5, D5, U6, D6;
@@ -37,16 +37,16 @@ void recordAuton(){
     D6 = joystickGetDigital(1, 6, JOY_DOWN);
     U6 = joystickGetDigital(1, 6, JOY_UP);
 
-    printf("TEST1");
+    //printf("TEST1");
     drive(A2, A3);
 
     lift(U6, D6);
 
-    claw(U5, D5);*/
+    claw(U5, D5);
 
-    /*printf("TEST2");
+    //printf("TEST2");
     int temp = A2;
-    while(temp < 100) {
+    while(temp < 100) { //these while loops dont stop
       temp *= 10;
       fprintf(fp, "0");
       printf("0");
@@ -63,15 +63,16 @@ void recordAuton(){
     fprintf(fp, "%d", A3);
     printf("%d", A3);
 
-    fprintf(fp, "%d %d %d %d\n", U5, D5, U6, D6);
+    fprintf(fp, "%d %d %d %d\n", U5, D5, U6, D6);//not printing out in the right place
     printf("%d %d %d %d\n",  U5, D5, U6, D6);
-    printf("TEST3");
-    delay(1);
-    printf("TEST4");*/
-  //}
+    //printf("TEST3");
+    delay(1000);
+    timeInMs+=1000;
+  //  printf("TEST4");
+  }
 
   //taskDelete(moveFunctions);
 }
 
 
-//fprintf(fileptr, "%d %d %d %d", analog[0]);
+//Something my brother told me about idk: fprintf(fileptr, "%d %d %d %d", analog[0]);
