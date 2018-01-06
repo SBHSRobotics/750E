@@ -1,7 +1,7 @@
 #include "variables.h"
 #include "main.h"
 
-THRESH = 20;
+int THRESH = 20;
 void drive(int A2, int A3) {
   motorSet(MOTOR_BASE_LB, -A3);
   motorSet(MOTOR_BASE_LF, A3);

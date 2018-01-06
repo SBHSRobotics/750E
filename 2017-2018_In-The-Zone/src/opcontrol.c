@@ -32,12 +32,12 @@
  */
 
 int A2, A3, D5, U5, D6, U6;
-THRESH = 20;
 //int U7;
 //bool slowDrive;
 void operatorControl() {
 //  slowDrive = false;
   while(true){
+      int THRESH = 20;
       if((abs)(joystickGetAnalog(1, 2)) > THRESH) {
         A2 = joystickGetAnalog(1, 2);
       }
