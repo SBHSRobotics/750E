@@ -4,14 +4,11 @@
 #include "main.h"
 
 #define MOTOR_BASE_LF 2
-#define MOTOR_BASE_LB 1
+#define MOTOR_BASE_LB 5
 #define MOTOR_BASE_RF 3
 #define MOTOR_BASE_RB 4
-#define LIFT_RT 5
-#define LIFT_RB 6
-#define LIFT_LT 7
-#define LIFT_LB 8
-#define CLAW 9
+#define LIFT_L 6
+#define LIFT_R 7
 
 int fileNumber;
 

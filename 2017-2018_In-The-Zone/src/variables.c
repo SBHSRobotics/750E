@@ -11,10 +11,8 @@ void drive(int A2, int A3) {
 }
 
 void lift(int U6, int D6) {
-    motorSet(LIFT_LB, (U6-D6)*65);
-    motorSet(LIFT_LT, (U6-D6)*65);
-    motorSet(LIFT_RB, -(U6-D6)*65);
-    motorSet(LIFT_RT, -(U6-D6)*65);
+    motorSet(LIFT_L, (U6-D6)*65);
+    motorSet(LIFT_R, -(U6-D6)*65);
 }
 
 void claw(int U5, int D5) {
