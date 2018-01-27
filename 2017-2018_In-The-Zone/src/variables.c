@@ -5,8 +5,10 @@ fileNumber = 1;
 
 void drive(int A2, int A3) {
   motorSet(MOTOR_BASE_LB, -A3);
+  motorSet(MOTOR_BASE_LM, -A3);
   motorSet(MOTOR_BASE_LF, A3);
   motorSet(MOTOR_BASE_RB, -A2);
+  motorSet(MOTOR_BASE_RM, -A2);
   motorSet(MOTOR_BASE_RF, -A2);
 }
 
