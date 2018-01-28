@@ -31,25 +31,29 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 
-int A2, A3, D5, U5, D6, U6;
+int A1, A3, D6, U6, U7;
 //int U7;
 //bool slowDrive;
 void operatorControl() {
 //  slowDrive = false;
   while(true){
       int THRESH = 20;
-      if((abs)(joystickGetAnalog(1, 2)) > THRESH) {
-        A2 = joystickGetAnalog(1, 2);
+      if((abs)(joystickGetAnalog(1, 1)) > THRESH) {
+        A1 = joystickGetAnalog(1, 1);
       }
-      else A2 = 0;
+      else A1 = 0;
       if((abs)(joystickGetAnalog(1, 3)) > THRESH) {
         A3 = joystickGetAnalog(1, 3);
       }
       else A3 = 0;
-      D5 = joystickGetDigital(1, 5, JOY_DOWN);
-      U5 = joystickGetDigital(1, 5, JOY_UP);
       D6 = joystickGetDigital(1, 6, JOY_DOWN);
       U6 = joystickGetDigital(1, 6, JOY_UP);
+      
+      U7 = joystickGetDigital(1, 7, JOY_UP);
+
+      if (U7) {
+        testAuton();
+      }
       /*U7 = joystickGetDigital(1, 7, JOY_UP);
       if(U7 == 1){
         if(slowDrive) {
@@ -62,10 +66,8 @@ void operatorControl() {
         A2 = 60*A2/(abs)(A2);
         A3 = 60*A3/(abs)(A3);
       }*/
-      drive(A2, A3);
+      drive(A1, A3);
 
       lift(U6, D6);
-
-      claw(U5, D5);
   }
 }
