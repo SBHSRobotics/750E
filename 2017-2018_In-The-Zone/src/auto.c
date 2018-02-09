@@ -27,31 +27,40 @@
  * so, the robot will await a switch to another mode or disable/enable cycle.
  */
 void autonomous() {
+    //Move lift down
     lift(-127, 127);
     delay(600);
     lift(0, 0);
 
+    //Drive forward
     drive(0, 127);
-    delay(2400);
+    delay(2200);
     drive(0, 0);
     lift(127, -127);
-    delay(300);
+    delay(600);
     lift(0, 0);
-    /*drive(0, 127);
-    delay(200);
 
+    //Move back
     drive(0, -127);
-    delay(1400);
+    delay(1000);
+    drive(0, 0);
 
     //10 pt auton
-    /*drive(127, 0); //L
-    //drive(-127,0); //R
-    delay(3900);
-    drive(0, 127);
+    //drive(127, 0); //L
+    drive(-127,0); //R
     delay(1300);
+    drive(0, 127);
+    //400
+    delay(600);
+    drive(0, 0);
 
+    //Drop mobile goal
     lift(-127, 127);
     delay(200);
     lift(0, 0);
-    drive(0, 0);*/
+
+    //Pull out
+    drive(0, -127);
+    delay(600);
+    drive(0, 0);
 }

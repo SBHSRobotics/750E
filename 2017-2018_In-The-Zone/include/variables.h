@@ -4,13 +4,13 @@
 #include "main.h"
 
 #define MOTOR_BASE_LF 2
-#define MOTOR_BASE_LM 3
-#define MOTOR_BASE_LB 4
-#define MOTOR_BASE_RF 5
-#define MOTOR_BASE_RM 6
-#define MOTOR_BASE_RB 7
-#define LIFT_L 8
-#define LIFT_R 9
+#define MOTOR_BASE_LB 3
+#define MOTOR_BASE_RF 4
+#define MOTOR_BASE_RB 5
+#define LIFT_L 6
+#define LIFT_R 7
+
+#define POT 1
 
 void drive(int A1, int A3);
 
